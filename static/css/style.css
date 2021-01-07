@@ -1,0 +1,14 @@
+body {
+    background-color: teal;
+}
+.text-black{
+    color: #000000;
+}
+.navbar-nav {
+    float: none !important;
+    text-align: center !important;
+}
+.navbar-nav li{
+    display: inline-block !important;
+    float: none !important;
+}
