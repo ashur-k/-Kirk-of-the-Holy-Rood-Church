@@ -1,6 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from . models import CurrentColorTheme
+from .forms import CurrentColorThemeForm
 
 
 def index(request):
     """ A view to return the undex page """
-    return render(request, 'home/index.html')
+
+    template = 'home/index.html'
+
+    return render(request, template)

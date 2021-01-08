@@ -1,8 +1,8 @@
 body {
-    background-color: teal;
+    
 }
 .text-black{
-    color: #000000;
+    color: #000000 !important;
 }
 .navbar-nav {
     float: none !important;
