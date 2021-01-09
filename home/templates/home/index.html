@@ -2,30 +2,181 @@
 {% load static %}
 
 {% block page_header %}
+    
     <div class="container header-container">
-        <div class="row">
-            <div class="col"></div>
-        </div>
+        
     </div>
 {% endblock %}
 
-{% block content %}
-    <div style="height: 15vh;"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-12">
-                <h1 class="logo-font text-black">
-                    Church Site Project
-                </h1>      
-                   <button class="btn btn-sm primary-button" 
-                    style="
-                        background-color: {{ color.current_color_theme.primary_background_color_code }};
-                        color: {{ color.current_color_theme.primary_foreground_color_code }};                    
-                    ">
-                        {{ color.current_color_theme.theme_name}}
-                    </button>
-                    <button class="btn btn-sm secondary-button">Cancel</button>          
+{% block content %}    
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid hero-parallax-img container-parallax">
+    <div class="opaque-overlay">&nbsp;</div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <section class="jumbotron text-center">  
+                <div class="jumbotron-text-background">
+                    <h3>
+                        God is calling us to be a vibrant and welcoming intergenerational <br>
+                        community, where individuals are transformed by the good news of Jesus Christ
+                    </h3>
+                    <hr style="height: 1px; background-color: #f44336;">
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 mb-4">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-md-none d-lg-none d-xl-none mb-4"
+            style="align-items: center;  
+            background-color: #f44336;">
+            <div class="row">
+                <h3 class="text-uppercase">Prayer Group</h3>
+                <p class="lead bold text-black">We are meeting online to pray for our Planet, country, persecuted Chrisitans and for ousrselves.
+                    If you want to know more please click below!
+                </p>
+                <div class="mt-1 mb-2">
+                    <a class="btn btn-dark" href="">Click me</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselExampleDark" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselExampleDark" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+            <img src="../../../media/carousel_1.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5 class="text-white">Philippians 4:6</h5>
+                <p class="text-white">"Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God."</p>
+            </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+            <img src="../../../media/carousel_2.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5 class="text-white">Psalm 102:17</h5>
+                <p class="text-white">"He regards the prayer of the destitute and does not despise their prayer."</p>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <img src="../../../media/carousel_3.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5 class="text-white">James 5:16</h5>
+                <p class="text-white">"Therefore, confess your sins to one another and pray for one another, that you may be healed. The prayer of a righteous person has great power as it is working."</p>
+            </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleDark" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleDark" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"
+            style="display: flex !important; 
+            align-items: center;  
+            background-color: #f44336;">
+            <div class="row d-none d-sm-none d-md-block">
+                <h3 class="text-uppercase">Prayer Group</h3>
+                <p class="lead bold text-black">We are meeting online to pray for our Planet, country, persecuted Chrisitans and for ousrselves.
+                    If you want to know more please click below!
+                </p>
+                <div class="mt-1 mb-2">
+                    <a class="btn btn-dark" href="">Click me</a>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="container-fluid container-parallax prayer-parallax-img">
+    <div class="opaque-overlay">&nbsp;</div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <section class="jumbotron text-center">  
+                <div class="jumbotron-text-background">
+                    <h3>
+                        In current environment of Covid where we cannot meet with each-other, <br>
+                        But we can pray together, we need something beyond ourselves.
+                    </h3>
+                    <hr style="height: 1px; background-color: #f44336;">
+                    <p class="text-white">To know more and how can you join our online Prayer group please click the buttton below!</p>
+                    <a href="" class="btn btn-dark">Click me</a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="contaienr-fluid p-5" style="background-color: #f44336; height: 100%;">
+    <div class="container mt-4 mb-4">
+        <div class="row text-center mb-4">
+            <h3 class="text-uppercase">Church other groups</h3>
+            <p class="lead bold text-white">At the moment we are organising below online groups. <br>
+                 Once the covid restrictions we will meet in person.</p>
+        </div>
+        <div class="row" style="display: flex; align-items: center;">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="card bg-dark text-white">
+                    <img src="../../../media/alpha_group.jpg" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-white text-uppercase">Alpha group</h5>
+                        <p class="card-text text-white d-none d-sm-none d-md-block">If you want to know more about mysterious God, that we all worship, 
+                            you can be part of our Alpha group, please click below to know more!</p>
+                        <a class="btn btn-light text-black">Click me</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 mt-1 mb-1">
+                <div class="card bg-dark text-white">
+                    <img src="../../../media/Bible_study.jpg" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-black text-uppercase">Bible study Group</h5>
+                        <p class="card-text text-black d-none d-sm-none d-md-block">To understand and know bible more we organise bible study to know more or join group 
+                           , please click the button below!</p>
+                        <a class="btn btn-light text-black">Click me</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="card bg-dark text-white">
+                    <img src="../../../media/know_more_Jesus.jpg" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title text-black text-uppercase">Knowing Jesus Christ</h5>
+                        <p class="card-text text-black d-none d-sm-none d-md-block">This is a discussion group, where we read bible and have discussions to know more about Jesus!
+                            if you want to know more about this group plesae click below!
+                        </p>
+                        <a class="btn btn-light text-black">Click me</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
 {% endblock %}

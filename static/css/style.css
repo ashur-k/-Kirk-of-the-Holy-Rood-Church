@@ -1,5 +1,6 @@
-body {
-    
+* {
+    padding: 0;
+    margin: 0;
 }
 .text-black{
     color: #000000 !important;
@@ -12,3 +13,52 @@ body {
     display: inline-block !important;
     float: none !important;
 }
+
+/*-------------------- Main Hero Section with Church image ------------------------- */
+.hero-parallax-img{
+    background: url('/media/anna-gru-MTdtJZByP5g-unsplash.jpg');
+}
+.prayer-parallax-img{
+    background: url('/media/Prayer-bg-img.jpg');
+}
+.container-parallax {
+    height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+.opaque-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.jumbotron {
+    background-color: transparent;
+}   
+.jumbotron-text-background{
+    padding: 10px;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.jumbotron-text-background h3{
+    color:#fff;
+    padding: 0px;
+    margin: 0px;
+    font-size: 24px;
+    word-spacing: 2px;
+    -webkit-text-stroke: 1px #000;
+    text-transform: uppercase;
+}
+
+/*-------------------- Main Hero Section with Church image ------------------------- */
+/*--------------------          End Of the Section         ------------------------- */

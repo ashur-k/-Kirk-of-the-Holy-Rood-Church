@@ -1,0 +1,9 @@
+ style="
+    {% if color %}
+        background-color: {{ color.current_color_theme.primary_background_color_code }};
+        color: {{ color.current_color_theme.primary_foreground_color_code }};
+    {% else %}
+        background-color: #000000;
+        color: #fff;
+    {% endif %}                 
+"
