@@ -13,6 +13,9 @@
     display: inline-block !important;
     float: none !important;
 }
+.general-hr{
+    height: 2px !important;
+}
 
 /*-------------------- Main Hero Section with Church image ------------------------- */
 .hero-parallax-img{
@@ -42,6 +45,12 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
 }
+/*To wrap hwero section heading*/
+.hero-heading-wrap
+{
+    max-width:700px;
+    word-wrap:break-word;
+}
 .jumbotron {
     background-color: transparent;
 }   
@@ -62,3 +71,7 @@
 
 /*-------------------- Main Hero Section with Church image ------------------------- */
 /*--------------------          End Of the Section         ------------------------- */
+.prayer-group-col{
+    display: flex !important; 
+    align-items: center;             
+}

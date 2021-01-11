@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block page_header %}
-    
     <div class="container header-container">
         
     </div>
@@ -22,24 +21,30 @@
             {% endif %}
         </div>
     </div>
-</div>
+</div>      
 
-<div class="container-fluid hero-parallax-img container-parallax">
-    <div class="opaque-overlay">&nbsp;</div>
-    <div class="row">
+<div class="container-fluid hero-parallax-img container-parallax" >    
+    <div class="flex-row justify-content-center">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <section class="jumbotron text-center">  
-                <div class="jumbotron-text-background">
-                    <h3>
-                        God is calling us to be a vibrant and welcoming intergenerational <br>
-                        community, where individuals are transformed by the good news of Jesus Christ
+            <div class="jumbotron text-center">
+                <div class="jumbotron-text-background w-20">
+                    
+					{% if request.user.is_superuser %}
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#heroParallaxModal">
+                            Edit Text
+                        </button>
+                    {% endif %}
+					
+                    <h3 class="hero-heading-wrap">
+                        {{ hero_heading.hero_heading }}
                     </h3>
-                    <hr style="height: 1px; background-color: #f44336;">
+                    <hr class="general-hr" {% include 'includes/theme.html' %}>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
-</div>
+</div> 
 
 <div class="container mt-4 mb-4">
     <div class="row">
@@ -96,13 +101,10 @@
         </a>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"
-            style="display: flex !important; 
-            align-items: center;  
-            background-color: #f44336;">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 prayer-group-col" {% include 'includes/theme.html' %}>
             <div class="row d-none d-sm-none d-md-block">
                 <h3 class="text-uppercase">Prayer Group</h3>
-                <p class="lead bold text-black">We are meeting online to pray for our Planet, country, persecuted Chrisitans and for ousrselves.
+                <p class="lead bold" {% include 'includes/theme.html' %}>We are meeting online to pray for our Planet, country, persecuted Chrisitans and for ousrselves.
                     If you want to know more please click below!
                 </p>
                 <div class="mt-1 mb-2">
@@ -123,7 +125,7 @@
                         In current environment of Covid where we cannot meet with each-other, <br>
                         But we can pray together, we need something beyond ourselves.
                     </h3>
-                    <hr style="height: 1px; background-color: #f44336;">
+                    <hr class="general-hr" {% include 'includes/theme.html' %}>
                     <p class="text-white">To know more and how can you join our online Prayer group please click the buttton below!</p>
                     <a href="" class="btn btn-dark">Click me</a>
                 </div>
@@ -132,7 +134,7 @@
     </div>
 </div>
 
-<div class="contaienr-fluid p-5" style="background-color: #f44336; height: 100%;">
+<div class="contaienr-fluid p-5" {% include 'includes/theme.html' %}>
     <div class="container mt-4 mb-4">
         <div class="row text-center mb-4">
             <h3 class="text-uppercase">Church other groups</h3>
@@ -179,4 +181,35 @@
         
     </div>
 </div>
+
+{% if request.user.is_superuser %}
+    <!-- #####################################################ALL Modals are here -- ###################################################### -->
+        <!-- Modal -->
+    <div class="modal fade" id="heroParallaxModal" tabindex="-1" aria-labelledby="heroParallaxModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="heroParallaxModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="hero-parallax-form" action="{% url 'home'  %}" method="POST">
+                {% csrf_token %}
+                {{form | crispy}}
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button form="hero-parallax-form" type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+{% endif %}
+<!-- ##################################################### Modals End here -- ###################################################### -->
+{% endblock %}
+
+{% block postloadjs %}
+
+   
 {% endblock %}

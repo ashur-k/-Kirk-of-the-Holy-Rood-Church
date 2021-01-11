@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SiteColorTheme, CurrentColorTheme
+from .models import SiteColorTheme, CurrentColorTheme, HeroSectionText
 
 
 class SiteColorThemeAdmin(admin.ModelAdmin):
@@ -24,3 +24,4 @@ class CurrentColorThemeAdmin(admin.ModelAdmin):
 
 admin.site.register(SiteColorTheme, SiteColorThemeAdmin)
 admin.site.register(CurrentColorTheme, CurrentColorThemeAdmin)
+admin.site.register(HeroSectionText)
