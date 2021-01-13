@@ -23,30 +23,26 @@
     {% endblock %}
 
     {% block corejs %}
-        <!--Below 2 CDNS are required for bootstrap navigation dropdowns-->
-                       <!--###### jquery-3.5.1.min.js #########-->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-                integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" 
-                crossorigin="anonymous">
-        </script>    
-	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-                integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" 
-                crossorigin="anonymous">
-        </script>
-        <!-- navigation dropdowns-->
-        <!-- End here-->
-        <!--Below 2 CDNS are required for bootstrap 5 Modalsand other bootstrap 5 functions -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" 
-                integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" 
-                crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" 
-                integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
-                crossorigin="anonymous">
-        </script>
-        <!-- bootstrap 5 -->
-        <!-- End here-->
-        <script src="https://kit.fontawesome.com/60ca92335a.js" crossorigin="anonymous"></script>
+    <!-- There are CDN addded for differetn versions of bootstrap to use their features from versions. -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    
+	<!-- Font Awsome URL !-->
+    <script src="https://kit.fontawesome.com/60ca92335a.js" crossorigin="anonymous"></script>
+    <!-- jQuery jquery-3.5.1.min.js !-->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+	</script>
+
+	<!-- jQuery UI !-->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
     {% endblock %}
 
     {% block extra_js %}
@@ -79,7 +75,7 @@
                             <a class="dropdown-item">
                                 <form method="POST" class="p-0 m-0">
                                     {% csrf_token %}
-                                    {{form | crispy}}                                    
+                                    {{ color_theme_form | crispy}}                                   
                                     <button type="submit" class="btn btn-sm mt-1"
                                        {% include 'includes/theme.html' %}>
                                        Apply Theme

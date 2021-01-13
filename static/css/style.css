@@ -24,6 +24,9 @@
 .prayer-parallax-img{
     background: url('/media/Prayer-bg-img.jpg');
 }
+.sunday-service-parallax-img{
+    background: url('/media/Sunday service.jpg');
+}
 .container-parallax {
     height: 100vh;
     background-attachment: fixed;
@@ -74,4 +77,9 @@
 .prayer-group-col{
     display: flex !important; 
     align-items: center;             
+}
+.edit-button-carousel-text{
+    width: 75px!important;
+    text-align: start!important;
+    margin-left: 13px!important;
 }

@@ -1,0 +1,23 @@
+<section id="Hero Section">
+    <div class="container-fluid  hero-parallax-img container-parallax" >    
+        <div class="flex-row justify-content-center">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="jumbotron text-center">
+                    <div class="jumbotron-text-background w-20">                    
+                        {% if request.user.is_superuser %}
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#heroParallaxModal">
+                                Edit Text
+                            </button>
+                        {% endif %}
+                        
+                        <h3 class="hero-heading-wrap">
+                            {{ hero_heading.hero_heading }}
+                        </h3>
+                        <hr class="general-hr" {% include 'includes/theme.html' %}>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>

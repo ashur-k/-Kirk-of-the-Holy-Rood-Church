@@ -1,0 +1,88 @@
+{% if request.user.is_superuser %}
+    <!-- #####################################################ALL Modals are here -- ###################################################### -->
+            <!-- Modal for hero parallax edit text -->
+    <div class="modal fade" id="heroParallaxModal" tabindex="-1" aria-labelledby="heroParallaxModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="heroParallaxModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="hero-parallax-form" action="{% url 'home'  %}" method="POST">
+                {% csrf_token %}
+                {{form | crispy}}
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button form="hero-parallax-form" type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal for carouselModal edit text -->
+    <div class="modal fade" id="carouselModal" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="carouselModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="carousel-modal-form" action="{% url 'carousel_text_edit'  %}" method="POST">
+                {% csrf_token %}
+                {{carousel_form | crispy}}               
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button form="carousel-modal-form" type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- Modal for InnercarouselModal Add new Item -->
+    <div class="modal fade" id="addCarouseItemModal" tabindex="-1" aria-labelledby="addCarouseItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCarouseItemModalLabel">Editing Carousel Inner Items</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCarouseItemForm" action="{% url 'add_new_carousel' %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{new_carousel_form | crispy}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button form="addCarouseItemForm" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for InnercarouselModal Add new Item -->
+    <div class="modal fade" id="secondParallaxEditModal" tabindex="-1" aria-labelledby="secondParallaxEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="secondParallaxEditModalLabel">Second Parallax Edit Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="second_parallax_edit" action="{% url 'second_parallax_edit' %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ second_parallax_form| crispy}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button form="second_parallax_edit" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<!-- ##################################################### Modals End here -- ###################################################### -->

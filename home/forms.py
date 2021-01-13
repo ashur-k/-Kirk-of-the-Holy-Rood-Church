@@ -1,5 +1,12 @@
 from django import forms
-from .models import CurrentColorTheme, HeroSectionText
+from .models import (
+    CurrentColorTheme,
+    HeroSectionText,
+    CarouselSectionText,
+    CarouselInnerSection,
+    SecondParallaxSection,
+    )
+from django.forms import ModelForm
 
 
 class CurrentColorThemeForm(forms.ModelForm):
@@ -7,6 +14,9 @@ class CurrentColorThemeForm(forms.ModelForm):
     class Meta:
         model = CurrentColorTheme
         fields = ['current_color_theme']
+        widgets = {
+            'current_color_theme': forms.Select()
+        }
 
 
 class HeroSectionTextForm(forms.ModelForm):
@@ -19,3 +29,41 @@ class HeroSectionTextForm(forms.ModelForm):
         widgets = {
             'hero_heading': forms.Textarea(attrs={'rows': 5, 'cols': 10})
         }
+
+
+class CarouselSectionTextForm(forms.ModelForm):
+
+    class Meta:
+        model = CarouselSectionText
+        heading = forms.CharField(widget=forms.Textarea)
+        fields = ['heading', 'paragraph']
+
+        widgets = {
+            'paragraph': forms.Textarea(attrs={'rows': 5, 'cols': 10})
+        }
+
+
+class AddNewCarouselForm(ModelForm):
+
+    class Meta:
+        model = CarouselInnerSection
+        heading = forms.CharField(widget=forms.Textarea)
+        fields = ['heading', 'paragraph', 'carousel_image']
+
+        widgets = {
+            'paragraph': forms.Textarea(attrs={'rows': 5, 'cols': 10})
+        }
+
+
+class CarouselInnerSectionForm(ModelForm):
+
+    class Meta:
+        model = CarouselInnerSection
+        fields = ['carousel_image', 'heading', 'paragraph']
+
+
+class SecondParallaxSectionForm(ModelForm):
+
+    class Meta:
+        model = SecondParallaxSection
+        fields = ['title', 'main_paragraph', 'instruction_paragraph']

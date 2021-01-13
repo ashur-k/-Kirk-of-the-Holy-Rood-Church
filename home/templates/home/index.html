@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block page_header %}
     <div class="container header-container">
         
@@ -21,192 +20,17 @@
             {% endif %}
         </div>
     </div>
-</div>      
-
-<div class="container-fluid hero-parallax-img container-parallax" >    
-    <div class="flex-row justify-content-center">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="jumbotron text-center">
-                <div class="jumbotron-text-background w-20">
-                    
-					{% if request.user.is_superuser %}
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-sm" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#heroParallaxModal">
-                            Edit Text
-                        </button>
-                    {% endif %}
-					
-                    <h3 class="hero-heading-wrap">
-                        {{ hero_heading.hero_heading }}
-                    </h3>
-                    <hr class="general-hr" {% include 'includes/theme.html' %}>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> 
-
-<div class="container mt-4 mb-4">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 d-md-none d-lg-none d-xl-none mb-4"
-            style="align-items: center;  
-            background-color: #f44336;">
-            <div class="row">
-                <h3 class="text-uppercase">Prayer Group</h3>
-                <p class="lead bold text-black">We are meeting online to pray for our Planet, country, persecuted Chrisitans and for ousrselves.
-                    If you want to know more please click below!
-                </p>
-                <div class="mt-1 mb-2">
-                    <a class="btn btn-dark" href="">Click me</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
-            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"></li>
-            <li data-bs-target="#carouselExampleDark" data-bs-slide-to="1"></li>
-            <li data-bs-target="#carouselExampleDark" data-bs-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-            <img src="../../../media/carousel_1.jpg" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5 class="text-white">Philippians 4:6</h5>
-                <p class="text-white">"Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God."</p>
-            </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-            <img src="../../../media/carousel_2.jpg" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5 class="text-white">Psalm 102:17</h5>
-                <p class="text-white">"He regards the prayer of the destitute and does not despise their prayer."</p>
-            </div>
-            </div>
-            <div class="carousel-item">
-            <img src="../../../media/carousel_3.jpg" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5 class="text-white">James 5:16</h5>
-                <p class="text-white">"Therefore, confess your sins to one another and pray for one another, that you may be healed. The prayer of a righteous person has great power as it is working."</p>
-            </div>
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleDark" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleDark" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </a>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 prayer-group-col" {% include 'includes/theme.html' %}>
-            <div class="row d-none d-sm-none d-md-block">
-                <h3 class="text-uppercase">Prayer Group</h3>
-                <p class="lead bold" {% include 'includes/theme.html' %}>We are meeting online to pray for our Planet, country, persecuted Chrisitans and for ousrselves.
-                    If you want to know more please click below!
-                </p>
-                <div class="mt-1 mb-2">
-                    <a class="btn btn-dark" href="">Click me</a>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="container-fluid container-parallax prayer-parallax-img">
-    <div class="opaque-overlay">&nbsp;</div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <section class="jumbotron text-center">  
-                <div class="jumbotron-text-background">
-                    <h3>
-                        In current environment of Covid where we cannot meet with each-other, <br>
-                        But we can pray together, we need something beyond ourselves.
-                    </h3>
-                    <hr class="general-hr" {% include 'includes/theme.html' %}>
-                    <p class="text-white">To know more and how can you join our online Prayer group please click the buttton below!</p>
-                    <a href="" class="btn btn-dark">Click me</a>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
+{% include 'home/includes/hero-section.html' %}
+{% include 'home/includes/carousel-section.html' %}
+{% include 'home/includes/out-reach-section.html' %}
+{% include 'home/includes/other-groups-section.html' %}
+{% include 'home/includes/sunday-worships-section.html' %}
+{% include 'home/includes/social-media-section.html' %}
+{% include 'home/includes/footer-section.html' %}
+{% include 'home/includes/modals.html' %}
 
-<div class="contaienr-fluid p-5" {% include 'includes/theme.html' %}>
-    <div class="container mt-4 mb-4">
-        <div class="row text-center mb-4">
-            <h3 class="text-uppercase">Church other groups</h3>
-            <p class="lead bold text-white">At the moment we are organising below online groups. <br>
-                 Once the covid restrictions we will meet in person.</p>
-        </div>
-        <div class="row" style="display: flex; align-items: center;">
-            <div class="col-sm-12 col-md-12 col-lg-4">
-                <div class="card bg-dark text-white">
-                    <img src="../../../media/alpha_group.jpg" class="card-img" alt="...">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title text-white text-uppercase">Alpha group</h5>
-                        <p class="card-text text-white d-none d-sm-none d-md-block">If you want to know more about mysterious God, that we all worship, 
-                            you can be part of our Alpha group, please click below to know more!</p>
-                        <a class="btn btn-light text-black">Click me</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-4 mt-1 mb-1">
-                <div class="card bg-dark text-white">
-                    <img src="../../../media/Bible_study.jpg" class="card-img" alt="...">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title text-black text-uppercase">Bible study Group</h5>
-                        <p class="card-text text-black d-none d-sm-none d-md-block">To understand and know bible more we organise bible study to know more or join group 
-                           , please click the button below!</p>
-                        <a class="btn btn-light text-black">Click me</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-4">
-                <div class="card bg-dark text-white">
-                    <img src="../../../media/know_more_Jesus.jpg" class="card-img" alt="...">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title text-black text-uppercase">Knowing Jesus Christ</h5>
-                        <p class="card-text text-black d-none d-sm-none d-md-block">This is a discussion group, where we read bible and have discussions to know more about Jesus!
-                            if you want to know more about this group plesae click below!
-                        </p>
-                        <a class="btn btn-light text-black">Click me</a>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        
-    </div>
-</div>
-
-{% if request.user.is_superuser %}
-    <!-- #####################################################ALL Modals are here -- ###################################################### -->
-        <!-- Modal -->
-    <div class="modal fade" id="heroParallaxModal" tabindex="-1" aria-labelledby="heroParallaxModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="heroParallaxModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="hero-parallax-form" action="{% url 'home'  %}" method="POST">
-                {% csrf_token %}
-                {{form | crispy}}
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button form="hero-parallax-form" type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
-    </div>
-{% endif %}
-<!-- ##################################################### Modals End here -- ###################################################### -->
 {% endblock %}
 
 {% block postloadjs %}

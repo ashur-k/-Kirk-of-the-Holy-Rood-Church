@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import SiteColorTheme, CurrentColorTheme, HeroSectionText
+from .models import (
+    SiteColorTheme,
+    CurrentColorTheme,
+    HeroSectionText,
+    CarouselSectionText,
+    CarouselInnerSection,
+    SecondParallaxSection,
+)
 
 
 class SiteColorThemeAdmin(admin.ModelAdmin):
@@ -25,3 +32,6 @@ class CurrentColorThemeAdmin(admin.ModelAdmin):
 admin.site.register(SiteColorTheme, SiteColorThemeAdmin)
 admin.site.register(CurrentColorTheme, CurrentColorThemeAdmin)
 admin.site.register(HeroSectionText)
+admin.site.register(CarouselInnerSection)
+admin.site.register(CarouselSectionText)
+admin.site.register(SecondParallaxSection)

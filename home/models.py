@@ -46,9 +46,23 @@ class CurrentColorTheme(models.Model):
                                             SiteColorTheme,
                                             on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.current_color_theme
-
 
 class HeroSectionText(models.Model):
-    hero_heading = models.CharField(max_length=200, null=False, blank=False)
+    hero_heading = models.TextField(max_length=200, null=False, blank=False)
+
+
+class CarouselInnerSection(models.Model):
+    carousel_image = models.ImageField(blank=False, upload_to='media/')
+    heading = models.CharField(max_length=20, null=False, blank=False)
+    paragraph = models.TextField(max_length=250, null=False, blank=False)
+
+
+class CarouselSectionText(models.Model):
+    heading = models.CharField(max_length=20, null=False, blank=False)
+    paragraph = models.TextField(max_length=140, null=False, blank=False)
+
+
+class SecondParallaxSection(models.Model):
+    title = models.CharField(max_length=20, null=False, blank=False)
+    main_paragraph = models.TextField(max_length=250, null=False, blank=False)
+    instruction_paragraph = models.TextField(max_length=65, null=False, blank=False)

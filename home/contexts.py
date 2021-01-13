@@ -7,16 +7,16 @@ from django.contrib import messages
 def site_settings(request):
     color = get_object_or_404(CurrentColorTheme, id=1)
     if request.method == 'POST':
-        form = CurrentColorThemeForm(request.POST, instance=color)
-        if form.is_valid():
-            form.save()
+        color_theme_form = CurrentColorThemeForm(request.POST, instance=color)
+        if color_theme_form.is_valid():
+            color_theme_form.save()
             messages.success(request, 'Successfully updated theme.')
 
-    form = CurrentColorThemeForm(instance=color)
+    color_theme_form = CurrentColorThemeForm(instance=color)
 
     context = {
         'color': color,
-        'form': form,
+        'color_theme_form': color_theme_form,
     }
 
     return context

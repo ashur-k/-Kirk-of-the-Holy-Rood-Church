@@ -1,0 +1,24 @@
+<section id="outreach-section">
+    <div class="container-fluid  container-parallax prayer-parallax-img">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <section class="jumbotron text-center">  
+                <div class="jumbotron-text-background w-20">
+                    {% if request.user.is_superuser %}
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm" {% include 'includes/theme.html' %} data-bs-toggle= "modal" data-bs-target="#secondParallaxEditModal">
+                            Edit Text
+                        </button>
+                    {% endif %}
+                    <h3 class="hero-heading-wrap">
+                        {{second_parallax_section.main_paragraph}}
+                    </h3>
+                    <hr class="general-hr" {% include 'includes/theme.html' %}>
+                    <p class="text-white">{{second_parallax_section.instruction_paragraph}}</p>
+                    <a href="" class="btn btn-dark">{{second_parallax_section.title}}</a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</section>

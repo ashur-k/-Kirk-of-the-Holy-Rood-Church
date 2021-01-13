@@ -1,0 +1,55 @@
+<footer>
+
+<div class="container-fluid pt-3 footer-container-background">
+    <div class="container p-1 mt-2">
+        <div class="row footer mb-2">
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                <h4><i class="far fa-address-card"></i> Address</h4>
+                <p><small class="p-1">
+                    Kirk Of the Holy Rood Grangemouth Scotland!
+                </small>
+                </p>          
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 offset-lg-1" >
+                <h4><i class="far fa-address-book"></i> Contact and Charity Details</h4>               
+                <p><i class="fas fa-mobile-alt"></i> Mobile: xxxxxxxxxxxxx<small></small></p>
+                <p><i class="fas fa-tty"></i> Telephone: xxxxxxxx@xxx.com</p>    
+                <p><i class="fas fa-at"></i> Email: xxxxxxxx@xxx.com</p>
+                <p><i class="fas fa-fax"></i>Fax: xxxxxxxx@xxx.com</p>                  
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 ">
+                <div>
+                    <h4><i class="fas fa-edit"></i>Write to us!</h4>
+                </div>
+                <form>
+                    {% csrf_token %}
+                    <p id="sendEmailSuccess" class="text-success d-none">Message has send succesfully!</p>
+                    <p id="sendEmailFail" class="text-danger d-none">Message sending failed sorry for inconvenience!</p>
+                    <div class="mb-3">
+                        <label for="name"><i class="fas fa-male"></i> Name:</label>
+                        <input type="text" class="form-control form-control-sm" name="name" placeholder="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email"><i class="fas fa-envelope-square"></i> Email:</label>
+                        <input type="email" class="form-control form-control-sm" name="email" placeholder="your_email@anymailservice.com" aria-describedby="emailHelp">
+                        <div class="form-text text-info">We'll never share your email with anyone else.</div>
+                    </div>                        
+                    <div class="mb-3 form-check p-0">
+                        <label for="message"><i class="far fa-comments"></i> Message:</label>                
+                        <textarea class="form-control form-control-sm" name="message" placeholder="Leave a message here" id="floatingTextarea"></textarea>                  
+                    </div>
+                    <button type="submit" class="btn btn-lg secondary-button">Submit</button>
+                </form>        
+            </div>     
+        </div>
+    </div>
+</div>
+<div class="row-centered text-center mt-3 mb-2">
+    <div class="row-centered text-center mt-4 mb-2 h-100">
+    <div class="col-sm-12 my-auto">
+        <p class="text-center text-uppercase">Thanks for visiting our site.</p>
+    </div>
+</div>
+    <p class="text-center text-uppercase">Kirk Of the Holy Rood Church <strong class="copy-rigth-sign">©</strong> 2020 copyright protected</p>
+</div>
+</footer>
