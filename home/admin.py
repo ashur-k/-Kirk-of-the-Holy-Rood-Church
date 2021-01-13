@@ -6,6 +6,7 @@ from .models import (
     CarouselSectionText,
     CarouselInnerSection,
     SecondParallaxSection,
+    StudyGroupText,
 )
 
 
@@ -29,9 +30,18 @@ class CurrentColorThemeAdmin(admin.ModelAdmin):
                     ]
 
 
+class CarouselSectionTextAdmin(admin.ModelAdmin):
+    list_display = [
+                    'id',
+                    'heading',
+                    'paragraph'
+                    ]
+
+
 admin.site.register(SiteColorTheme, SiteColorThemeAdmin)
 admin.site.register(CurrentColorTheme, CurrentColorThemeAdmin)
 admin.site.register(HeroSectionText)
 admin.site.register(CarouselInnerSection)
-admin.site.register(CarouselSectionText)
+admin.site.register(CarouselSectionText, CarouselSectionTextAdmin)
 admin.site.register(SecondParallaxSection)
+admin.site.register(StudyGroupText)

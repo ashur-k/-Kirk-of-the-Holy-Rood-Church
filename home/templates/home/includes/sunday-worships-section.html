@@ -1,17 +1,21 @@
 <section id="sunday-worship">
     <div class="container-fluid container-parallax sunday-service-parallax-img">
-    <div class="opaque-overlay">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <section class="jumbotron text-center">  
                 <div class="jumbotron-text-background">
+                    {% if request.user.is_superuser %}
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#sundayModal">
+                            Edit Text
+                        </button>
+                    {% endif %}
                     <h3 class="hero-heading-wrap">
-                        At the moment due to covid restrictions we are not meeting at the Church,
-                        But are uploading our Sunday worship services which gets live at service time and then available for later viewing.
+                        {{ sunday_services.main_paragraph }}
                     </h3>
                     <hr class="general-hr" {% include 'includes/theme.html' %}>
-                    <p class="text-white">To know more or watch previous services please click below!</p>
-                    <a href="" class="btn btn-dark">Click me</a>
+                    <p class="text-white">{{ sunday_services.instruction_paragraph }}</p>
+                    <a href="" class="btn btn-dark">{{ sunday_services.title }}</a>
                 </div>
             </section>
         </div>

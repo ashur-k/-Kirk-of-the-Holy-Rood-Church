@@ -84,5 +84,28 @@
             </div>
         </div>
     </div>
+    <!-- Modal for InnercarouselModal Add new Item -->
+    <div class="modal fade" id="sundayModal" tabindex="-1" aria-labelledby="sundayModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sundayModallLabel">Second Parallax Edit Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="sunday_parallax_form" action="{% url 'sunday_parallax_edit' %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ sunday_edit_form | crispy}}
+                     
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button form="sunday_parallax_form" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 {% endif %}
 <!-- ##################################################### Modals End here -- ###################################################### -->

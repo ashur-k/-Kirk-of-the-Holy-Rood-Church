@@ -66,3 +66,8 @@ class SecondParallaxSection(models.Model):
     title = models.CharField(max_length=20, null=False, blank=False)
     main_paragraph = models.TextField(max_length=250, null=False, blank=False)
     instruction_paragraph = models.TextField(max_length=65, null=False, blank=False)
+
+
+class StudyGroupText(models.Model):
+    heading = models.CharField(max_length=20, null=False, blank=False)
+    paragraph = models.TextField(max_length=200, null=False, blank=False)

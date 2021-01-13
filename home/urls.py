@@ -18,4 +18,8 @@ urlpatterns = [
     path('second_parallax_edit/',
          views.second_parallax_edit,
          name='second_parallax_edit'),
+
+    path('sunday_parallax_edit/',
+         views.sunday_parallax_edit,
+         name='sunday_parallax_edit'),
 ]
