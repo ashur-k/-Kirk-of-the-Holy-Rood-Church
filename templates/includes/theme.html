@@ -1,9 +1,9 @@
  style="
     {% if color %}
-        background-color: {{ color.current_color_theme.primary_background_color_code }};
-        color: {{ color.current_color_theme.primary_foreground_color_code }};
+        background-color: {{ color.current_color_theme.primary_background_color_code }}!important;
+        color: {{ color.current_color_theme.primary_foreground_color_code }}!important;
     {% else %}
-        background-color: #000000;
-        color: #fff;
+        background-color: #000000!important;
+        color: #fff!important;
     {% endif %}                 
 "

@@ -40,14 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'home.apps.HomeConfig',
+    'services.apps.ServicesConfig',
+    'ministries.apps.MinistriesConfig',
 
     # all auth settings
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
+    'embed_video',
     'crispy_forms',
+    'phonenumber_field',
+
 
 ]
 
@@ -79,15 +83,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'home.contexts.site_settings'
+                'home.contexts.site_settings',
             ],
+
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
                 'crispy_forms.templatetags.crispy_forms_field',
             ],
         },
     },
+
 ]
+
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
@@ -101,8 +108,13 @@ AUTHENTICATION_BACKENDS = [
 
 # All auth settings
 SITE_ID = 1
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'KHRC@example.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ashurkanwal@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('KIRK_HOLY_ROOD_EMAIL')
+DEFAULT_FROM_EMAIL = 'ashurkanwal@gmail.com'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True

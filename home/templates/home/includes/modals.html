@@ -30,9 +30,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="carousel-modal-form" action="{% url 'carousel_text_edit'  %}" method="POST">
+            <form id="carousel-modal-form" action="{% url 'carousel_text_edit' carousel_text.id %}" method="POST">
                 {% csrf_token %}
-                {{carousel_form | crispy}}               
+                {{ carousel_form | crispy}}               
             </form>
         </div>
         <div class="modal-footer">
@@ -42,7 +42,7 @@
         </div>
     </div>
     </div>
-    <!-- Modal for InnercarouselModal Add new Item -->
+    <!-- Modal for add Inner carousel item Modal Add new Item -->
     <div class="modal fade" id="addCarouseItemModal" tabindex="-1" aria-labelledby="addCarouseItemModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal for InnercarouselModal Add new Item -->
+    <!-- Modal for Outreach Parallax Modal Add new Item -->
     <div class="modal fade" id="secondParallaxEditModal" tabindex="-1" aria-labelledby="secondParallaxEditModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -72,7 +72,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="second_parallax_edit" action="{% url 'second_parallax_edit' %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                    <form id="second_parallax_edit" action="{% url 'parallax_edit' second_parallax_section.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ second_parallax_form| crispy}}
                     </form>
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal for InnercarouselModal Add new Item -->
+    <!-- Modal for Sunday SErvice Modal Add new Item -->
     <div class="modal fade" id="sundayModal" tabindex="-1" aria-labelledby="sundayModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -93,7 +93,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="sunday_parallax_form" action="{% url 'sunday_parallax_edit' %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                    <form id="sunday_parallax_form" action="{% url 'parallax_edit' sunday_services.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ sunday_edit_form | crispy}}
                      
@@ -103,6 +103,69 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button form="sunday_parallax_form" type="submit" class="btn btn-primary">Save changes</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for Study Group Modal Add new Item -->
+    <div class="modal fade" id="studyGroupModal" tabindex="-1" aria-labelledby="studyGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studyGroupModalLabel">Study Group Edit Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="study_group_edit_form" action="{% url 'study_group_edit' %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ group_title_edit_form| crispy}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button form="study_group_edit_form" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal for Alpha Group Modal edit text -->
+    <div class="modal fade" id="alphaGroupModal" tabindex="-1" aria-labelledby="alphaGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alphaGroupModalLabel">Editing Carousel Inner Items</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="inner-{{item.id}}-carousel-form" action="{% url 'carousel_text_edit' alpha_study.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ alpha_text_edit_form | crispy}}    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button form="inner-{{item.id}}-carousel-form" type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal for Bible Study Modal edit text -->
+    <div class="modal fade" id="bibleStudyGroupModal" tabindex="-1" aria-labelledby="bibleStudyGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bibleStudyGroupModalLabel">Editing Carousel Inner Items</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="bible-study-group-form" action="{% url 'carousel_text_edit' bible_study.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ bible_study_text_edit_form | crispy}}    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button form="bible-study-group-form" type="submit" class="btn btn-primary">Save changes</button>
+            </div>
             </div>
         </div>
     </div>

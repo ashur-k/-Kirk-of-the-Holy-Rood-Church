@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+{% endblock %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div style="height: 15vh;"></div>  
+<div class="container">
+    <div class="row">            
+        
+    </div>
+</div>
+
+<div class="container">     
+    <div class="row mb-5">
+         <div class="col-sm-12">
+                <div class="card text-center">
+                    <div class="card-header" {% include 'includes/theme.html' %}>
+                        <h5 class="text-uppercase"><strong>{{ministry.ministry_heading}}</strong></h5>
+                    </div>
+                    
+                    <div class="card-body">
+                        <hr class="general-hr" {% include 'includes/theme.html' %}>
+                        <h4 class="card-title" ><blockquote >{{ministry.sub_title_heading}}</blockquote></h4>
+                         <hr class="general-hr" {% include 'includes/theme.html' %}>
+                        <h6 class="card-text" style="padding-left: 10%; padding-right: 10%;">{{ministry.bible_verse}}</h6>
+                           
+                    </div>
+                    <div class="mb-3" style="padding-left: 30%; padding-right: 30%;">
+                            <small>{{ministry.group_promotion}}
+                            </small> 
+                     </div>
+                </div>
+        </div>
+       <div class="row">
+           <blockquote class="mt-5 text-uppercase"><strong><small>
+                If you want to know more about alpha group or join us please fill the form below:
+            </small></strong></blockquote>
+            <div class="col-sm-12">
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm-6">
+                <form  method="POST">
+                {% csrf_token %}
+                <fieldset class="">
+                    <legend class="text-uppercase">
+                       <small>Alpha Form:</small>
+                    </legend>
+                    {{form | crispy}}
+                </fieldset>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-outline-info" {% include 'includes/theme.html' %}>Submit Information</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6 mt-4">
+            <div class="col-sm-12 mt-5">
+                <div class="accordion"  id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" {% include 'includes/secondary_theme.html' %} id="headingOne">
+                        <button class="accordion-button" {% include 'includes/secondary_theme.html' %} 
+                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-book-reader"></i><span class="m-1">Group Coordinator</span>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>{{ministry.group_leader}}:</strong> 
+                        {{ministry.group_leader_info}}
+                    </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo"  {% include 'includes/secondary_theme.html' %}>
+                    <button class="accordion-button collapsed" {% include 'includes/secondary_theme.html' %} type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="fas fa-stopwatch"></i><span class="m-1">Meeting Times</span>
+                    </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table table-striped table-hover table-bordered table-sm ">
+                            <div class="table-responsive">
+                                <thead>
+                                <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Week Day</th>
+                                <th scope="col">Group Lead by:</th>
+                                <th scope="col">Handle</th>
+                                </tr>
+                                </thead>
+                                <tbody> 
+                                    {% for item in times %}
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>{{ item.week_day}}</td>
+                                        <td>{{ item.time }}</td>
+                                        <td>{{ item.group_lead_by }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree"  {% include 'includes/secondary_theme.html' %}>
+                    <button class="accordion-button collapsed" {% include 'includes/secondary_theme.html' %} type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i class="fas fa-info"></i><span class="m-1">Important Information</span>
+                    </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p class="text-danger">{{ministry.important_information}}
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+       </div>
+    </div>
+     
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

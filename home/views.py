@@ -20,7 +20,8 @@ from . forms import (
     CarouselSectionTextForm,
     CarouselInnerSectionForm,
     AddNewCarouselForm,
-    SecondParallaxSectionForm
+    SecondParallaxSectionForm,
+    StudyGroupTextForm,
 )
 
 
@@ -44,6 +45,13 @@ def index(request):
         new_carousel_form = AddNewCarouselForm()
         sunday_edit_form = SecondParallaxSectionForm(
             instance=sunday_services)
+        group_title_edit_form = StudyGroupTextForm(
+            instance=study_group_text)
+
+        alpha_text_edit_form = CarouselSectionTextForm(instance=alpha_study)
+
+        bible_study_text_edit_form = CarouselSectionTextForm(
+            instance=bible_study)
 
         if request.method == 'POST':
             form = HeroSectionTextForm(request.POST, instance=hero_heading)
@@ -66,6 +74,9 @@ def index(request):
             'new_carousel_form': new_carousel_form,
             'second_parallax_form': second_parallax_form,
             'sunday_edit_form': sunday_edit_form,
+            'group_title_edit_form': group_title_edit_form,
+            'alpha_text_edit_form': alpha_text_edit_form,
+            'bible_study_text_edit_form': bible_study_text_edit_form,
 
         }
     else:
@@ -83,8 +94,8 @@ def index(request):
     return render(request, template, context)
 
 
-def carousel_text_edit(request):
-    carousel_text = get_object_or_404(CarouselSectionText, id=1)
+def carousel_text_edit(request, id):
+    carousel_text = get_object_or_404(CarouselSectionText, id=id)
     if request.method == 'POST':
         form = CarouselSectionTextForm(request.POST, instance=carousel_text)
         if form.is_valid():
@@ -122,8 +133,8 @@ def add_new_carousel(request):
     return redirect(reverse('home'))
 
 
-def second_parallax_edit(request):
-    second_parallax_section = get_object_or_404(SecondParallaxSection, id=1)
+def parallax_edit(request, id):
+    second_parallax_section = get_object_or_404(SecondParallaxSection, id=id)
 
     if request.method == 'POST':
         form = SecondParallaxSectionForm(request.POST,
@@ -138,12 +149,12 @@ def second_parallax_edit(request):
             return redirect(reverse('home'))
 
 
-def sunday_parallax_edit(request):
-    sunday_parallax_section = get_object_or_404(SecondParallaxSection, id=2)
+def study_group_edit(request):
+    study_group_heading_text = get_object_or_404(StudyGroupText, id=1)
 
     if request.method == 'POST':
-        form = SecondParallaxSectionForm(request.POST,
-                                         instance=sunday_parallax_section)
+        form = StudyGroupTextForm(request.POST,
+                                  instance=study_group_heading_text)
         if form.is_valid():
             form.save()
             messages.success(request, 'Text updated successfully.')

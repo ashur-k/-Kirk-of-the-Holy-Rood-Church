@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+{% endblock %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div style="height: 15vh;"></div>  
+<div class="container">
+    <div class="row">            
+        
+    </div>
+</div>
+<div class="container">     
+    <div class="row mb-5">
+         <div class="col-sm-12">
+                <div class="card text-center">
+                    <div class="card-header" {% include 'includes/secondary_theme.html' %}>
+                        <h5 class="text-uppercase"><strong>Bible Study</strong></h5>
+                    </div>
+                    
+                    <div class="card-body">
+                        <hr class="general-hr" {% include 'includes/theme.html' %}>
+                        <h4 class="card-title" ><blockquote >Matthew 4:4</blockquote></h4>
+                         <hr class="general-hr" {% include 'includes/theme.html' %}>
+                        <h6 class="card-text" style="padding-left: 10%; padding-right: 10%;">“But Jesus told him, “No! The Scriptures say, 
+                            ‘People do not live by bread alone, but by every word that comes from the mouth of God.”” </h6>
+                           
+                    </div>
+                    <div class="mb-3" style="padding-left: 20%; padding-right: 20%;">
+                            <small>We have bible study group where we meet at once a week at one of group member house.
+                                Due to covid restrictions this group is meeting online at the moment you are more than 
+                                welcome to join one of our group which suits your locality.
+                            </small> 
+                     </div>
+                </div>
+        </div>
+       <div class="row">
+           <blockquote class="mt-5 text-uppercase"><strong><small>
+                If you want to know more about alpha group or join us please fill the form below:
+            </small></strong></blockquote>
+            <div class="col-sm-12">
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm-6">
+                <form  method="POST">
+                {% csrf_token %}
+                <fieldset class="">
+                    <legend class="text-uppercase">
+                       <small>Alpha Form:</small>
+                    </legend>
+                    {{form | crispy}}
+                </fieldset>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-outline-info" {% include 'includes/theme.html' %}>Submit Information</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6 mt-4">
+            <div class="col-sm-12 mt-5">
+                <div class="accordion"  id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" {% include 'includes/secondary_theme.html' %} id="headingOne">
+                        <button class="accordion-button" {% include 'includes/secondary_theme.html' %} 
+                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-book-reader"></i><span class="m-1">Group Coordinator </span>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>Mr Visually presented.</strong> 
+                        I bleieve in God, I am Chrisitan for many years. I beleive to follow message given to us in Bible
+                        and I beleive Jesus Christ is our saviour. Since, I beleive, I am growing in my faith and I would welcome you to 
+                        be part of my journey where I can share my experiences to help you and learn from your experiences 
+                        in wisdom and guidance of Hloy Spirit.
+                    </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo"  {% include 'includes/secondary_theme.html' %}>
+                    <button class="accordion-button collapsed" {% include 'includes/secondary_theme.html' %} type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="fas fa-stopwatch"></i><span class="m-1">Meeting Times</span>
+                    </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table table-striped table-hover table-bordered table-sm ">
+                            <div class="table-responsive">
+                                <thead>
+                                <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Week Day</th>
+                                <th scope="col">Group Lead by:</th>
+                                <th scope="col">Handle</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Wednesday</td>
+                                        <td>7:30 pm</td>
+                                        <td>Ms Visually presented</td>
+                                    </tr>
+                                </tbody>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree"  {% include 'includes/secondary_theme.html' %}>
+                    <button class="accordion-button collapsed" {% include 'includes/secondary_theme.html' %} type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i class="fas fa-info"></i><span class="m-1">Important Information</span>
+                    </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p class="text-danger">At the moment all our meetings are held online to login into you are required zoom app.
+                            We are going to provide you ID and password that you can use to login into zoom account.
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+       </div>
+    </div>
+     
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

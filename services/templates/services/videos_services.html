@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+{% endblock %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div style="height: 15vh;"></div>  
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container"> 
+    <div class="row">
+       <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}>
+                    <h5><blockquote class="text-uppercase mt-3">Video Services</blockquote></h5>
+                </div>
+                <div class="card-body" {% include 'includes/secondary_theme.html' %}>
+                    <hr class="general-hr" {% include 'includes/theme.html' %}>
+                    <h4 class="card-title" ><blockquote >Featured Video</blockquote></h4>  
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+                    <div class="embed-responsive">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/PJbQN6WSkew" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>                  
+                    <hr class="general-hr" {% include 'includes/theme.html' %}>
+                </div>
+                <div class="mb-3" style="padding-left: 30%; padding-right: 30%;">
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+            {% for item in videos %}
+                <div class="col-sm-12 col-md-6 col-lg-6 mb-4">             
+                    <h4>Title:{{ item.title }}
+                        </h4>
+                    <h5>Date: {{ item.date }}</h5>
+                    <p> {{ item.main_paragraph }}
+                    </p>
+                    <div class="embed-responsive">
+                        <iframe class="embed-responsive-item" width="560" height="315" 
+                        src="{{item.video}}" 
+                        frameborder="0" allow="accelerometer; autoplay; 
+                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+                    </div>
+                </div>
+            {% endfor %}
+       </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

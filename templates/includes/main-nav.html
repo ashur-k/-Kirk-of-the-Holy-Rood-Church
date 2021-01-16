@@ -1,7 +1,7 @@
 <div class="collapse navbar-collapse" id="main-nav">
     <ul class="navbar-nav w-auto mx-auto">
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link" {% include 'includes/theme.html' %} href="#" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link" {% include 'includes/theme.html' %} href="{% url 'home' %}" aria-haspopup="true" aria-expanded="false">
                 Home
             </a>
         </li>
@@ -9,13 +9,11 @@
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link" {% include 'includes/theme.html' %} href="#" id="clothing-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Services
-
             </a>
             <div class="dropdown-menu" aria-labelledby="clothing-link">
-                <a href="" class="dropdown-item">Mother &amp; Toddlers</a>
-                <a href="" class="dropdown-item">Alpha</a>
-                <a href="" class="dropdown-item">Worship</a>
-                <a href="" class="dropdown-item">Bible Studies</a>
+                <a href="{% url 'services' %}" class="dropdown-item">Video Services</a>
+                <a href="" class="dropdown-item">Sunday Services</a>
+                <a href="" class="dropdown-item">Worship Services</a>
             </div>
         </li>
 
@@ -24,14 +22,13 @@
                 Ministries
             </a>
             <div class="dropdown-menu" aria-labelledby="homeware-link">
-                <a href="" class="dropdown-item">Mothers &amp; Toddlers</a>
-                <a href="" class="dropdown-item">Women’s Association</a>
-                <a href="" class="dropdown-item">Alpha</a>
-                <a href="" class="dropdown-item">Worship</a>
-                <a href="" class="dropdown-item">Bible Studies</a>
-                <a href="" class="dropdown-item">Children</a><!--Sunday School element is going to go in children-->
-                <a href="" class="dropdown-item">Wednesday Coffee</a>
-                <a href="" class="dropdown-item">Gardener's Group</a>
+                <a href="{% url 'mother_and_toddlers' %}" class="dropdown-item">Mothers &amp; Toddlers</a>
+                <a href="{% url 'women_association' %}" class="dropdown-item">Women’s Association</a>
+                <a href="{% url 'alpha_ministry' %}" class="dropdown-item">Alpha</a>
+                <a href="{% url 'bible_studies' %}" class="dropdown-item">Bible Studies</a>
+                <a href="{% url 'children' %}" class="dropdown-item">Children</a><!--Sunday School element is going to go in children-->
+                <a href="{% url 'wednesday_coffee' %}" class="dropdown-item">Wednesday Coffee</a>
+                <a href="{% url 'gardners_group' %}" class="dropdown-item">Gardener's Group</a>
                 <a href="" class="dropdown-item">Community of Churches</a>               
             </div>
         </li>

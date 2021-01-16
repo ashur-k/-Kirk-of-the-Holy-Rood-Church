@@ -5,6 +5,7 @@ from .models import (
     CarouselSectionText,
     CarouselInnerSection,
     SecondParallaxSection,
+    StudyGroupText,
     )
 from django.forms import ModelForm
 
@@ -67,3 +68,11 @@ class SecondParallaxSectionForm(ModelForm):
     class Meta:
         model = SecondParallaxSection
         fields = ['title', 'main_paragraph', 'instruction_paragraph']
+
+
+class StudyGroupTextForm(forms.ModelForm):
+
+    class Meta:
+        model = StudyGroupText
+        heading = forms.CharField(widget=forms.Textarea)
+        fields = ['heading', 'paragraph']

@@ -1,0 +1,1 @@
+Email from Kirk Of Holy Rood Church {{ form.full_name }}

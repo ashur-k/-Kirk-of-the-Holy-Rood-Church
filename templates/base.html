@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load embed_video_tags %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -56,8 +56,8 @@
             <div class="col-sm-12 col-md-12 col-lg-10">
                 <a href="{% url 'home' %}" class="nav-link main-logo-link">                    
                     <h4 class="logo-font text-black my-0">
-                        <img src="/media/kirkcolour.png" alt="s" height="50px">
-                        <strong class="text-uppercase">Kirk Of the <br> Holy Rood Church</strong>
+                        <img src="/media/kirkcolour.png" alt="" height="70px">
+                        <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
                     </h4>                    
                 </a>
             </div>
@@ -127,20 +127,26 @@
     
     {% block content %}
     {% endblock %}
-
-    {% block postloadjs %}
- <script>
+<div class="row-centered text-center mt-3 mb-2">
+    <hr>
+    <div class="row-centered text-center mt-4 mb-2 h-100">
+    <div class="col-sm-12 my-auto">
+        <p class="text-center text-uppercase">Thanks for visiting our site.</p>
+    </div>
+</div>
+    <p class="text-center text-uppercase">Kirk Of the Holy Rood Church <strong class="copy-rigth-sign">©</strong> 2020 copyright protected</p>
+</div>
+    
+  </body>
+ 
+    <script>
      var myModal = document.getElementById('myModal')
     var myInput = document.getElementById('myInput')
     myModal.addEventListener('shown.bs.modal', function () {
     myInput.focus()
     })
  </script>
-    {% endblock %}
 
-   
-    
 
-  </body>
 
 </html>
