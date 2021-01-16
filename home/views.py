@@ -15,6 +15,8 @@ from . models import (
     StudyGroupText,
 )
 
+from ministries.models import Ministries
+
 from . forms import (
     HeroSectionTextForm,
     CarouselSectionTextForm,
@@ -36,6 +38,8 @@ def index(request):
     alpha_study = get_object_or_404(CarouselSectionText, id=2)
     bible_study = get_object_or_404(CarouselSectionText, id=3)
     sunday_services = get_object_or_404(SecondParallaxSection, id=2)
+
+    ministry = get_object_or_404(Ministries, id=1)
 
     if request.user.is_superuser:
         form = HeroSectionTextForm(instance=hero_heading)
@@ -77,6 +81,7 @@ def index(request):
             'group_title_edit_form': group_title_edit_form,
             'alpha_text_edit_form': alpha_text_edit_form,
             'bible_study_text_edit_form': bible_study_text_edit_form,
+            'ministry': ministry
 
         }
     else:

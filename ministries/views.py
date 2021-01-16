@@ -1,20 +1,21 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
-from .models import AlphaGroup, Ministries, MeetingTimes
-from .forms import AlphaGroupEntranceForm
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from .models import Message, Ministries, MeetingTimes
+from .forms import MessageForm, MinistrieForm
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 
 
-def _send_confirmation_email(form):
+def _send_confirmation_email(form, cust_email):
     """
         Send the user a confirmation email
     """
-    cust_email = 'ashurkanwal@gmail.com'
+    cust_email = cust_email
     subject = render_to_string(
         'ministries/confirmation_emails/confirmation_email_subject.txt',
-        {'form': form})
+        {'form': form}
+        )
     body = render_to_string(
         'ministries/confirmation_emails/confirmation_email_body.txt',
         {
@@ -31,22 +32,23 @@ def _send_confirmation_email(form):
     )
 
 
-def alpha_ministry(request):
-    ministry = get_object_or_404(Ministries, id=1)
+def ministry(request, name):
+    ministry = get_object_or_404(Ministries, ministry_heading=name)
     times = MeetingTimes.objects.filter(meeting_times_id=ministry.id)
-    for items in times:
-        print(items)
 
     if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
+        form = MessageForm(request.POST)
         if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
+            form = form.save(commit=False)
+            form.ministy = ministry
+            form.save()
+            cust_email = ministry.group_leader_email
+            _send_confirmation_email(form, cust_email)
             messages.success(request, 'We have received your inforamtion, thanks and we will contact you soon!')
         else:
             messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/alpha_ministry.html'
+    form = MessageForm()
+    template = 'ministries/ministry.html'
     context = {
          'form': form,
          'ministry': ministry,
@@ -56,115 +58,17 @@ def alpha_ministry(request):
     return render(request, template, context)
 
 
-def mother_and_toddlers(request):
+def ministry_edit(request, id):
 
-    if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
-        if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
-            messages.success(request, 'We have received your inforamtion and we will contact you soon!')
-        else:
-            messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/mother_and_toddlers.html'
+    ministry = get_object_or_404(Ministries, id=id)
+    times = MeetingTimes.objects.filter(meeting_times_id=ministry.id)
+    form = MinistrieForm(instance=ministry)
+
+    template = 'ministries/ministry_admin_edit.html'
     context = {
-         'form': form,
-        }
-
-    return render(request, template, context)
-
-
-def women_association(request):
-
-    if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
-        if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
-            messages.success(request, 'We have received your inforamtion and we will contact you soon!')
-        else:
-            messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/women_association.html'
-    context = {
-         'form': form,
-        }
-
-    return render(request, template, context)
-
-
-def bible_studies(request):
-
-    if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
-        if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
-            messages.success(request, 'We have received your inforamtion and we will contact you soon!')
-        else:
-            messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/bible_studies.html'
-    context = {
-         'form': form,
-        }
-
-    return render(request, template, context)
-
-
-def children(request):
-
-    if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
-        if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
-            messages.success(request, 'We have received your inforamtion and we will contact you soon!')
-        else:
-            messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/children.html'
-    context = {
-         'form': form,
-        }
-
-    return render(request, template, context)
-
-
-def wednesday_coffee(request):
-
-    if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
-        if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
-            messages.success(request, 'We have received your inforamtion and we will contact you soon!')
-        else:
-            messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/wednesday_coffee.html'
-    context = {
-         'form': form,
-        }
-
-    return render(request, template, context)
-
-
-def gardners_group(request):
-
-    if request.method == 'POST':
-        form = AlphaGroupEntranceForm(request.POST)
-        if form.is_valid():
-            form = form.save()
-            _send_confirmation_email(form)
-            messages.success(request, 'We have received your inforamtion and we will contact you soon!')
-        else:
-            messages.error(request, 'Please enter valid information.')
-    form = AlphaGroupEntranceForm()
-    template = 'ministries/gardners_group.html'
-    context = {
-         'form': form,
+        'ministry': ministry,
+        'times': times,
+        'form': form,
         }
 
     return render(request, template, context)

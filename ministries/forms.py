@@ -1,13 +1,14 @@
 from django import forms
 from .models import (
-    AlphaGroup,
+    Message,
+    Ministries,
     )
 
 
-class AlphaGroupEntranceForm(forms.ModelForm):
+class MessageForm(forms.ModelForm):
 
     class Meta:
-        model = AlphaGroup
+        model = Message
         fields = [
             'full_name',
             'email',
@@ -21,3 +22,11 @@ class AlphaGroupEntranceForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={'rows': 2, 'cols': 0}
             ))
+
+
+class MinistrieForm(forms.ModelForm):
+
+    class Meta:
+        model = Ministries
+        fields = '__all__'
+

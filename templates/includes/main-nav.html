@@ -22,14 +22,12 @@
                 Ministries
             </a>
             <div class="dropdown-menu" aria-labelledby="homeware-link">
-                <a href="{% url 'mother_and_toddlers' %}" class="dropdown-item">Mothers &amp; Toddlers</a>
-                <a href="{% url 'women_association' %}" class="dropdown-item">Women’s Association</a>
-                <a href="{% url 'alpha_ministry' %}" class="dropdown-item">Alpha</a>
-                <a href="{% url 'bible_studies' %}" class="dropdown-item">Bible Studies</a>
-                <a href="{% url 'children' %}" class="dropdown-item">Children</a><!--Sunday School element is going to go in children-->
-                <a href="{% url 'wednesday_coffee' %}" class="dropdown-item">Wednesday Coffee</a>
-                <a href="{% url 'gardners_group' %}" class="dropdown-item">Gardener's Group</a>
-                <a href="" class="dropdown-item">Community of Churches</a>               
+                {% for ministry in ministries %}
+                <a href="{% url 'ministry' ministry.ministry_heading %}" class="dropdown-item">{{ ministry.ministry_heading }}</a>
+                {% endfor %}  
+                {% if request.user.is_superuser %}
+                    <a href="" class="dropdown-item">Add New ministry</a>                           
+                {% endif %}              
             </div>
         </li>
 
