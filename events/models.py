@@ -10,9 +10,10 @@ class Events(models.Model):
     image = models.ImageField(blank=False, upload_to='media/')
     event_description = models.TextField()
     event_dates = models.CharField(max_length=254, null=False, blank=False)
-    event_buy_button_text = models.CharField(max_length=254, null=False, blank=False)
+    event_price = models.CharField(max_length=254, null=False, blank=False)
     event_display_status = models.CharField(max_length=10, choices=STATUS)
     event_instructions = models.CharField(max_length=254, null=False, blank=False)
+    create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.event_name
