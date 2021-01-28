@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}   
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="margin-top: 100px;">
+        <div class="col-sm-12">
+            <h1 class="mt-5" >Events.html</h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% for item in events %}
+            <div class="col-sm-6">
+                <div class="card">
+                <img src="../../../media/event-1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase">{{ item.event_name }}</h5>
+                        <p class="card-text">{{ item.event_description }}</p>
+                    <h5>{{ item.event_dates }}</h5>
+                    <a href="#" class="btn btn-primary">Ticket {{ item.event_buy_button_text }}</a>
+                    <small><p>{{ item.event_instructions }}</p></small>
+                </div>
+                </div>
+            </div>
+       {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block extra_css %}
 
 {% endblock %}
@@ -55,6 +55,20 @@
                 </strong>
             </blockquote>
             <div class="col-sm-12">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 {% if messages %}
                     <div class="message-container">
                         {% for message in messages %}
@@ -97,28 +111,133 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo"  {% include 'includes/secondary_theme.html' %}>
                                 <button class="accordion-button collapsed" {% include 'includes/secondary_theme.html' %} type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <i class="fas fa-stopwatch"></i><span class="m-1">Meeting Times</span>
-                                </button>
+                                    <i class="fas fa-stopwatch"></i><span class="m-1">
+                                        Meeting Times
+                                </button> 
+
+                                    </span>
+                                
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
+                                    <button class="btn-sm btn-success m-2" data-bs-toggle="modal" data-bs-target="#addNewTimingsModal">Add New</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="addNewTimingsModal" tabindex="-1" aria-labelledby="addNewTimingsLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addNewTimingsLabel">Add New Times</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="AddNewTimes" action="{% url 'add_new_meeting_times' ministry.id %}" method="POST">
+                                                    {% csrf_token %}
+                                                    {{ time_form | crispy }}
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </form>                                                
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button form="AddNewTimes" type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover table-bordered table-sm ">
                                         <div class="table-responsive">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">S.No</th>
                                                     <th scope="col">Week Day</th>
-                                                    <th scope="col">Group Lead by:</th>
-                                                    <th scope="col">Handle</th>
+                                                    <th scope="col">Strat Time</th>
+                                                    <th scope="col">Group Lead by</th>
+                                                    {% if request.user.is_superuser %}
+                                                    <th scope="col"></th>
+                                                    {% endif %}
                                                 </tr>
                                             </thead>
                                             <tbody> 
                                                 {% for item in times %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ item.week_day}}</td>
-                                                    <td>{{ item.time }}</td>
+                                                    <td>{{ item.meeting_day }}</td>
+                                                    <td>{{ item.timings }}</td>
                                                     <td>{{ item.group_lead_by }}</td>
+                                                    {% if request.user.is_superuser %}
+                                                    <td>
+                                                        <button class="btn-sm btn-info m-2" data-bs-toggle="modal" data-bs-target="#timings{{item.id}}EditModal">Edit</button>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="timings{{item.id}}EditModal" tabindex="-1" aria-labelledby="timings{{item.id}}EditModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="timings{{item.id}}EditModalLabel">Edit Times</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                   <form id="form{{ item.id }}" action="{% url 'edit_meeting_times' item.id %}" method="POST">
+                                                                       {% csrf_token %}
+                                                                        <div class="mb-3">
+                                                                            <label for="edit-week-day" class="form-label">Meeting Day:</label>
+                                                                            <select id="edit-week-day" class="form-select" name="meeting_day" aria-label="Default select example">
+                                                                                <option value="{{ item.meeting_day.id }}" selected="selected">{{ item.meeting_day }}</option>
+                                                                                {% for day in meeting_days %}
+                                                                                <option value="{{ day.id }}">{{ day }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="times" class="form-label">Timings:</label>
+                                                                            <input type="text" class="form-control" id="times" name="timings" value="{{ item.timings }}">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="group-leader" class="form-label">Group Leader:</label>
+                                                                            <input type="text" class="form-control" id="group-leader" name="group_lead_by" value="{{ item.group_lead_by }}">
+                                                                        </div>
+                                                                        
+                                                                    </form>
+                                                                    
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button form="form{{ item.id }}" type="submit" class="btn btn-primary">Submit</button>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Meeting Times Modal Ends Here -->
+                                                        <button class="btn-sm btn-danger m-2" data-bs-toggle="modal" data-bs-target="#timings{{item.id}}DeleteModal">Delete</button>
+                                                        <!-- Meeting Times Delete Modal -->
+                                                        <div class="modal fade" id="timings{{item.id}}DeleteModal" tabindex="-1" aria-labelledby="timings{{item.id}}DeleteModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="timings{{item.id}}DeleteModalLabel">Delete Times</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                   <form>
+                                                                        <div class="mb-3">
+                                                                            <label for="edit-week-day" class="form-label">{{ item.meeting_day }}:</label>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="times" class="form-label">{{ item.timings }}</label>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="group-leader" class="form-label">{{ item.group_lead_by }}</label>
+                                                                        </div>
+                                                                    </form>
+                                                                    
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_meeting_times' item.id %}" type="button" class="btn btn-danger ">Delete</a>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    {% endif %}
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>

@@ -23,17 +23,17 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="homeware-link">
                 {% for ministry in ministries %}
-                <a href="{% url 'ministry' ministry.ministry_heading %}" class="dropdown-item">{{ ministry.ministry_heading }}</a>
+                <a href="{% url 'ministry' ministry.id %}" class="dropdown-item">{{ ministry.ministry_heading }}</a>
                 {% endfor %}  
                 {% if request.user.is_superuser %}
-                    <a href="" class="dropdown-item">Add New ministry</a>                           
+                    <a href="{% url 'add_ministry' %}" class="dropdown-item">Add New ministry</a>                           
                 {% endif %}              
             </div>
         </li>
 
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link" {% include 'includes/theme.html' %} href="#" id="specials-link" aria-haspopup="true" aria-expanded="false">
-                Media Team
+            <a class="logo-font font-weight-bold nav-link" {% include 'includes/theme.html' %} href="{% url 'events' %}" id="specials-link" aria-haspopup="true" aria-expanded="false">
+                Events
             </a>
         </li>
          <li class="nav-item dropdown">

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'services.apps.ServicesConfig',
     'ministries.apps.MinistriesConfig',
+    'events.apps.EventsConfig',
 
     # all auth settings
     'django.contrib.sites',

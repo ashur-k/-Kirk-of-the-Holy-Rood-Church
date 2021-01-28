@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+{% endblock %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div style="height: 15vh;"></div>  
+<div class="container">
+    <div class="row">            
+        
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <h2>Add New Ministry Page:</h2><hr>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <form method="POST">
+                {% csrf_token %}
+                {{form | crispy}}
+                <button type="submit" class="btn btn-md btn-dark m-1 mt-3 mb-3">Update Page</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

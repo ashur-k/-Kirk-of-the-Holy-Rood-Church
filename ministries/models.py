@@ -69,31 +69,27 @@ class Message(models.Model):
         return self.full_name
 
 
+class WeekDays(models.Model):
+    day_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.day_name
+
+
 class MeetingTimes(models.Model):
 
-    Weekdays = (
-        ('To be updated', 'To be updated'),
-        ('Sunday', 'Sunday'),
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Satarday', 'Satarday'),
-    )
-    meeting_times = models.ForeignKey(
+    meeting_day = models.ForeignKey(
+        WeekDays,
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+
+    meeting_ministry_name = models.ForeignKey(
         Ministries,
         null=True, blank=True,
         on_delete=models.CASCADE)
 
-    week_day = models.CharField(
-        max_length=30,
-        choices=Weekdays,
-        default='None'
-        )
-
     group_lead_by = models.CharField(max_length=25, null=False, blank=False)
-    time = models.TimeField()
+    timings = models.CharField(max_length=50, null=False, blank=False)
 
     def __str__(self):
-        return self.week_day
+        return self.group_lead_by

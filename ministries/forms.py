@@ -1,7 +1,10 @@
 from django import forms
+from django.forms import ModelForm
 from .models import (
     Message,
     Ministries,
+    MeetingTimes,
+    WeekDays,
     )
 
 
@@ -30,3 +33,9 @@ class MinistrieForm(forms.ModelForm):
         model = Ministries
         fields = '__all__'
 
+
+class AddMeetingTimesForm(forms.ModelForm):
+
+    class Meta:
+        model = MeetingTimes
+        fields = ['meeting_day', 'group_lead_by', 'timings']
