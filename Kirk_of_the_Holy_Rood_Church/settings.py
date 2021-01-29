@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'ministries.apps.MinistriesConfig',
     'events.apps.EventsConfig',
+    'payment.apps.PaymentConfig',
 
     # all auth settings
     'django.contrib.sites',
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'embed_video',
     'crispy_forms',
     'phonenumber_field',
+    'django_countries',
 
 
 ]
