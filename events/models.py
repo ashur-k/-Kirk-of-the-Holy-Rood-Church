@@ -10,12 +10,7 @@ class Events(models.Model):
     image = models.ImageField(blank=False, upload_to='media/')
     event_description = models.TextField()
     event_dates = models.CharField(max_length=254, null=False, blank=False)
-    event_price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        null=False,
-        default=0
-        )
+    event_price = models.FloatField()
     event_display_status = models.CharField(max_length=10, choices=STATUS)
     event_instructions = models.CharField(max_length=254, null=False, blank=False)
     create_at = models.DateTimeField(auto_now_add=True)
