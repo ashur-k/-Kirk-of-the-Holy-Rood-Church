@@ -40,79 +40,114 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="col m-2">
+        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal">
+            Add New Event
+        </button>             
+        <!-- Add Event Modal -->
+        <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ event_form | crispy }}
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button form="add_event" type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">        
         {% for item in events %}
             <div class="col-sm-6">
-                <div class="card">
-                    {% if request.user.is_superuser %}
+                {% if request.user.is_superuser %}
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Edit Event
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="col mb-1 p-1">                        
+                        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#edit{{ item.id }}EventModal">
+                            Edit Event
+                        </button>
+                        <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#delteEventModal">
+                            Delete Event
+                        </button>
+                    </div>                    
+                    <!-- Edit Event Modal -->
+                    <div class="modal fade" id="edit{{ item.id }}EventModal" tabindex="-1" aria-labelledby="edit{{ item.id }}EventModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="edit{{ item.id }}EventModalLabel">Editing {{ item.event_name }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="" action="" method="POST" class="form mb-2" enctype="multipart/form-data">
+                            <form id="edit__{{item.id}}_event" action="{% url 'edit_event' item.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
                                 {% csrf_token %}
                                     <div class="mb-1">
-                                        <label for="heading" class="form-label">Event Name</label>
-                                        <input type="text" class="form-control" id="heading" name="heading" value="{{ item.event_name }}">
+                                        <label for="event_{{item.id}}_name" class="form-label">Event Name</label>
+                                        <input type="text" class="form-control" id="event_{{item.id}}_name" name="event_name" value="{{ item.event_name }}">
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label">Current Image</label><br>
                                         <img src="{{ item.image.url }}" class="img-thumbnail" alt="..." style="height:100px;" >
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="carousel_image">Default file input example</label>
-                                        <input type="file" class="form-control" name="carousel_image" id="carousel_image" />
+                                        <label class="form-label" for="image_{{item.id}}">Default file input example</label>
+                                        <input type="file" class="form-control" name="image" id="image_{{item.id}}" />
                                     </div>                                    
                                     <div class="mb-1">
-                                        <label class="form-label" for="carousel_image">Event Description</label>
-                                        <textarea class="form-control"  style="height: 150px">
-                                            {{ item.event_description }}
-                                        </textarea>                              
+                                        <label class="form-label" for="event_{{item.id}}_description">Event Description</label>
+                                        <textarea id="event_{{item.id}}_description" class="form-control" name="event_description"  style="height: 150px">{{ item.event_description }}</textarea>                              
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="carousel_image">Event Dates</label>
-                                        <input type="text" class="form-control" id="heading" name="heading" value="{{ item.event_dates }}">
+                                        <label class="form-label" for="event__{{item.id}}_dates">Event Dates</label>
+                                        <input type="text" class="form-control" id="event__{{item.id}}_dates" name="event_dates" value="{{ item.event_dates }}">
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="carousel_image">Event Price</label>
-                                        <input type="text" class="form-control" id="heading" name="heading" value="{{ item.event_price }}">
-                                    </div>  
-                                    <div class="form-check form-switch">
-                                        
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckDefault">Show Event on Web page</label>
+                                        <label class="form-label" for="event__{{item.id}}_price">Event Price</label>
+                                        <input type="text" class="form-control" id="event__{{item.id}}_price" name="event_price" value="{{ item.event_price }}">
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="carousel_image">Event Instructions</label>
-                                        <input type="text" class="form-control" id="heading" name="heading" value="{{ item.event_dates }}">
+                                        <label for="event_{{ item.id }}_display_status" class="form-label">Event Display</label>
+                                        <select id="event_{{ item.id }}_display_status" class="form-select" name="event_display_status" aria-label="Default select example">
+                                            <option value="{{ item.event_display_status }}" selected="selected">
+                                               {% if item.event_display_status  %}Show Event{% else %}Not Showing Event{% endif %}
+                                            </option>
+                                            <option value="False">Not Show Event</option>                            
+                                        </select>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="event__{{item.id}}_instructions">Event Price</label>
+                                        <input type="text" class="form-control" id="event__{{item.id}}_instructions" name="event_instructions" value="{{ item.event_instructions }}">
                                     </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button form="edit__{{item.id}}_event" type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                         </div>
                     </div>
                     </div>
-                    {% endif %}
-                <img src="{{ item.image.url }}" class="card-img-top" alt="...">
-                <div class="card-body">
+                    {% endif %}  
+                <div class="card p-2">                                     
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
                     <h5 class="card-title text-uppercase">{{ item.event_name }}</h5>
                         <p class="card-text">{{ item.event_description }}</p>
                     <h5>{{ item.event_dates }}</h5>
                     <a href="#" class="btn btn-primary">Ticket {{ item.event_price }}</a>
                     <small><p>{{ item.event_instructions }}</p></small>
-                </div>
+                    </div>
+                   
                 </div>
             </div>
        {% endfor %}

@@ -20,17 +20,3 @@ class EventsForm(forms.ModelForm):
             ]
 
 
-class EventForm(forms.Form):
-    STATUS = (
-        ('True', 'Show'),
-        ('False', 'Dont Show'),
-    )
-    event_name = forms.CharField(max_length=254)
-    image = forms.forms.FileField()
-    event_description = forms.CharField(widget=forms.Textarea)
-    event_dates = forms.CharField(max_length=254)
-    event_price = forms.CharField(max_length=25)
-    event_display_status = forms.ChoiceField(
-        widget=forms.RadioSelect,
-        choices=STATUS)
-    event_instructions = forms.CharField(max_length=254)
