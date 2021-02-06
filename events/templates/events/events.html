@@ -56,7 +56,6 @@
                         <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ event_form | crispy }}
-                            
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -144,7 +143,7 @@
                     <h5 class="card-title text-uppercase">{{ item.event_name }}</h5>
                         <p class="card-text">{{ item.event_description }}</p>
                     <h5>{{ item.event_dates }}</h5>
-                    <a href="#" class="btn btn-primary">Ticket {{ item.event_price }}</a>
+                    <a href="{% url 'ticket_payment' item.id %}" class="btn btn-primary">Ticket £{{ item.event_price }}</a>
                     <small><p>{{ item.event_instructions }}</p></small>
                     </div>
                    

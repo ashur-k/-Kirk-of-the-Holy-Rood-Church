@@ -15,9 +15,15 @@ class CurrentColorThemeForm(forms.ModelForm):
     class Meta:
         model = CurrentColorTheme
         fields = ['current_color_theme']
-        widgets = {
-            'current_color_theme': forms.Select()
-        }
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        self.fields['current_color_theme'].widget.attrs['autofocus'] = True
+        for field in self.fields:
+            if field == 'current_color_theme':
+                self.fields[field].widget.attrs['class'] = 'form-select m-1'
 
 
 class HeroSectionTextForm(forms.ModelForm):

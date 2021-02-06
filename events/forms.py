@@ -14,6 +14,7 @@ class EventsForm(forms.ModelForm):
             'event_description',
             'event_dates',
             'event_price',
+            'event_ticket_quantity',
             'event_display_status',
             'event_display_status'
 
