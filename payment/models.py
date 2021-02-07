@@ -11,6 +11,8 @@ class Payment(models.Model):
     phone_number = models.CharField(max_length=20, null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
     donation_payment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
+    ticket_payment_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
+    grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
 
     def _generate_payment_number(self):
         return uuid.uuid4().hex.upper()
@@ -20,7 +22,9 @@ class Payment(models.Model):
         Update grand total each time a line item is added,
         accounting for delivery costs.
         """
-        pass
+        self.ticket_payment_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
+        self.grand_total = self.ticket_payment_total + self.donation_payment_amount
+        self.save()
 
     def save(self, *args, **kwargs):
         if not self.payment_number:
@@ -32,15 +36,18 @@ class Payment(models.Model):
 
 
 class TicketsPayment(models.Model):
-    payment = models.ForeignKey(Payment, null=True, blank=True, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, null=True, blank=True, on_delete=models.CASCADE, related_name='lineitems')
     event = models.ForeignKey(Events, null=True, blank=True, on_delete=models.CASCADE)
     event_ticket_qty = models.IntegerField(null=False, blank=False, default=1)
-    payment_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, default=0)
+    lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, default=0)
 
     def save(self, *args, **kwargs):
         """
         Override the original save method to set the lineitem total
         and update the order total.
         """
-        self.payment_total = self.event.event_price * self.event_ticket_qty
+        self.lineitem_total = self.event.event_price * self.event_ticket_qty
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'ID {self.event.id} on order {self.payment.payment_number}'
