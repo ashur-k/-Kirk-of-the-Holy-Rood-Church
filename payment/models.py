@@ -36,7 +36,7 @@ class Payment(models.Model):
 
 
 class TicketsPayment(models.Model):
-    payment = models.ForeignKey(Payment, null=True, blank=True, on_delete=models.CASCADE, related_name='lineitems')
+    payment = models.ForeignKey(Payment, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
     event = models.ForeignKey(Events, null=True, blank=True, on_delete=models.CASCADE)
     event_ticket_qty = models.IntegerField(null=False, blank=False, default=1)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, default=0)

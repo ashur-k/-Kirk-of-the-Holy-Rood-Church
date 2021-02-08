@@ -1,6 +1,10 @@
 from django.db import models
 
 
+class EventDates(models.Model):
+    date = models.DateField()
+
+
 class Events(models.Model):
     STATUS = (
         ('True', 'True'),

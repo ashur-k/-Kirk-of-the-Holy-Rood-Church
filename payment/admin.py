@@ -11,7 +11,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
     inlines = (TicketsPaymentAdminInline,)
 
-    readonly_fields = ('payment_number', 'date',
+    readonly_fields = ('payment_number', 'date', 'donation_payment_amount',
                        'ticket_payment_total', 'grand_total',)
 
     fields = ('payment_number', 'date', 'full_name',
