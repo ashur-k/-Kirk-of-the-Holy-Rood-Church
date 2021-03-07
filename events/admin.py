@@ -1,10 +1,17 @@
 from django.contrib import admin
 from . models import (
     Events,
+    EventDates
     )
 
 
+class EventDatesAdminInline(admin.TabularInline):
+    model = EventDates
+    readonly_fields = ('event',)
+
+
 class EventsAdmin(admin.ModelAdmin):
+    inlines = (EventDatesAdminInline,)
     list_display = [
                     'id',
                     'event_name',
@@ -14,3 +21,4 @@ class EventsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Events, EventsAdmin)
+admin.site.register(EventDates)

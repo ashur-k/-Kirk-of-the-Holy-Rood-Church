@@ -41,8 +41,22 @@
 
 	<!-- jQuery UI !-->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <!--
+    <script>
+            $(document).ready(function() {
+                let ticket_qty = $('#id_event_ticket_qty').val();
+               let ticket_price = $('#ticket_price').val();
+                
+                $('#id_event_ticket_qty').change(function(){
+                
+                    $("input[id=ticket_price]").attr({
+                        "value": ticket_qty *  ticket_price
+                });
+                })
 
-
+    });
+    </script>-->
     {% endblock %}
 
     {% block extra_js %}
@@ -136,6 +150,9 @@
 </div>
     <p class="text-center text-uppercase">Kirk Of the Holy Rood Church <strong class="copy-rigth-sign">©</strong> 2020 copyright protected</p>
 </div>
+{% block postloadjs %}
+  
+{% endblock %}
     
   </body>
  

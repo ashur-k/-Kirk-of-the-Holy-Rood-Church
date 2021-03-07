@@ -28,7 +28,7 @@ class PaymentForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'border-black m-1'
 
-            # self.fields[field].label = False
+            self.fields[field].label = False
 
 
 class TicketPaymentForm(forms.ModelForm):
@@ -41,5 +41,4 @@ class TicketPaymentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            # self.fields[field].label = False
-            pass
+            self.fields[field].label = False

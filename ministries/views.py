@@ -93,15 +93,17 @@ def ministry_edit(request, id):
 
 
 def add_ministry(request):
-
     form = MinistrieForm()
 
     if request.method == 'POST':
+        form = MinistrieForm(request.POST)
         if form.is_valid():
-            form = MinistrieForm(request.POST)
             ministry = form.save()
             messages.success(request, 'New Ministry is added!')
             return redirect(reverse('ministry', args=[ministry.id]))
+        else:
+            print("form errors are", form.errors)
+            return HttpResponse("Form is not valid")
 
     template = 'ministries/add_new_ministry.html'
     context = {

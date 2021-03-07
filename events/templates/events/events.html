@@ -142,9 +142,15 @@
                     <div class="card-body">
                     <h5 class="card-title text-uppercase">{{ item.event_name }}</h5>
                         <p class="card-text">{{ item.event_description }}</p>
-                    <h5>{{ item.event_dates }}</h5>
-                    <a href="{% url 'ticket_payment' item.id %}" class="btn btn-primary">Ticket £{{ item.event_price }}</a>
+                        <div>
+                            {% for item in item.event_dates %}  
+                                <small>{{ item.date }},</small>  
+                            {% endfor %}  
+                        </div>
+                        
+                    <a href="{% url 'buy_event_tickets' item.id %}" class="btn btn-primary">Ticket £{{ item.event_price }}</a>
                     <small><p>{{ item.event_instructions }}</p></small>
+                    <small><p>Total tickets were {{ item.event_ticket_quantity }} and remaining tickets are {{ item.event_remaining_ticket }}</p></small>
                     </div>
                    
                 </div>

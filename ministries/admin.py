@@ -7,7 +7,15 @@ from . models import(
     )
 
 
+class MeetingTimesAdminInline(admin.TabularInline):
+    model = MeetingTimes
+    readonly_fields = ('id',)
+    # readonly_fields = ('lineitem_total',)
+
+
 class MinistriesAdmin(admin.ModelAdmin):
+    inlines = (MeetingTimesAdminInline,)
+
     list_display = [
                     'id',
                     'ministry_heading',

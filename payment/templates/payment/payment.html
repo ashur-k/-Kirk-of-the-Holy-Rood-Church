@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'payment/css/payment.css' %}">
+{% endblock %}
 {% block page_header %}
     <div class="container header-container">
         
@@ -25,7 +28,7 @@
 <div class="container" style="margin-top: 150px!important;">
     <div class="row mt-5">
         <div class="col-md-12">
-            <h1>Checkout page</h1>
+            <h1>Donation</h1>
         </div>
         <div class="col-12 col-lg-6">
             <p class="text-muted">Please fill out the form below to make your payment</p>
@@ -41,29 +44,17 @@
                 <fieldset class="rounded px-3 mb-5">
                     <legend class="fieldset-label small text-black px-2 w-auto">Donation Amount</legend>
                     {{ payment_form.donation_payment_amount | as_crispy_field }}
-                </fieldset>
-
-                <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Card Details</legend>
-                    <!-- Stripe card element will go here-->
-                    <div class="mb-3" id="card-element"></div>
-                    <!-- Stripe card element will go here-->
-                    <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                </fieldset>                
+                    <input type="hidden" id="donation_page" name="donation_page" value="True">
+                </fieldset>              
                 <fieldset class="rounded px-3 mb-5">
                     <div class="submit-button text-right mt-5 mb-2"> 
                         <button id="submit-button" class="btn rounded-0" {% include 'includes/theme.html' %}>
-                            <span class="font-weight-bold">Make Payment</span>
+                            <span class="font-weight-bold">Your Details</span>
                         </button>
-                        <p class="small text-danger my-0">
-                            <span class="icon">
-                                <i class="fas fa-exclamation-circle"></i>
-                            </span>
-                            <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
-                        </p>
+                    
                     </div>
                 </fieldset>
-                
+                             
                 
             </form>
         </div>
@@ -72,6 +63,6 @@
 {% endblock %}
 
 {% block postloadjs %}
-
-   
+  
 {% endblock %}
+

@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'payment/css/payment.css' %}">
+{% endblock %}
 {% block page_header %}
     <div class="container header-container">
         
@@ -27,27 +30,56 @@
         <p>Event Date</p>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <h6>Payment Form</h6>
             <form action="{% url 'ticket_payment' event.id %}" method="POST" id="payment-form">
                 {% csrf_token %}
-                {{ payment_form | crispy }}     
-                {{ticket_payment_form | crispy }}
+                <!--
+                <fieldset class="rounded px-3 mb-5">
+                    <legend class="fieldset-label small text-black px-2 w-auto">Contact Details</legend>
+                    {{ payment_form.full_name | as_crispy_field }}
+                    {{ payment_form.email | as_crispy_field }}
+                    {{ payment_form.phone_number | as_crispy_field }}
+                    <small class="m-3" style="font-size:x-small;">Do you want to pay some donation for Church.</small>                  
+                    {{ payment_form.donation_payment_amount | as_crispy_field }}
+                    
+                </fieldset>
+                <fieldset class="rounded px-3 mb-5">
+                <legend class="fieldset-label small text-black px-2 w-auto">Ticket Details</legend>                    
+                    <input class="border-black m-1 textinput textInput form-control" type="float" id="ticket_price" value="Ticket Price: £{{event.event_price}}" readonly>
+                    <label for="">Ticket Qty</label>
+                    {{ ticket_payment_form.event_ticket_qty | as_crispy_field }}
+                </fieldset>
+                -->
+                <fieldset class="rounded px-3 mb-5">
+                    <legend class="fieldset-label small text-black px-2 w-auto">Card Details</legend>
+                    <!-- Stripe card element will go here-->
+                    <div class="mb-3" id="card-element"></div>
+                    <!-- Stripe card element will go here-->
+                    <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                </fieldset>  
+
+               
             </form>
             <button form="payment-form" class="btn btn-dark mt-2" type="submit">Submit data</button>
+            <p class="small text-danger my-0">
+                <span class="icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </span>
+                <span>Your card will be charged <strong>£{{ grand_total|floatformat:2 }}</strong></span>
+            </p>
         </div>
     </div>
    
     
 </div>
 
-<script>
-    
-</script>
 
 {% endblock %}
 
 {% block postloadjs %}
-
-   
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'payment/js/stripe_elements.js' %}"></script>
 {% endblock %}

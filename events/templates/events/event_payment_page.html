@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}   
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="margin-top: 100px;">
+        <div class="col-sm-12">
+            <h1 class="mt-5" >Events Payment html</h1>
+        </div>
+      
+    </div>
+  
+    <div class="row">     
+        <div class="col-md-6"> 
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="rounded px-3 mb-5">
+                    <legend class="fieldset-label small text-black px-2 w-auto">Contact Details</legend>
+                    {{ payment_form.full_name | as_crispy_field }}
+                    {{ payment_form.email | as_crispy_field }}
+                    {{ payment_form.phone_number | as_crispy_field }}
+                    <small class="m-3" style="font-size:x-small;">Do you want to pay some donation for Church.</small>                  
+                    {{ payment_form.donation_payment_amount | as_crispy_field }}
+                    
+                </fieldset>
+                <fieldset class="rounded px-3 mb-5">
+                <legend class="fieldset-label small text-black px-2 w-auto">Ticket Details</legend>
+                    <label for="">Ticket Qty</label>
+                    <div class="input-group">
+                        {{ ticket_payment_form.event_ticket_qty | as_crispy_field }}
+                        <span class="input-group-text">£</span>
+                        <span class="input-group-text">{{ event.event_price }}</span>
+                    </div>
+                </fieldset>
+                <!--
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Telephone Number</label>
+                    <input type="tel" name="phone_number" maxlength="20" placeholder="Phone Number *" class="border-black m-1 textinput textInput form-control" required="" id="id_phone_number">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Donation</label>
+                    <input type="number" name="donation_payment_amount" value="0" step="0.01" placeholder="donation_payment_amount *" class="border-black m-1 numberinput form-control" required="" id="id_donation_payment_amount">
+                </div>
+                <div class="input-group">
+                    <input type="number" class="form-control" name="ticket_qty" aria-label="Dollar amount (with dot and two decimal places)">
+                    <span class="input-group-text">£</span>
+                    <span class="input-group-text">{{ event.event_price }}</span>
+                </div>
+                -->
+                    <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                </form>
+        </div>  
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

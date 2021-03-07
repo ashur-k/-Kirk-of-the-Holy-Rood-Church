@@ -15,6 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
     'embed_video',
     'crispy_forms',
     'phonenumber_field',
@@ -87,6 +89,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'home.contexts.site_settings',
+                'payment.contexts.payment_bag_contents',
             ],
 
             'builtins': [
@@ -183,3 +186,12 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Stripe
+STRIPE_CURRENCY = 'GBP'
+STRIPE_PUBLIC_KEY = os.getenv('KIRK_STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('KIRK_STRIPE_SECRET_KEY', '')
+
+#print("Printing STripe PUBLIC key and secret key to verify all is fine")
+#print(STRIPE_PUBLIC_KEY)
+#print(STRIPE_SECRET_KEY)
