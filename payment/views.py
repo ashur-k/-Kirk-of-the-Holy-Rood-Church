@@ -1,8 +1,14 @@
 from decimal import Decimal
-from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
+from django.shortcuts import (
+    render,
+    redirect,
+    reverse,
+    HttpResponse,
+    get_object_or_404)
 from django.contrib import messages
 from .forms import PaymentForm, TicketPaymentForm
 from events.models import Events
+from .models import Payment
 import stripe
 from django.conf import settings
 
@@ -30,7 +36,7 @@ def payment(request):
             request.session['payment_bag'] = payment_bag
             return redirect(reverse('ticket_payment', args=[1]))
         else:
-            print("save failed payment.view line 20")
+            print("save failed payment.view line 33")
 
     payment_form = PaymentForm()
     template = 'payment/payment.html'
@@ -70,6 +76,11 @@ def ticket_payment(request, id):
             payment_form = PaymentForm(payment_form_data)
             if payment_form.is_valid():
                 payment = payment_form.save()
+                return redirect(reverse(
+                    'payment_success',
+                    args=[payment.payment_number]))
+            else:
+                return HttpResponse('Data is not in ticket payment view')
         else:
             payment_form_data = {
                 'full_name': payment_bag['full_name'],
@@ -89,6 +100,11 @@ def ticket_payment(request, id):
                 ticket.payment = payment
                 ticket.event = event
                 ticket.save()
+                return redirect(reverse(
+                    'payment_success',
+                    args=[payment.payment_number]))
+            else:
+                return HttpResponse('Data is not in ticket payment view')
             # stripe_payment = payment.grand_total
 
     stripe_total = round(stripe_payment * 100)
@@ -114,3 +130,17 @@ def ticket_payment(request, id):
     }
 
     return render(request, template, context)
+
+
+def payment_success(request, payment_number):
+    payment = get_object_or_404(Payment, payment_number=payment_number)
+    if 'payment_bag' in request.session:
+        del request.session['payment_bag']
+
+    template = 'payment/payment_success.html'
+    context = {
+        'payment': payment,
+    }
+
+    return render(request, template, context)
+

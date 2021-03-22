@@ -88,8 +88,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # For using media URl tags
+                'django.template.context_processors.media',
                 'home.contexts.site_settings',
-                'payment.contexts.payment_bag_contents',
+                # 'payment.contexts.payment_bag_contents',
             ],
 
             'builtins': [

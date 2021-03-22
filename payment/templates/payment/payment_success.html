@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'payment/css/payment.css' %}">
+{% endblock %}
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}   
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="margin-top: 150px;">
+        <div class="col-md-6">
+            <h3>Payment Success</h3>
+        </div>
+    </div>    
+</div>
+
+
+{% endblock %}
+
+{% block postloadjs %}
+    
+{% endblock %}
