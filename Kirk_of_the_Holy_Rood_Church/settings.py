@@ -91,7 +91,7 @@ TEMPLATES = [
                 # For using media URl tags
                 'django.template.context_processors.media',
                 'home.contexts.site_settings',
-                # 'payment.contexts.payment_bag_contents',
+                'payment.contexts.payment_bag_contents',
             ],
 
             'builtins': [

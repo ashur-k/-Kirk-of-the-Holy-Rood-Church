@@ -25,5 +25,10 @@ class Events(models.Model):
 
 
 class EventDates(models.Model):
-    event = models.ForeignKey(Events, null=False, blank=False, on_delete=models.CASCADE)
-    date = models.DateField()
+    event = models.ForeignKey(
+        Events,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE
+        )
+    date = models.DateTimeField()

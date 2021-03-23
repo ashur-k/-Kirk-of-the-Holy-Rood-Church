@@ -27,8 +27,22 @@
 <div class="container">
     <div class="row" style="margin-top: 150px;">
         <div class="col-md-6">
-            <h3>Payment Success</h3>
+            <h3>Thank You and Your Payment is successful</h3>
+            <p>Your payment information id below</p>
+            <p>{{payment.full_name}}</p>
+            {% if payment.donation_payment_amount %}
+                <p>Donation: {{payment.donation_payment_amount}}</p>            
+                {% else %}
+                <a href="{% url 'payment' %}">Do you want to give donation to Church</a>
+            {% endif %}
+            {% if ticket_payment %}
+                <p>Ticket Quantity: {{ticket_payment.event_ticket_qty}}</p>
+                <p>Event Name: {{ticket_payment.event.event_name}}</p>
+                <p>Event Date: {{ticket_payment.event_date}}</p>
+            {% endif %}
+                <p>Total amount Paid: {{payment.grand_total}}</p>
         </div>
+        
     </div>    
 </div>
 

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Payment, TicketsPayment
+from events.models import EventDates
 
 
 class PaymentForm(forms.ModelForm):
@@ -36,6 +37,7 @@ class TicketPaymentForm(forms.ModelForm):
         model = TicketsPayment
         fields = (
             'event_ticket_qty',
+            'event_date',
             )
 
     def __init__(self, *args, **kwargs):

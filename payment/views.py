@@ -8,7 +8,7 @@ from django.shortcuts import (
 from django.contrib import messages
 from .forms import PaymentForm, TicketPaymentForm
 from events.models import Events
-from .models import Payment
+from .models import Payment, TicketsPayment
 import stripe
 from django.conf import settings
 
@@ -89,6 +89,7 @@ def ticket_payment(request, id):
                 'donation_payment_amount': payment_bag['donation_payment_amount'],
                 }
             ticket_form_data = {
+                'event_date': payment_bag['event_date'],
                 'event_ticket_qty': payment_bag['ticket_qty'],
             }
             payment_form = PaymentForm(payment_form_data)
@@ -133,14 +134,23 @@ def ticket_payment(request, id):
 
 
 def payment_success(request, payment_number):
+    ticket_payment_information = None
     payment = get_object_or_404(Payment, payment_number=payment_number)
+    ticket_payment = TicketsPayment.objects.filter(payment=payment.id)
+
+    if ticket_payment:
+        ticket_payment_information = get_object_or_404(
+            TicketsPayment, id=ticket_payment[0].id)
+        print(ticket_payment_information.event_ticket_qty)
+    else:
+        print('Tickets are availalbe')
     if 'payment_bag' in request.session:
         del request.session['payment_bag']
 
     template = 'payment/payment_success.html'
     context = {
         'payment': payment,
+        'ticket_payment': ticket_payment_information,
     }
 
     return render(request, template, context)
-

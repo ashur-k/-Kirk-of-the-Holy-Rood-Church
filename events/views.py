@@ -4,8 +4,8 @@ from django.shortcuts import (
     reverse,
     get_object_or_404,
     HttpResponse)
-from . models import Events
-from .forms import EventsForm
+from . models import Events, EventDates
+from .forms import EventsForm, EventDateForm
 from payment.forms import PaymentForm, TicketPaymentForm
 from django.contrib import messages
 
@@ -13,6 +13,8 @@ from django.contrib import messages
 def events(request):
     events = Events.objects.filter(event_display_status=True)
     event_form = EventsForm()
+    event_date_form = EventDateForm()
+
     if request.method == 'POST':
         form = EventsForm(request.POST, request.FILES)
         if form.is_valid():
@@ -28,6 +30,7 @@ def events(request):
     context = {
          'events': events,
          'event_form': event_form,
+         'event_date_form': event_date_form,
         }
     template = 'events/events.html'
     return render(request, template, context)
@@ -50,10 +53,51 @@ def edit_event(request, event_id):
             return redirect(reverse('events'))
 
 
+def add_event_date_time(request, event_id):
+    event = get_object_or_404(Events, id=event_id)
+
+    if request.method == 'POST':
+        form = EventDateForm(request.POST)
+        if form.is_valid():
+            event_date_form = form.save(commit=False)
+            event_date_form.event = event
+            form.save()
+            messages.success(request, 'You have succesfully updated the page!')
+            return redirect(reverse('events'))
+        return HttpResponse(form.errors)
+
+
+def edit_event_date_time(request, event_date_time_id):
+    event_date_time = get_object_or_404(EventDates, id=event_date_time_id)
+
+    if request.method == 'POST':
+        form = EventDateForm(request.POST, instance=event_date_time)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                'You have succesfully edited the event date-time!')
+            return redirect(reverse('events'))
+        return HttpResponse(form.errors)
+
+
+def delete_event_date_time(request, event_date_time_id):
+    """ Delete a product from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only Church Admin can watch this.')
+        return redirect(reverse('home'))
+
+    event_date_time = get_object_or_404(EventDates, id=event_date_time_id)
+    event_date_time.delete()
+    messages.success(request, 'event_date_time deleted!')
+    return redirect(reverse('events'))
+
+
 def buy_event_tickets(request, event_id):
     event = get_object_or_404(Events, id=event_id)
 
     if request.method == 'POST':
+
         payment_form = PaymentForm(request.POST)
         ticket_form = TicketPaymentForm(request.POST)
         if payment_form.is_valid() and ticket_form.is_valid():
@@ -63,6 +107,8 @@ def buy_event_tickets(request, event_id):
             payment_bag['phone_number'] = request.POST.get('phone_number')
             payment_bag['donation_payment_amount'] = request.POST.get(
                 'donation_payment_amount')
+
+            payment_bag['event_date'] = request.POST.get('event_date')
             payment_bag['ticket_qty'] = request.POST.get(
                 'event_ticket_qty')
             payment_bag['donation_page'] = False
@@ -78,11 +124,11 @@ def buy_event_tickets(request, event_id):
 
             return redirect(reverse('ticket_payment', args=[event.id]))
         else:
-            return render(request, 'events/event_payment_page.html', {
-                    'payment_form': payment_form,
-                    'ticket_payment_form': ticket_form,
-                }
-                )
+            ash = payment_form.errors
+            bsh = ticket_form.errors
+            print(bsh, ash)
+            return HttpResponse(bsh)
+
     payment_form = PaymentForm()
     ticket_payment_form = TicketPaymentForm
     template = 'events/event_payment_page.html'
