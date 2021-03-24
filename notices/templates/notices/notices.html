@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'payment/css/payment.css' %}">
+{% endblock %}
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}   
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="margin-top: 150px;">
+        <div class="col-sm-12">
+        <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addnewnoticeModal">Add New Notice</a>   
+          <h2>Notices</h2>
+        </div>        
+            {% for notice in notices %}
+            <div class="col-sm-12 mt-2 mb-5">
+                <!-- Edit Notice Modal Button -->
+                <a type="button" class="" data-bs-toggle="modal" data-bs-target="#edit-{{ notice.id }}-notice-Modal">
+                    edit this notice
+                </a> 
+                <span>or</span> 
+                <!-- Delete Notice Modal Button -->
+                <a class="text-danger" type="button" data-bs-toggle="modal" data-bs-target="#delete-{{ notice.id }}-notice-Modal">
+                    delete this notice
+                </a>
+                <div class="card" style="background-color: #f5f5f5;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ notice.notice_title }}</h5>
+                        <h5 class="card-subtitle mb-2 text-muted">{{ notice.notice_given_by }}</h5><hr>
+                        <p class="card-text">{{ notice.notice_context }}
+                        </p>
+                        <hr>
+                        <p><strong>{{ notice.contact_phone_number }}</strong></p>
+                        <p><strong>{{ notice.contact_email }}</strong></p><hr>
+                        <p>{{ notice.date_time }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Notice Modal -->
+            <div class="modal fade" id="edit-{{ notice.id }}-notice-Modal" tabindex="-1" aria-labelledby="edit-{{ notice.id }}-notice-ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-{{ notice.id }}-notice-ModalLabel">{{ notice.notice_title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-{{ notice.id }}_form" action="{% url 'edit_notice' notice.id  %}" method="POST">
+                        {% csrf_token %}                                   
+                        <div id="div_id_notice_title" class="form-group">        
+                            <label for="id_notice_title" class=" requiredField">
+                                Notice title<span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <input type="text" name="notice_title" maxlength="100" class="textinput textInput form-control" required="" id="id_notice_title" value="{{notice.notice_title}}">
+                            </div>
+                        </div>
+                        <div id="div_id_notice_given_by" class="form-group">        
+                            <label for="id_notice_given_by" class=" requiredField">
+                                Notice given by<span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <input type="text" name="notice_given_by" maxlength="50" class="textinput textInput form-control" required="" id="id_notice_given_by" value="{{notice.notice_given_by}}">
+                            </div>
+                        </div>
+                        <div id="div_id_notice_context" class="form-group">        
+                            <label for="id_notice_context" class=" requiredField">
+                                Notice context<span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <textarea name="notice_context" cols="40" rows="10" maxlength="500" class="textarea form-control" required="" id="id_notice_context">{{notice.notice_context}}</textarea>
+                            </div>
+                        </div>
+                        <div id="div_id_contact_phone_number" class="form-group">        
+                            <label for="id_contact_phone_number" class=" requiredField">
+                                Contact phone number<span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <input type="tel" name="contact_phone_number" maxlength="128" class="textinput textInput form-control" required="" id="id_contact_phone_number" value="{{notice.contact_phone_number}}">
+                            </div>
+                        </div>
+                        <div id="div_id_contact_email" class="form-group">
+                            <label for="id_contact_email" class=" requiredField">
+                                Contact email<span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <input type="email" name="contact_email" maxlength="50" class="emailinput form-control" required="" id="id_contact_email" value="{{notice.contact_email}}">
+                            </div>
+                        </div>
+                        <div id="div_id_date_time" class="form-group">
+                            <label for="id_date_time" class="requiredField">
+                                Date-time<span class="asteriskField">*</span>
+                            </label>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" id="id_date_time" name="date_time" value="{{ notice.date_time }}">
+                            </div>
+                        </div>
+                        <div id="div_id_notice_display_status" class="form-group">
+                                <label for="id_notice_display_status" class=" requiredField">
+                                Notice display status<span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <select name="notice_display_status" class="select form-control" required="" id="id_notice_display_status">
+                                    <option value="{{ notice.notice_display_status }}" selected="">{{ notice.notice_display_status }}</option>
+                                    <option value="True">True</option>
+                                    <option value="False">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="edit-{{ notice.id }}_form" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- Delete Notice  Modal -->
+            <div class="modal fade" id="delete-{{ notice.id }}-notice-Modal" tabindex="-1" aria-labelledby="delete-{{ notice.id }}-notice-ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete-{{ notice.id }}-notice-ModalLabel">{{notice.notice_title}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this {{notice.notice_title}}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{% url 'delete_notice' notice.id  %}" type="button" class="btn btn-danger">Delete</a>
+                </div>
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+        
+    </div>    
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade modal-dialog-scrollable" id="addnewnoticeModal" tabindex="-1" aria-labelledby="addnewnoticeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addnewnoticeModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                <div class="col-md-12 ms-auto">
+                        <form action="{% url 'add_new_notice'  %}" method="POST" id="add-notice-form">
+                            {% csrf_token %}                
+                            {{ notice_form.notice_title | as_crispy_field }}
+                            {{ notice_form.notice_given_by| as_crispy_field }}
+                            {{ notice_form.notice_context | as_crispy_field }}
+                            {{ notice_form.contact_phone_number | as_crispy_field }}
+                            {{ notice_form.contact_email | as_crispy_field }}
+                            <div id="div_id_date_time" class="form-group">
+                                <label for="id_date_time" class="requiredField">
+                                    Date-time<span class="asteriskField">*</span>
+                                </label>
+                                <div class="form-group">
+                                    <input type="datetime-local" class="form-control" id="id_date_time" name="date_time">
+                                </div>
+                            </div>
+                            {{ notice_form.notice_display_status | as_crispy_field }}
+                        </form>
+                </div>
+                </div>
+            </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" form="add-notice-form" id="submit-button" class="btn rounded-0" {% include 'includes/theme.html' %}>
+            <span class="font-weight-bold">Add Notice</span>
+        </button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+    
+{% endblock %}

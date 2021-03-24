@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ministries.apps.MinistriesConfig',
     'events.apps.EventsConfig',
     'payment.apps.PaymentConfig',
+    'notices.apps.NoticesConfig',
 
     # all auth settings
     'django.contrib.sites',
@@ -91,7 +92,7 @@ TEMPLATES = [
                 # For using media URl tags
                 'django.template.context_processors.media',
                 'home.contexts.site_settings',
-                'payment.contexts.payment_bag_contents',
+                #'payment.contexts.payment_bag_contents',
             ],
 
             'builtins': [
