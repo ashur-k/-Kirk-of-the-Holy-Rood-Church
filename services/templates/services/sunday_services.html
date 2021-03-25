@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+{% endblock %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div style="height: 15vh;"></div>  
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container" style="height:65vh;"> 
+    <div class="row">
+       <div class="col-sm-12">
+          <h1 class="text-uppercase">Sunday Service</h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="jumbotron bg-dark text-light p-3 rounded">
+                <h2 style="float: right;">24-12-2021</h2>
+                <br>
+                <h2 class="text-uppercase">Service title</h2>
+                <h3>Mr ABC Preaching</h3>
+                <h4 class="m-1">Sermon Title</h4>
+                <p class="lead m-1">Bible verses context is going here</p>
+                <hr class="my-4">
+                <p class="m-1">Following hymss we are going to sing </p>
+                <p class="m-1">Following hymss we are going to sing </p>
+                <p class="m-1">Following hymss we are going to sing </p>
+                <hr class="my-4">
+                <p class="m-1"><strong>Important Notices</strong></p>
+                <a class="btn btn-light btn-sm" href="#" role="button" {% include 'includes/theme.html' %}>Request to attend Church in person</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

@@ -11,3 +11,13 @@ def services(request):
         }
 
     return render(request, template, context)
+
+
+def sunday_services(request):
+    template = 'services/sunday_services.html'
+
+    context = {
+        
+        }
+
+    return render(request, template, context)
