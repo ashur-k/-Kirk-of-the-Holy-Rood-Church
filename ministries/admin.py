@@ -36,7 +36,17 @@ class WeekDaysAdmin(admin.ModelAdmin):
                     ]
 
 
-admin.site.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = [
+                    'ministy',
+                    'full_name',
+                    'email',
+                    'phone_number'
+                    ]
+
+
 admin.site.register(Ministries, MinistriesAdmin)
 admin.site.register(MeetingTimes, MeetingTimesAdmin)
 admin.site.register(WeekDays, WeekDaysAdmin)
+
+admin.site.register(Message, MessageAdmin)

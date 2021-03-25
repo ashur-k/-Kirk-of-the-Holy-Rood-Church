@@ -42,21 +42,7 @@
 	<!-- jQuery UI !-->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://js.stripe.com/v3/"></script>
-    <!--
-    <script>
-            $(document).ready(function() {
-                let ticket_qty = $('#id_event_ticket_qty').val();
-               let ticket_price = $('#ticket_price').val();
-                
-                $('#id_event_ticket_qty').change(function(){
-                
-                    $("input[id=ticket_price]").attr({
-                        "value": ticket_qty *  ticket_price
-                });
-                })
 
-    });
-    </script>-->
     {% endblock %}
 
     {% block extra_js %}
@@ -75,60 +61,59 @@
                     </h4>                    
                 </a>
             </div>
+            {% if request.user.is_superuser %}
             <div class="col-sm-12 col-lg-2 my-auto py-1 py-lg-0">
-            <ul class="list-inline list-unstyled text-center text-lg-right my-0">
+                <ul class="list-inline list-unstyled text-center text-lg-right my-0">
+                        <li class="list-inline-item dropdown">
+                            <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="text-center">
+                                    <div><i class="fas fa-palette"></i></div>
+                                    <p class="my-0">Color Theme</p>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu border-0" aria-labelledby="user-options">       
+                                <a href="" class="dropdown-item">Add New Color Theme</a>
+                                <a class="dropdown-item">
+                                    <form method="POST" class="p-0 m-0">
+                                        {% csrf_token %}
+                                        {{ color_theme_form | crispy}}                                   
+                                        <button type="submit" class="btn btn-sm mt-1"
+                                        {% include 'includes/theme.html' %}>
+                                        Apply Theme
+                                        </button>          
+                                    </form>                            
+                                </a>         
+                            </div>
+                        </li>
+        
                     <li class="list-inline-item dropdown">
                         <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="text-center">
-                                <div><i class="fas fa-palette"></i></div>
-                                <p class="my-0">Color Theme</p>
+                                <div><i class="fas fa-user fa-lg"></i></div>
+                                <p class="my-0">Admin Logged In</p>
                             </div>
                         </a>
-                        <div class="dropdown-menu border-0" aria-labelledby="user-options">       
-                            <a href="" class="dropdown-item">Add New Color Theme</a>
-                            <a class="dropdown-item">
-                                <form method="POST" class="p-0 m-0">
-                                    {% csrf_token %}
-                                    {{ color_theme_form | crispy}}                                   
-                                    <button type="submit" class="btn btn-sm mt-1"
-                                       {% include 'includes/theme.html' %}>
-                                       Apply Theme
-                                    </button>          
-                                </form>                            
-                            </a>         
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">                           
+                            <a href="{% url 'request_and_messages' %}" class="dropdown-item">Request messages</a>                           
+                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>                            
                         </div>
                     </li>
-    
-                <li class="list-inline-item dropdown">
-                    <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="text-center">
-                            <div><i class="fas fa-user fa-lg"></i></div>
-                            <p class="my-0">My Account</p>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu border-0" aria-labelledby="user-options">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user.is_superuser %}
-                                <a href="" class="dropdown-item">Product Management</a>
-                            {% endif %}
-                            <a href="" class="dropdown-item">My Profile</a>
-                            <a href="" class="dropdown-item">Logout</a>
-                        {% else %}
-                            <a href="" class="dropdown-item">Register</a>
-                            <a href=" class="dropdown-item">Login</a>
-                        {% endif %}
-                    </div>
-                </li>
-            </ul>
+                </ul>
             </div>
+            {% endif %}
         </div>
         
         <div class="row" {% include 'includes/theme.html' %}>
-            <nav class="navbar navbar-expand-lg navbar-light w-100">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <nav class="navbar navbar-expand-lg navbar-light w-100 text-center p-2" >
+                
+                <button class="navbar-toggler m-2" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <h5 class="logo-font text-black text-right">
+                        <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
+                    </h5> 
                     <span class="navbar-toggler-icon"></span>
+                    
                 </button>
-                {% include 'includes/mobile-top-header.html' %}
+                 
                 {% include 'includes/main-nav.html' %}
             </nav>
         </div>

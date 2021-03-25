@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'payment.apps.PaymentConfig',
     'notices.apps.NoticesConfig',
+    'requests_and_messages.apps.RequestsAndMessagesConfig',
 
     # all auth settings
     'django.contrib.sites',

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}   
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 150px;">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mt-3 ">
+            <h2 class="logo-font text-dark">Request and Messages</h2>
+            {% for ministry in ministries %}
+                <a class="category-badge text-decoration-none mb-2" href="{% url 'request_and_messages' ministry.id %}">
+                    <span class="p-2 mt-2 badge btn-dark fs-6" {% include 'includes/secondary_theme.html' %}>{{ ministry.ministry_heading }}</span>
+                </a>
+            {% endfor %}                
+            <hr>
+        </div>            
+    </div>
+    
+    <div class="row table-responsive">
+        {% if request_messages %}
+        <table class="table table-success table-striped">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Minstry</th>
+                <th scope="col">Message send by</th>
+                <th scope="col">Message Content</th>
+                <th scope="col">Sender-Email</th>
+                <th scope="col">Sender-Phone Number</th>
+                <th scope="col">Sender-Address</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                {% for request_message in request_messages %}
+                <tr>        
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ request_message.ministy }}</td>
+                <td>{{ request_message.full_name }}</td>
+                <td>{{ request_message.message }}</td>
+                <td>{{ request_message.email }}</td>
+                <td>{{ request_message.phone_number }}</td>
+                <td>{{ request_message.street_address1 }}{{ message.street_address2 }} {{message.postcode}}</td>     
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% else %}
+<p class="lead"> Please select one of ministries to view messages in it.</p>
+{% endif %}
+    </div>         
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}
