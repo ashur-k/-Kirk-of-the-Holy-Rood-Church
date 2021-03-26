@@ -7,8 +7,12 @@ class Videos(models.Model):
         ('True', 'True'),
         ('False', 'False'),
     )
-    title = models.CharField(max_length=30, null=False, blank=False)
+    title = models.CharField(max_length=30, blank=False)
     video = EmbedVideoField()  # same like models.URLField()
+    video_image = models.ImageField(
+        blank=False,
+        upload_to='media/video_images/'
+        )
     main_paragraph = models.TextField(max_length=100, blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='True')
     date = models.DateTimeField()

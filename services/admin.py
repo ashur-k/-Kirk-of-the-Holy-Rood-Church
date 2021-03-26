@@ -5,6 +5,7 @@ from embed_video.admin import AdminVideoMixin
 
 class VideosAdmin(AdminVideoMixin, admin.ModelAdmin):
     list_display = [
+                    'id',
                     'video',
                     ]
 

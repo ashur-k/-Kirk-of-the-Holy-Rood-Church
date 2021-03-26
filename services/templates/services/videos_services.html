@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block extra_css %}
-
-{% endblock %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'services/css/video_style.css' %}">
+{% endblock %}
 
 {% block page_header %}
     <div class="container header-container">
@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}  
-<div style="height: 15vh;"></div>  
+<div style="height: 10vh !important;"></div>  
 <div class="container">
     <div class="row">            
         <div class="col-sm-12">
@@ -27,9 +27,22 @@
     </div>
 </div>
 
-<div class="container"> 
+<div class="container-fluid" style="height:100%; margin-top: 8px;">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h4 class="display-4 pt-4">Video Services</h4>
+            <div class="card-body">            
+                <div class="col-sm-12 col-md-12 col-lg-12 mb-4 px-5">
+                <div class="embed-responsive px-5">
+                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/PJbQN6WSkew" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
     <div class="row">
-       <div class="col-sm-12">
+        <div class="col-sm-12">
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}>
                     <h5><blockquote class="text-uppercase mt-3">Video Services</blockquote></h5>
@@ -40,20 +53,41 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
                     <div class="embed-responsive">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/PJbQN6WSkew" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+                </div>
                 </div>                  
-                    <hr class="general-hr" {% include 'includes/theme.html' %}>
-                </div>
-                <div class="mb-3" style="padding-left: 30%; padding-right: 30%;">
-                        
-                </div>
+                 
+            </div>
+               
             </div>
         </div>
     </div>
+-->
+</div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for item in videos %}
+        <div class="col-sm-6 p-5">
+            <div class="card mb-3 p5 border-0">
+                <img src="{{ item.video_image.url}}" class="card-img-top p-2" alt="..." style="height:200px !important;" >
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+    <!--
     <div class="row mt-5">
             {% for item in videos %}
                 <div class="col-sm-12 col-md-6 col-lg-6 mb-4">             
-                    <h4>Title:{{ item.title }}
+                    <h4>Title:{{ item.title }} {{ item.id }}
                         </h4>
                     <h5>Date: {{ item.date }}</h5>
                     <p> {{ item.main_paragraph }}
@@ -67,8 +101,9 @@
                     </div>
                 </div>
             {% endfor %}
-       </div>
-</div>
+    </div>
+   -->
+
 {% endblock %}
 
 {% block postloadjs %}
