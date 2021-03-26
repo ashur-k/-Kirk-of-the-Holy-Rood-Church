@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}  
-<div style="height: 15vh;"></div>  
+<div style="height: 19vh;"></div>  
 <div class="container">
     <div class="row">            
         <div class="col-sm-12">
@@ -29,26 +29,65 @@
 
 <div class="container" style="height:65vh;"> 
     <div class="row">
+      
        <div class="col-sm-12">
           <h1 class="text-uppercase">Sunday Service</h1>
         </div>
+        {% if services %}
+        {% for service in services %}
+        <div class="col-sm-4 m-1">
+            <!-- Update Service Information trigger modal Button  -->
+            <a type="button" href="{% url 'edit_sunday_services' service.id %}" class="btn btn-sm" {% include 'includes/theme.html' %}>
+                Update Service Information
+            </a>
+        </div>
+        
         <div class="col-sm-12">
             <div class="jumbotron bg-dark text-light p-3 rounded">
-                <h2 style="float: right;">24-12-2021</h2>
+                <h6 style="float: right;">{{ service.date }}</h6>
                 <br>
-                <h2 class="text-uppercase">Service title</h2>
-                <h3>Mr ABC Preaching</h3>
-                <h4 class="m-1">Sermon Title</h4>
-                <p class="lead m-1">Bible verses context is going here</p>
+                <h3 class="text-uppercase">{{service.title}}</h3>
+                <h3 class="m-1">{{service.preacher_name}}</h3>
+                <h4 class="m-1">{{service.sermon_title}}</h4>
+                <p class="lead m-1">{{service.bible_refrence}}</p>
                 <hr class="my-4">
-                <p class="m-1">Following hymss we are going to sing </p>
-                <p class="m-1">Following hymss we are going to sing </p>
-                <p class="m-1">Following hymss we are going to sing </p>
+                <p class="m-1">{{service.worship_hymm1}}</p>
+                <p class="m-1">{{service.worship_hymm2}}</p>
+                <p class="m-1">{{service.worship_hymm3}}</p>
+                 <p class="m-1">{{service.worship_hymm4}}</p>
                 <hr class="my-4">
-                <p class="m-1"><strong>Important Notices</strong></p>
+                <p class="m-1"><strong>{{service.important_notices}}</strong></p>
                 <a class="btn btn-light btn-sm" href="#" role="button" {% include 'includes/theme.html' %}>Request to attend Church in person</a>
             </div>
         </div>
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="update{{service.id}}ServiceInfomrationModal" tabindex="-1" aria-labelledby="update{{service.id}}ServiceInfomrationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update{{service.id}}ServiceInfomrationModalLabel">Update SErvice Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update{{service.id}}ServiceInfomration" method="POST">
+                    {% csrf_token %}
+                    {{form | crispy}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button form="update{{service.id}}ServiceInfomration" type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        
+        {% endfor %}
+        {% else %}
+        <p class="lead">At the moment there is no service to update</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

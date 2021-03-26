@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+{% endblock %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div style="height: 19vh;"></div>  
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container" style="height:100%;"> 
+    <div class="row">
+      
+       <div class="col-sm-12">
+          <h1 class="text-uppercase">Editing Sunday Service</h1>
+        </div>
+        <div class="col-sm-8 m-3">
+            <form id="update{{service.id}}ServiceInfomration" method="POST">
+                {% csrf_token %}
+                {{form | crispy}}
+            </form>
+        </div>
+        <div class="col-sm-12 mt-3">
+            <a href="{% url 'sunday_services' %}" type="button" class="btn btn-dark">Cancel</a>
+            <button form="update{{service.id}}ServiceInfomration" type="submit" class="btn btn-lg" {% include 'includes/theme.html' %}>Save changes</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}
