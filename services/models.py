@@ -1,5 +1,6 @@
 from django.db import models
 from embed_video.fields import EmbedVideoField
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Videos(models.Model):
@@ -31,8 +32,38 @@ class SundayServiceInformation(models.Model):
     worship_hymm3 = models.CharField(max_length=100)
     worship_hymm4 = models.CharField(max_length=100)
     important_notices = models.CharField(max_length=300)
+    available_bookings = models.IntegerField(default=50)
     date = models.DateTimeField()
     updated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def update_available_bookings(self, number_of_bookings):
+        """
+        Update grand total each time a line item is added,
+        accounting for delivery costs.
+        """
+        self.available_bookings = self.available_bookings - number_of_bookings
+        self.save()
+
+
+class SundayServiceBooking(models.Model):
+    full_name = models.CharField(max_length=50, null=False, blank=False)
+
+    service_title = models.ForeignKey(
+        SundayServiceInformation,
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+
+    email = models.EmailField(max_length=50, null=False, blank=False)
+    phone_number = phone_number = PhoneNumberField()
+    number_of_bookings = models.IntegerField(
+        default=1,
+        null=False,
+        blank=False)
+
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name

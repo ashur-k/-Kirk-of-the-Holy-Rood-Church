@@ -7,6 +7,14 @@
 {% endblock %}
 
 {% block content %}   
+<style>
+    h1{
+    font-size: 1.8rem;
+    padding: 1rem 0;
+
+}
+</style>
+<div style="height: 17vh;"></div>  
 <div class="container">
     <div class="row">            
         <div class="col-sm-12">
@@ -22,46 +30,52 @@
     </div>
 </div>
 <div class="container">
-    <div class="row" style="margin-top: 100px;">
+     <div class="row"> 
         <div class="col-sm-12">
-            <h1 class="mt-5" >Events.html</h1>
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase bg-dark mb-0">
+                        <strong class="text-white">Events</strong>
+                    </h1>
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>                    
         </div>
     </div>
-         {% if request.user.is_superuser %}
-    <div class="col m-2">   
-            <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal">
-                Add New Event
-            </button>          
-        <!-- Add Event Modal -->
-        <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ event_form | crispy }}
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button form="add_event" type="submit" class="btn btn-primary">Save changes</button>
+        {% if request.user.is_superuser %}
+            <div class="col m-2">   
+                <button type="button" class="btn  m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal" {% include 'includes/theme.html' %}>
+                    Add New Event
+                </button>          
+                <!-- Add Event Modal -->
+                <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ event_form | crispy }}
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button form="add_event" type="submit" class="btn " {% include 'includes/theme.html' %}>Save changes</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    {% endif %}
-    <div class="row">        
+        {% endif %}
+    <div class="row mt-3">        
         {% for event in events %}
             <div class="col-sm-6">
                 {% if request.user.is_superuser %}
                     <!-- Button trigger modal -->
                     <div class="col mb-1 p-1">                        
-                        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#edit{{ event.id }}EventModal">
+                        <button type="button" class="btn m-2" data-bs-toggle="modal" data-bs-target="#edit{{ event.id }}EventModal" {% include 'includes/theme.html' %}>
                             Edit Event
                         </button>
                         <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#delteEventModal">
@@ -121,7 +135,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button form="edit__{{event.id}}_event" type="submit" class="btn btn-primary">Submit information</button>
+                            <button form="edit__{{event.id}}_event" type="submit" class="btn" {% include 'includes/theme.html' %}>Submit information</button>
                         </div>
                         </div>
                     </div>
@@ -135,7 +149,7 @@
                         <div>  
                             {% if request.user.is_superuser %} 
                             <!-- Add New Date Modal Button -->
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#add-{{event.id}}-date-time-formModal">
+                            <button type="button" class="btn  btn-sm" data-bs-toggle="modal" data-bs-target="#add-{{event.id}}-date-time-formModal" {% include 'includes/theme.html' %}>
                                 Add New Date
                             </button>
                             <!-- Add New Date Modal -->
@@ -157,7 +171,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button form="add-{{event.id}}-date-time-form" type="submit" class="btn btn-primary">Submit information</button>
+                                    <button form="add-{{event.id}}-date-time-form" type="submit" class="btn " {% include 'includes/theme.html' %}>Submit information</button>
                                 </div>
                                 </div>
                             </div>
@@ -195,7 +209,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" form="edit-{{event_date.id}}-date-time-form" class="btn btn-primary">Save changes</button>
+                                                <button type="submit" form="edit-{{event_date.id}}-date-time-form" class="btn " {% include 'includes/theme.html' %}> Save changes</button>
                                             </div>
                                             </div>
                                         </div>
@@ -225,7 +239,7 @@
                             {% endfor %}  
                         </div>
                         
-                    <a href="{% url 'buy_event_tickets' event.id %}" class="btn btn-primary">Ticket £{{ event.event_price }}</a>
+                    <a href="{% url 'buy_event_tickets' event.id %}" class="btn " {% include 'includes/theme.html' %}>Ticket £{{ event.event_price }}</a>
                     <small><p>{{ event.event_instructions }}</p></small>
                     <small><p>Total tickets were {{ event.event_ticket_quantity }} and remaining tickets are {{ event.event_remaining_ticket }}</p></small>
                     </div>

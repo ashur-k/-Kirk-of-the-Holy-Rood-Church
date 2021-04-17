@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Videos, SundayServiceInformation
+from .models import Videos, SundayServiceInformation, SundayServiceBooking
 from embed_video.admin import AdminVideoMixin
 
 
@@ -24,3 +24,4 @@ admin.site.register(
     SundayServiceInformation,
     SundayServiceInformationAdmin
     )
+admin.site.register(SundayServiceBooking)

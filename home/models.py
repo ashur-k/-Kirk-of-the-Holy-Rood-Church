@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from ministries.models import Ministries
+from services.models import SundayServiceInformation
 
 
 class SiteColorTheme(models.Model):
@@ -50,16 +52,26 @@ class CurrentColorTheme(models.Model):
 class HeroSectionText(models.Model):
     hero_heading = models.TextField(max_length=200, null=False, blank=False)
 
+    def __str__(self):
+        return self.hero_heading
+
 
 class CarouselInnerSection(models.Model):
     carousel_image = models.ImageField(blank=False, upload_to='media/')
     heading = models.CharField(max_length=20, null=False, blank=False)
     paragraph = models.TextField(max_length=250, null=False, blank=False)
 
+    def __str__(self):
+        return self.heading
+
 
 class CarouselSectionText(models.Model):
+    ministry = models.ForeignKey(Ministries, null=True, blank=True, on_delete=models.SET_NULL)
     heading = models.CharField(max_length=20, null=False, blank=False)
     paragraph = models.TextField(max_length=140, null=False, blank=False)
+
+    def __str__(self):
+        return self.heading
 
 
 class SecondParallaxSection(models.Model):
@@ -67,7 +79,13 @@ class SecondParallaxSection(models.Model):
     main_paragraph = models.TextField(max_length=250, null=False, blank=False)
     instruction_paragraph = models.TextField(max_length=65, null=False, blank=False)
 
+    def __str__(self):
+        return self.title
+
 
 class StudyGroupText(models.Model):
     heading = models.CharField(max_length=20, null=False, blank=False)
     paragraph = models.TextField(max_length=200, null=False, blank=False)
+
+    def __str__(self):
+        return self.heading

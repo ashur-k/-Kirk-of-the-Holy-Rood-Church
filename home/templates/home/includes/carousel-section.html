@@ -36,10 +36,7 @@
                                     {% if request.user.is_superuser %}
                                         <button type="button" class="btn btn-sm mb-2" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#inner{{ item.id }}CarouseModal">
                                             Edit Text
-                                        </button>
-                                        <button type="button" class="btn btn-sm mb-2" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#addCarouseItemModal">
-                                            Add New Item
-                                        </button>
+                                        </button>                    
                                         <!-- Modal for InnercarouselModal edit text -->
                                         <div class="modal fade" id="inner{{ item.id }}CarouseModal" tabindex="-1" aria-labelledby="inner{{ item.id }}CarouseModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -147,7 +144,7 @@
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 prayer-group-col" {% include 'includes/theme.html' %}>
                 <div class="row d-none d-sm-none d-md-none d-lg-block">
                     {% if request.user.is_superuser %}
-                        <button type="button" class="btn btn-sm edit-button-carousel-text" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#carouselModal">
+                        <button type="button" class="btn btn-sm btn-dark edit-button-carousel-text" data-bs-toggle="modal" data-bs-target="#carouselModal">
                             Edit Text
                         </button>
                     {% endif %}
@@ -156,7 +153,7 @@
                         {{ carousel_text.paragraph }}
                     </p>
                     <div class="mt-1 mb-2">
-                        <a class="btn btn-dark" href="">{{ carousel_text.heading }}</a>
+                        <a class="btn" href="{% url 'ministry' carousel_text.ministry.id  %}" {% include 'includes/secondary_theme.html' %}>{{ carousel_text.heading }}</a>
                     </div>
                 </div>
             </div>

@@ -72,7 +72,6 @@ def ministry(request, id):
 def ministry_edit(request, id):
 
     ministry = get_object_or_404(Ministries, id=id)
-    times = MeetingTimes.objects.filter(meeting_times_id=ministry.id)
     form = MinistrieForm(instance=ministry)
 
     if request.method == 'POST':
@@ -85,7 +84,6 @@ def ministry_edit(request, id):
     template = 'ministries/ministry_admin_edit.html'
     context = {
         'ministry': ministry,
-        'times': times,
         'form': form,
         }
 

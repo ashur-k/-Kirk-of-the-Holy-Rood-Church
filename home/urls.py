@@ -13,8 +13,6 @@ urlpatterns = [
          views.inner_carousel_edit,
          name='inner_carousel_edit'),
 
-    path('add_new_carousel/', views.add_new_carousel, name='add_new_carousel'),
-
     path('parallax_edit/<int:id>/',
          views.parallax_edit,
          name='parallax_edit'),

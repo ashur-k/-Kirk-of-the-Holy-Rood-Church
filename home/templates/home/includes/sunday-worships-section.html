@@ -15,7 +15,7 @@
                     </h3>
                     <hr class="general-hr" {% include 'includes/theme.html' %}>
                     <p class="text-white">{{ sunday_services.instruction_paragraph }}</p>
-                    <a href="" class="btn btn-dark">{{ sunday_services.title }}</a>
+                    <a href="{% url 'sunday_services' %}" class="btn btn-dark">{{ sunday_services.title }}</a>
                 </div>
             </section>
         </div>

@@ -4,7 +4,7 @@
             <div class="row text-center mb-4 row justify-content-center">
                 {% if request.user.is_superuser %}
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm w-25" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#studyGroupModal">
+                    <button type="button" class="btn btn-sm w-25" {% include 'includes/secondary_theme.html' %} data-bs-toggle="modal" data-bs-target="#studyGroupModal">
                         Edit Text
                     </button>
                 {% endif %}
@@ -17,7 +17,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-6  mt-1 mb-1">
                     {% if request.user.is_superuser %}
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-sm w-25 mb-2" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#alphaGroupModal">
+                        <button type="button" class="btn btn-sm w-25 mb-2" {% include 'includes/secondary_theme.html' %} data-bs-toggle="modal" data-bs-target="#alphaGroupModal">
                             Edit Text
                         </button>
                     {% endif %}
@@ -26,14 +26,14 @@
                         <div class="overlay">
                             <h2 class="card-title text-white text-uppercase">{{ alpha_study.heading }}</h2>
                             <p class="card-text text-white d-none d-sm-none d-md-block">{{ alpha_study.paragraph }}</p>
-                            <a class="info" href="#">{{ alpha_study.heading }}</a>
+                            <a class="info" href="{% url 'ministry' alpha_study.ministry.id  %}">{{ alpha_study.heading }}</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 mt-1 mb-1">
                      {% if request.user.is_superuser %}
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-sm w-25 mb-2" {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#bibleStudyGroupModal">
+                        <button type="button" class="btn btn-sm w-25 mb-2" {% include 'includes/secondary_theme.html' %} data-bs-toggle="modal" data-bs-target="#bibleStudyGroupModal">
                             Edit Text
                         </button>
                     {% endif %}
@@ -42,7 +42,7 @@
                         <div class="card-img-overlay overlay">
                             <h5 class="card-title text-white text-uppercase">{{ bible_study.heading }}</h5>
                             <p class="card-text text-white d-none d-sm-none d-md-block">{{ bible_study.paragraph }}</p>
-                            <a class="info" href="#">{{ bible_study.heading }}</a>
+                            <a class="info" href="{% url 'ministry' alpha_study.ministry.id  %}">{{ bible_study.heading }}</a>
                         </div>
                     </div>
                 </div>            

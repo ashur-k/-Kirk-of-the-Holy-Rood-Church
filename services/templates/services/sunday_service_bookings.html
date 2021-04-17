@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+    <div class="container header-container">
+        
+    </div>
+{% endblock %}
+
+{% block content %}   
+<div class="container">
+    <div class="row">            
+        <div class="col-sm-12">
+            {% if messages %}
+                <div style="height: 15vh;"></div>
+                <div class="message-container">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 150px;">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mt-3 ">
+            <h2 class="logo-font text-dark">Sunday Bookings</h2>
+                      
+            <hr>
+        </div>            
+    </div>
+    
+    <div class="row table-responsive">
+        
+        <table class="table table-success table-striped">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">Service Title</th>
+                <th scope="col">Number of Bookings</th>
+                <th scope="col">Buttons</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in sunday_service_bookings %}
+                <tr>        
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ booking.full_name}}</td>
+                <td>{{ booking.phone_number }}</td>
+                <td>{{ booking.email }}</td>
+                <td>{{ booking.service_title }}</td>
+                <td>{{ booking.number_of_bookings }}</td>
+                <td>
+                    <a href="" class="btn btn-small btn-dark">Edit</a>
+                    <a href="" class="btn btn-small btn-dark">Del</a>
+                </td>     
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>         
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}
