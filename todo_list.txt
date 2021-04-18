@@ -1,9 +1,2 @@
-1. Need to change navbar with bootstrap navbar to keep thing simple and clean XX done
-2. Need to set proper display for messages showing
-3. Need to finish checkout success page.
-4. Need to finish video page design
-5. Need to develop admin viweing for request coming to ministries groups xx done
-6. Footer designing needs to finish
-7. Contact us and about us page needs to be created
-8. Make website pages consistent
-9. Need to solve context proceessor issue (Tackling Now)
+1. First thing tommorrow are toasts
+2. Contact us and about us page needs to be created

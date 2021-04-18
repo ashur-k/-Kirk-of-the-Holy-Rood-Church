@@ -13,6 +13,7 @@ def site_settings(request):
         if color_theme_form.is_valid():
             color_theme_form.save()
             messages.success(request, 'Successfully updated theme.')
+            
 
     color_theme_form = CurrentColorThemeForm(instance=color)
 

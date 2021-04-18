@@ -14,19 +14,9 @@
 
 }
 </style>
-<div style="height: 17vh;"></div>  
 <div class="container">
     <div class="row">            
-        <div class="col-sm-12">
-            {% if messages %}
-                <div style="height: 15vh;"></div>
-                <div class="message-container">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
+        
     </div>
 </div>
 <div class="container">
@@ -35,184 +25,195 @@
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
                     <h1 class="text-uppercase bg-dark mb-0">
-                        <strong class="text-white">Events</strong>
+                         {% if request.user.is_superuser %}
+                            <div class="col m-2">   
+                                <button type="button" class="btn  m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal" {% include 'includes/theme.html' %}>
+                                <i class="fas fa-plus"></i>  Add New Event
+                                </button>          
+                                <!-- Add Event Modal -->
+                                <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    {{ event_form | crispy }}
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button form="add_event" type="submit" class="btn " {% include 'includes/theme.html' %}>Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         {% endif %}
+                        <strong class="text-white">
+                            Events
+                        </strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
         </div>
     </div>
-        {% if request.user.is_superuser %}
-            <div class="col m-2">   
-                <button type="button" class="btn  m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal" {% include 'includes/theme.html' %}>
-                    Add New Event
-                </button>          
-                <!-- Add Event Modal -->
-                <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    {{ event_form | crispy }}
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button form="add_event" type="submit" class="btn " {% include 'includes/theme.html' %}>Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+   
     <div class="row mt-3">        
         {% for event in events %}
             <div class="col-sm-6">
-                {% if request.user.is_superuser %}
-                    <!-- Button trigger modal -->
-                    <div class="col mb-1 p-1">                        
-                        <button type="button" class="btn m-2" data-bs-toggle="modal" data-bs-target="#edit{{ event.id }}EventModal" {% include 'includes/theme.html' %}>
-                            Edit Event
-                        </button>
-                        <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#delteEventModal">
-                            Delete Event
-                        </button>
-                    </div>                    
-                    <!-- Edit Event Modal -->
-                    <div class="modal fade" id="edit{{ event.id }}EventModal" tabindex="-1" aria-labelledby="edit{{ event.id }}EventModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="edit{{ event.id }}EventModalLabel">Editing {{ event.event_name }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="edit__{{event.id}}_event" action="{% url 'edit_event' event.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                    <div class="mb-1">
-                                        <label for="event_{{event.id}}_name" class="form-label">Event Name</label>
-                                        <input type="text" class="form-control" id="event_{{event.id}}_name" name="event_name" value="{{ event.event_name }}">
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label">Current Image</label><br>
-                                        <img src="{{ event.image.url }}" class="img-thumbnail" alt="..." style="height:100px;" >
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="image_{{event.id}}">Default file input example</label>
-                                        <input type="file" class="form-control" name="image" id="image_{{event.id}}" />
-                                    </div>                                    
-                                    <div class="mb-1">
-                                        <label class="form-label" for="event_{{event.id}}_description">Event Description</label>
-                                        <textarea id="event_{{event.id}}_description" class="form-control" name="event_description"  style="height: 150px">{{ event.event_description }}</textarea>                              
-                                    </div>
-                        
-                                    <div class="mb-1">
-                                        <label class="form-label" for="event__{{event.id}}_price">Event Price</label>
-                                        <input type="text" class="form-control" id="event__{{event.id}}_price" name="event_price" value="{{ event.event_price }}">
-                                    </div>
-                                       <div class="mb-1">
-                                        <label class="form-label" for="event__{{event.id}}_price">Available Tickets</label>
-                                        <input type="number" class="form-control" id="event__{{event.id}}_ticket_quantity" name="event_ticket_quantity" value="{{ event.event_ticket_quantity }}">
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="event_{{ event.id }}_display_status" class="form-label">Event Display</label>
-                                        <select id="event_{{ event.id }}_display_status" class="form-select" name="event_display_status" aria-label="Default select example">
-                                            <option value="{{ event.event_display_status }}" selected="selected">
-                                               {% if event.event_display_status  %}Show Event{% else %}Not Showing Event{% endif %}
-                                            </option>
-                                            <option value="False">Not Show Event</option>                            
-                                        </select>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="event__{{event.id}}_instructions">Event Price</label>
-                                        <input type="text" class="form-control" id="event__{{event.id}}_instructions" name="event_instructions" value="{{ event.event_instructions }}">
-                                    </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button form="edit__{{event.id}}_event" type="submit" class="btn" {% include 'includes/theme.html' %}>Submit information</button>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    {% endif %}  
                 <div class="card p-2">                                     
                     <img src="{{ event.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                    <h5 class="card-title text-uppercase">{{ event.event_name }}</h5>
-                        <p class="card-text">{{ event.event_description }}</p>
-                        <div>  
-                            {% if request.user.is_superuser %} 
-                            <!-- Add New Date Modal Button -->
-                            <button type="button" class="btn  btn-sm" data-bs-toggle="modal" data-bs-target="#add-{{event.id}}-date-time-formModal" {% include 'includes/theme.html' %}>
-                                Add New Date
+                    <h5 class="card-title text-uppercase">
+                        {{ event.event_name }}
+                        {% if request.user.is_superuser %}
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-sm btn btn-dark" data-bs-toggle="modal" data-bs-target="#edit{{ event.id }}EventModal">
+                                <small><i class="fas fa-user-edit"></i></small>
                             </button>
-                            <!-- Add New Date Modal -->
-                            <div class="modal fade" id="add-{{event.id}}-date-time-formModal" tabindex="-1" aria-labelledby="add-{{event.id}}-date-time-formModalLabel" aria-hidden="true">
+                            <!-- Edit Event Modal -->
+                            <div class="modal fade" id="edit{{ event.id }}EventModal" tabindex="-1" aria-labelledby="edit{{ event.id }}EventModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="add-{{event.id}}-date-time-formModalLabel">{{event.id}}{{event.event_name}}</h5>
+                                    <h5 class="modal-title" id="edit{{ event.id }}EventModalLabel">Editing {{ event.event_name }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="add-{{event.id}}-date-time-form" method="POST" action="{% url 'add_event_date_time' event.id %}">
-                                         {% csrf_token %}
-                                        <p>
-                                            <label for="datetime-local">Example datetime-local</label>
-                                            <input type="datetime-local" id="datetime-local" name="date" required>
-                                        </p>
-                                    </form>                                   
+                                    <form id="edit__{{event.id}}_event" action="{% url 'edit_event' event.id %}" method="POST" class="form mb-2" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                            <div class="mb-1">
+                                                <label for="event_{{event.id}}_name" class="form-label">Event Name</label>
+                                                <input type="text" class="form-control" id="event_{{event.id}}_name" name="event_name" value="{{ event.event_name }}">
+                                            </div>
+                                            <div class="mb-1">
+                                                <label class="form-label">Current Image</label><br>
+                                                <img src="{{ event.image.url }}" class="img-thumbnail" alt="..." style="height:100px;" >
+                                            </div>
+                                            <div class="mb-1">
+                                                <label class="form-label" for="image_{{event.id}}">Default file input example</label>
+                                                <input type="file" class="form-control" name="image" id="image_{{event.id}}" />
+                                            </div>                                    
+                                            <div class="mb-1">
+                                                <label class="form-label" for="event_{{event.id}}_description">Event Description</label>
+                                                <textarea id="event_{{event.id}}_description" class="form-control" name="event_description"  style="height: 150px">{{ event.event_description }}</textarea>                              
+                                            </div>
+                                
+                                            <div class="mb-1">
+                                                <label class="form-label" for="event__{{event.id}}_price">Event Price</label>
+                                                <input type="text" class="form-control" id="event__{{event.id}}_price" name="event_price" value="{{ event.event_price }}">
+                                            </div>
+                                            <div class="mb-1">
+                                                <label class="form-label" for="event__{{event.id}}_price">Available Tickets</label>
+                                                <input type="number" class="form-control" id="event__{{event.id}}_ticket_quantity" name="event_ticket_quantity" value="{{ event.event_ticket_quantity }}">
+                                            </div>
+                                            <div class="mb-1">
+                                                <label for="event_{{ event.id }}_display_status" class="form-label">Event Display</label>
+                                                <select id="event_{{ event.id }}_display_status" class="form-select" name="event_display_status" aria-label="Default select example">
+                                                    <option value="{{ event.event_display_status }}" selected="selected">
+                                                    {% if event.event_display_status  %}Show Event{% else %}Not Showing Event{% endif %}
+                                                    </option>
+                                                    <option value="False">Not Show Event</option>                            
+                                                </select>
+                                            </div>
+                                            <div class="mb-1">
+                                                <label class="form-label" for="event__{{event.id}}_instructions">Event Price</label>
+                                                <input type="text" class="form-control" id="event__{{event.id}}_instructions" name="event_instructions" value="{{ event.event_instructions }}">
+                                            </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button form="add-{{event.id}}-date-time-form" type="submit" class="btn " {% include 'includes/theme.html' %}>Submit information</button>
+                                    <button form="edit__{{event.id}}_event" type="submit" class="btn" {% include 'includes/theme.html' %}>Submit information</button>
                                 </div>
                                 </div>
                             </div>
+                            </div>
+                            <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#delteEventModal">
+                                <small><i class="fas fa-trash-alt"></i></small>
+                            </button>                   
                         </div>
-
+                        {% endif %} 
+                    </h5>
+                        <p class="card-text">{{ event.event_description }}</p>
+                        <div>  
+                            {% if request.user.is_superuser %} 
+                            
                             {% endif %}
-                            {% for event_date in event.event_dates %}  
-                            <p>
-                                {% if request.user.is_superuser %} 
-                                <small>
-                                    <!-- edit date time trigger modal -->
-                                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#edit-{{event_date.id}}-date-time-formModal">
-                                        edit
-                                    </a>
-                                    <!-- Delete date-time trigger modal -->
-                                    <a type="button" class=""  data-bs-toggle="modal" data-bs-target="#delete-{{event_date.id}}-date-timeModal" style="color: red;">
-                                        delete
-                                    </a>
-                                    <!-- Edit Date Time Modal -->
-                                    <div class="modal fade" id="edit-{{event_date.id}}-date-time-formModal" tabindex="-1" aria-labelledby="edit-{{event_date.id}}-date-time-formModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="edit-{{event_date.id}}-date-time-formModalLabel">Editing Event Date{{event_date.date }}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="edit-{{event_date.id}}-date-time-form" method="POST" action="{% url 'edit_event_date_time' event_date.id %}">
-                                                    {% csrf_token %}
-                                                        <p>
-                                                            <label for="datetime-local">Example datetime-local</label>
-                                                            <input type="datetime-local" id="edit-datetime-local" name="date" value="{{ event_date.date  }}" required>
-                                                        </p>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" form="edit-{{event_date.id}}-date-time-form" class="btn " {% include 'includes/theme.html' %}> Save changes</button>
-                                            </div>
-                                            </div>
+                            {% if request.user.is_superuser %} 
+                            <p class="m-0 p-0">
+                                <!-- Add New Date Modal Button -->
+                                    <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#add-{{event.id}}-date-time-formModal">
+                                        <small class="m-0 p-0"><i class="far fa-calendar-plus"></i><span> Add Date</span></small>
+                                    </button>
+                                    <!-- Add New Date Modal -->
+                                    <div class="modal fade" id="add-{{event.id}}-date-time-formModal" tabindex="-1" aria-labelledby="add-{{event.id}}-date-time-formModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="add-{{event.id}}-date-time-formModalLabel">Add new Date for {{event.event_name}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <div class="modal-body">
+                                            <form id="add-{{event.id}}-date-time-form" method="POST" action="{% url 'add_event_date_time' event.id %}">
+                                                {% csrf_token %}
+                                                <p>
+                                                    <label for="datetime-local">Example datetime-local</label>
+                                                    <input type="datetime-local" id="datetime-local" name="date" required>
+                                                </p>
+                                            </form>                                   
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button form="add-{{event.id}}-date-time-form" type="submit" class="btn " {% include 'includes/theme.html' %}>Submit information</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </p>
+                            {% endif %}                            
+                            {% for event_date in event.event_dates %}  
+                            <p class="m-0 p-0">                                                           
+                                {{ event_date.date  }}
+                                {% if request.user.is_superuser %} 
+                                <span class="btn-group" role="group" aria-label="Basic example">                                    
+                                     <!-- edit date time trigger modal -->
+                                    <button type="button" class="btn btn-small btn-dark" data-bs-toggle="modal" data-bs-target="#edit-{{event_date.id}}-date-time-formModal">
+                                        <small><i class="fas fa-user-edit"></i></small>
+                                    </button>
+                                    <!-- Delete date-time trigger modal -->
+                                    <button type="button" class="btn btn-small btn-danger"  data-bs-toggle="modal" data-bs-target="#delete-{{event_date.id}}-date-timeModal" >
+                                        <small><i class="fas fa-trash-alt"></i></small>
+                                    </button>
+                                </span>
+                                <!-- Modals -->                                    
+                                    <!-- Edit date-time modal -->
+                                    <div class="modal fade" id="edit-{{event_date.id}}-date-time-formModal" tabindex="-1" aria-labelledby="edit-{{event_date.id}}-date-time-formModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="edit-{{event_date.id}}-date-time-formModalLabel">Editing Event Date {{event_date.date }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="edit-{{event_date.id}}-date-time-form" method="POST" action="{% url 'edit_event_date_time' event_date.id %}">
+                                                        {% csrf_token %}
+                                                            <p>
+                                                                <label for="datetime-local">Example datetime-local</label>
+                                                                <input type="datetime-local" id="edit-datetime-local" name="date" value="{{ event_date.date  }}" required>
+                                                            </p>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" form="edit-{{event_date.id}}-date-time-form" class="btn " {% include 'includes/theme.html' %}> Save changes</button>
+                                                </div>
+                                                </div>
+                                            </div>
                                     </div>
                                     <!-- Delete date-time modal -->
                                     <div class="modal fade" id="delete-{{event_date.id}}-date-timeModal" tabindex="-1" aria-labelledby="delete-{{event_date.id}}-date-timeModalLabel" aria-hidden="true">
@@ -232,9 +233,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </small>
                                 {% endif %}
-                                {{ event_date.date  }}
                             </p>
                             {% endfor %}  
                         </div>

@@ -74,7 +74,7 @@ def edit_sunday_services(request, id):
         form = SundayServiceInformationForm(request.POST, instance=service)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Service successfully updated')
+            messages.success(request, 'Service information successfully updated')
             return redirect(reverse('sunday_services'))
 
     context = {
@@ -92,5 +92,5 @@ def get_sunday_bookings(request):
     context = {
         'sunday_service_bookings': sunday_service_bookings
     }
-    
+
     return render(request, template, context)
