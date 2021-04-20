@@ -50,67 +50,71 @@
 
     <title>Kirk of Holy Rood {% block extra_title %}{% endblock %}</title>  
   </head>
-  <body>
-    <header class="container-fluid fixed-top mb-5">
-        <div class="row bg-white pt-lg-2 d-none d-lg-flex">
-            <div class="col-sm-12 col-md-12 col-lg-10">
-                <a href="{% url 'home' %}" class="nav-link main-logo-link">                    
-                    <h4 class="logo-font text-black my-0">
-                        <img src="/media/kirkcolour.png" alt="" height="70px">
-                        <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
-                    </h4>                    
-                </a>
-            </div>
-            {% if request.user.is_superuser %}
-            <div class="col-sm-12 col-lg-2 my-auto py-1 py-lg-0">
-                <ul class="list-inline list-unstyled text-center text-lg-right my-0">       
-                    <li class="list-inline-item dropdown">
-                        <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="text-center">
-                                <div><i class="fas fa-user fa-lg"></i></div>
-                                <p class="my-0">Admin Logged In</p>
-                            </div>
+    <body>
+        <section class="header" style="height: 10vh;">
+            <header class="container-fluid fixed-top" >
+                <div class="row bg-white pt-lg-2 d-none d-lg-flex">
+                    <div class="col-sm-12 col-md-12 col-lg-10">
+                        <a href="{% url 'home' %}" class="nav-link main-logo-link">                    
+                            <h4 class="logo-font text-black my-0">
+                                <img src="/media/kirkcolour.png" alt="" height="70px">
+                                <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
+                            </h4>                    
                         </a>
-                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
-                            <a href="{% url 'admin_settings' %}" class="dropdown-item">Admin Settings</a>
-                            <a href="{% url 'sunday_bookings' %}" class="dropdown-item">Sunday Bookings</a>                       
-                            <a href="{% url 'request_and_messages' %}" class="dropdown-item">Request messages</a>                           
-                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>                            
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            {% endif %}
-        </div>
-        
-        <div class="row" {% include 'includes/theme.html' %}>
-            <nav class="navbar navbar-expand-lg navbar-light w-100 text-center p-2" >
+                    </div>
+                    {% if request.user.is_superuser %}
+                    <div class="col-sm-12 col-lg-2 my-auto py-1 py-lg-0">
+                        <ul class="list-inline list-unstyled text-center text-lg-right my-0">       
+                            <li class="list-inline-item dropdown">
+                                <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="text-center">
+                                        <div><i class="fas fa-user fa-lg"></i></div>
+                                        <p class="my-0">Admin Logged In</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                                    <a href="{% url 'admin_settings' %}" class="dropdown-item">Admin Settings</a>
+                                    <a href="{% url 'sunday_bookings' %}" class="dropdown-item">Sunday Bookings</a>                       
+                                    <a href="{% url 'request_and_messages' %}" class="dropdown-item">Request messages</a>                           
+                                    <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>                            
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
                 
-                <button class="navbar-toggler m-2" type="button" 
-                data-toggle="collapse" data-target="#main-nav" 
-                aria-controls="main-nav" aria-expanded="false" 
-                aria-label="Toggle navigation"
-                style="width: 100%  !important;">
-                    <h5 class="logo-font text-black text-right">
-                        <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
-                    </h5> 
-                    <span class="navbar-toggler-icon"></span>
-                    
-                </button>
-                 
-                {% include 'includes/main-nav.html' %}
-            </nav>
-        </div>
-    </header>
-    <div style="height: 17vh;"></div>  
-
-    
+                <div class="row" {% include 'includes/theme.html' %}>
+                    <nav class="navbar navbar-expand-lg navbar-light w-100 text-center p-2" >                    
+                        <button class="navbar-toggler m-2" type="button" 
+                            data-toggle="collapse" data-target="#main-nav" 
+                            aria-controls="main-nav" aria-expanded="false" 
+                            aria-label="Toggle navigation"
+                            style="width: 100%  !important;">
+                            <h5 class="logo-font text-black text-right">
+                                <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
+                            </h5> 
+                            <span class="navbar-toggler-icon"></span>                        
+                        </button>                    
+                        {% include 'includes/main-nav.html' %}
+                    </nav>
+                </div>
+            </header>
+        </section> 
     {% if messages %}
-	<div class="message-container">
+	<div class="message-container" style="margin-top: 20px !important;">
 		{% for message in messages %}
-            
-            {% include 'includes/toasts/toast_success.html' %}
-                	
+            {% with message.level as level %}
+                {% if level == 40 %} <!--Level 40 is an error-->
+                    {% include 'includes/toasts/toast_error.html' %}
+                {% elif level == 30 %} <!--Level 40 is a warning-->
+                    {% include 'includes/toasts/toast_warning.html' %}
+                {% elif level == 25 %} <!--Level 40 is a success-->
+                    {% include 'includes/toasts/toast_success.html' %}
+                {% else %} <!--for everything else -->
+                    {% include 'includes/toasts/toast_info.html' %}
+                {% endif %}
+            {% endwith %}		
 		{% endfor %}
 	</div>
 	{% endif %}
@@ -123,19 +127,21 @@
     
     {% block content %}
     {% endblock %}
-<div class="row-centered text-center mt-3 mb-2">
-    <hr>
-    <div class="row-centered text-center mt-4 mb-2 h-100">
-    <div class="col-sm-12 my-auto">
-        <p class="text-center text-uppercase">Thanks for visiting our site.</p>
+    <div class="row-centered text-center mt-3 mb-2">
+        <hr>
+        <div class="row-centered text-center mt-4 mb-2 h-100">
+        <div class="col-sm-12 my-auto">
+            <p class="text-center text-uppercase">Thanks for visiting our site.</p>
+        </div>
     </div>
-</div>
-    <p class="text-center text-uppercase">Kirk Of the Holy Rood Church <strong class="copy-rigth-sign">©</strong> 2020 copyright protected</p>
-</div>
+        <p class="text-center text-uppercase">Kirk Of the Holy Rood Church <strong class="copy-rigth-sign">©</strong> 2020 copyright protected</p>
+    </div>
 
-       <script type="text/javascript">
-        $('.toast').toast('show');
-    </script>
+
+<script type="text/javascript">
+    $('.toast').toast('show');
+</script>
+
 {% block postloadjs %}
  
    

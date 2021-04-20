@@ -33,7 +33,7 @@
         </div>
     </div>
 </div>
-<div class="container" style="height:80vh;"> 
+<div class="container" style="height:80vh; margin-top: 50px !important;"> 
     <div class="row"> 
         <div class="col-sm-12">
             <div class="card text-center">
@@ -48,16 +48,16 @@
     <div class="row">
         {% if services %}
             {% for service in services %}
-                {% if request.user.is_superuser %}
-                    <div class="col-sm-4 m-1">
-                        <!-- Update Service Information trigger modal Button  -->
-                        <a type="button" href="{% url 'edit_sunday_services' service.id %}" class="btn btn-sm" {% include 'includes/theme.html' %}>
-                            Edit Service Information
-                        </a>
-                    </div>  
-                {% endif %}
-                    <div class="col-sm-12 mt-5">
-                        <div class="jumbotron bg-dark text-light p-3 rounded">
+                <div class="col-sm-12 mt-5">                        
+                    <div class="jumbotron bg-dark text-light p-3 rounded">
+                    {% if request.user.is_superuser %}
+                        <div class="col-sm-4 m-1">
+                            <!-- Update Service Information trigger modal Button  -->
+                            <a type="button" href="{% url 'edit_sunday_services' service.id %}" class="btn btn-sm" {% include 'includes/theme.html' %}>
+                                Edit Service Information
+                            </a>
+                        </div>  
+                    {% endif %}
                             <h6 style="float: right;">{{ service.date }}</h6>
                             <br>
                             <h3 class="text-uppercase">{{service.title}}</h3>

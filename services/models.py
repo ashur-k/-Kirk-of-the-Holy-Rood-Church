@@ -16,10 +16,19 @@ class Videos(models.Model):
         )
     main_paragraph = models.TextField(max_length=100, blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='True')
+    pinned = models.BooleanField(default=False)
     date = models.DateTimeField()
 
     def __str__(self):
         return self.title
+
+    def pin(self):
+        self.pinned = True
+        self.save()
+
+    def unpin(self):
+        self.pinned = False 
+        self.save()
 
 
 class SundayServiceInformation(models.Model):

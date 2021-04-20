@@ -1,18 +1,119 @@
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponse
 from . models import Videos, SundayServiceInformation, SundayServiceBooking
-from .forms import SundayServiceInformationForm, SundayServiceBookingForm, SundayServiceBooking
+from .forms import SundayServiceInformationForm, SundayServiceBookingForm, SundayServiceBooking, VideoForm
 
 
-def services(request):
+def video_services(request):
     template = 'services/videos_services.html'
-    videos = Videos.objects.all()
+    title_video = get_object_or_404(Videos, pinned=True)
+    if request.user.is_superuser:
+        videos = Videos.objects.all()
+    else:
+        videos = Videos.objects.filter(status="True")
 
     context = {
+        'title_video': title_video,
         'videos': videos,
         }
 
     return render(request, template, context)
+
+
+def play_video(request, video_id):
+
+    title_video = get_object_or_404(Videos, id=video_id)
+    videos = Videos.objects.filter(status="True")
+    template = 'services/videos_services.html'
+    context = {
+        'title_video': title_video,
+        'videos': videos,
+    }
+    return render(request, template, context)
+
+
+def pin_video(request, video_id):
+
+    for video in Videos.objects.all():
+        if video.pinned:
+            video.unpin()
+    video = get_object_or_404(Videos, pk=video_id)
+    video.pin()
+    return redirect('video_services')
+
+
+def add_video(request):
+    video_form = VideoForm()
+    template = "services/add_new_video.html"
+
+    if request.method == 'POST':
+        video_form = VideoForm(request.POST, request.FILES)
+        if video_form.is_valid():
+            video = video_form.save(commit=False)
+            if video.pinned:
+                if video.status == "False":
+                    messages.error(request, 'Pinned Videos visivility status is required to set true.')
+                    return redirect('add_video')
+                else:
+                    video = video_form.save()
+                    for video in Videos.objects.all():
+                        video.unpin()
+                    video = get_object_or_404(Videos, pk=video.id)
+                    video.pin()
+                    messages.success(request, 'Video is successfully added and pinned.')
+                    return redirect('video_services')
+            else:
+                video = video_form.save()
+                messages.success(request, 'Video is successfully added.')
+                return redirect('video_services')
+    context = {
+        'video_form': video_form
+    }
+    return render(request, template, context)
+
+
+def edit_video(request, id):
+    video_obj = get_object_or_404(Videos, pk=id)
+    video_pinned = video_obj.pinned
+
+    if request.method == 'POST':
+        video_form = VideoForm(request.POST, request.FILES, instance=video_obj)
+        if video_form.is_valid():
+            video = video_form.save(commit=False)
+            if video.pinned:
+                if video.status == "False":
+                    messages.error(request, 'Pinned Videos visivility status is required to set true.')
+                else:
+                    video = video_form.save()
+                    for video in Videos.objects.all():
+                        video.unpin()
+                    new_video = get_object_or_404(Videos, pk=video.id)
+                    new_video.pin()
+                    messages.success(request, 'Video is successfully updated.')
+                    return redirect('video_services')
+            else:
+                print(video_obj.pinned, video_pinned)
+                if video_obj.pinned is False and video_pinned is True:
+                    messages.error(request, 'Please do not try unpinning video')
+                else:
+                    video_form.save()
+                    messages.success(request, 'Video is successfully updated.')
+                    return redirect('video_services')
+
+
+    video_form = VideoForm(instance=video_obj)
+    template = "services/edit_video.html"
+    context = {
+        'video_form': video_form
+    }
+    return render(request, template, context)
+
+
+def del_video(request, id):
+    video = get_object_or_404(Videos, id=id)
+    video.delete()
+    messages.success(request, 'Video is deleted successfully!')
+    return redirect(reverse('video_services'))
 
 
 def sunday_services(request):

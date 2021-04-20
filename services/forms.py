@@ -1,7 +1,8 @@
 from django import forms
 from .models import (
     SundayServiceInformation,
-    SundayServiceBooking
+    SundayServiceBooking,
+    Videos,
     )
 
 
@@ -34,3 +35,10 @@ class SundayServiceBookingForm(forms.ModelForm):
             'phone_number',
             'number_of_bookings',
             ]
+
+
+class VideoForm(forms.ModelForm):
+
+    class Meta:
+        model = Videos
+        fields = '__all__'
