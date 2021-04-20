@@ -92,7 +92,6 @@ def edit_video(request, id):
                     messages.success(request, 'Video is successfully updated.')
                     return redirect('video_services')
             else:
-                print(video_obj.pinned, video_pinned)
                 if video_obj.pinned is False and video_pinned is True:
                     messages.error(request, 'Please do not try unpinning video')
                 else:

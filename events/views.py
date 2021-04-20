@@ -4,8 +4,8 @@ from django.shortcuts import (
     reverse,
     get_object_or_404,
     HttpResponse)
-from . models import Events, EventDates
-from .forms import EventsForm, EventDateForm
+from . models import Events, EventDates, BookingFreeEvents
+from .forms import EventsForm, EventDateForm, BookingFreeEventsForm
 from payment.forms import PaymentForm, TicketPaymentForm
 from django.contrib import messages
 
@@ -51,6 +51,13 @@ def edit_event(request, event_id):
                 request,
                 'Editing events content is failed for errors in form!')
             return redirect(reverse('events'))
+
+
+def delete_event(request, event_id):
+    event = get_object_or_404(Events, id=event_id)
+    event.delete()
+    messages.success(request, 'Succesfully deleted an event!')
+    return redirect(reverse('events'))
 
 
 def add_event_date_time(request, event_id):
@@ -138,4 +145,56 @@ def buy_event_tickets(request, event_id):
         'ticket_payment_form': ticket_payment_form,
     }
 
+    return render(request, template, context)
+
+
+def booking_free_event(request, event_id):
+
+    event = get_object_or_404(Events, id=event_id)
+    event_dates = EventDates.objects.filter(event=event_id)
+
+    if request.method == 'POST':
+        event_booking_date = request.POST['event_booking_date']
+        form_data = {
+            'full_name': request.POST['full_name'],
+            'email': request.POST['email'],
+            'phone_number': request.POST['phone_number'],
+            'number_of_bookings': request.POST['number_of_bookings'],
+        }
+        booking_free_event_form = BookingFreeEventsForm(form_data)
+        if booking_free_event_form.is_valid():
+            booking_free_event = booking_free_event_form.save(commit=False)
+            booking_free_event.event_title = event
+            booking_free_event.event_booking_date = event_booking_date
+            booking_free_event = booking_free_event_form.save()
+
+            bookings = booking_free_event.number_of_bookings
+
+            # updating event ticket count
+          
+            messages.success(request, 'You haeve successfully booked for this event.')
+            return redirect(reverse('free_event_booking_success', args=[booking_free_event.id]))
+
+    booking_free_event_form = BookingFreeEventsForm()
+    template = 'events/booking_free_event.html'
+
+    context = {
+        'event_dates': event_dates,
+        'free_event_form': booking_free_event_form,
+    }
+    return render(request, template, context)
+
+
+def free_event_booking_success(request, id):
+
+    booked_event_data = get_object_or_404(BookingFreeEvents, id=id)
+    event_id = booked_event_data.event_title.id
+    event = get_object_or_404(Events, id=event_id)
+
+    template = 'events/event_booking_success.html'
+
+    context = {
+        'event': event,
+        'booked_event_data': booked_event_data,
+    }
     return render(request, template, context)

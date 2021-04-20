@@ -66,7 +66,7 @@ class SundayServiceBooking(models.Model):
         on_delete=models.SET_NULL)
 
     email = models.EmailField(max_length=50, null=False, blank=False)
-    phone_number = phone_number = PhoneNumberField()
+    phone_number = PhoneNumberField()
     number_of_bookings = models.IntegerField(
         default=1,
         null=False,

@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Events(models.Model):
@@ -33,3 +34,24 @@ class EventDates(models.Model):
         on_delete=models.CASCADE
         )
     date = models.DateTimeField()
+
+
+class BookingFreeEvents(models.Model):
+    full_name = models.CharField(max_length=50, null=False, blank=False)
+    event_title = models.ForeignKey(
+        Events,
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+    event_booking_date = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50, null=False, blank=False)
+    phone_number = PhoneNumberField()
+    number_of_bookings = models.IntegerField(
+        default=1,
+        null=False,
+        blank=False)
+
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.full_name

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+   <div class="container" style="margin-top: 70px !important;">
+    <div class="row"> 
+        <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase bg-dark mb-0">
+                        <strong class="text-white">Event Booking</strong>
+                    </h1>
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>                    
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <h3>Booking Details</h3>
+        </div>
+        <div class="row mb-5">
+            <hr>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-8"> 
+                        <img src="{{ event.image.url }}" class="rounded float-end" alt="" style="height: 360px;">
+                    </div>
+                    <div class="col-sm-4  border-end border-dark mt-0">                       
+                        <h2 class="text-right float-end mt-4">{{ event.event_name }}</h2>
+                        <p class="text-right float-end">
+                            {{ event.event_description }}<br>
+                            <small>Its an free entry ticket</small><br>
+                            <strong class="lead fw-bolder">{{ event.event_instructions }}</strong>
+                        </p>                                         
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">                    
+                    <div class="col-sm-4">
+                        <h2 class="text-right float-end mt-4">                            
+                            {{ booked_event_data.full_name }}
+                            <hr class="mb-0">                     
+                        </h2>
+                        <p class="mb-0">                  
+                            <span class="text-dark p-1 fs-6">
+                                <strong>DATE & TIME:</strong><br>
+                                {{ booked_event_data.event_booking_date|slice:"0:16" }}
+                                <hr class="m-0 mt-2">
+                            </span>  
+                        </p>                        
+                        <p class="mt-0">                 
+                            <small>Its an free entry ticket</small><br>
+                            <strong class="lead  float-start">No of Bookings: {{ booked_event_data.number_of_bookings }}</strong>
+                        </p>
+                       
+                        <p class="mt-0">             
+                            <small class="float-start">{{ booked_event_data.email }}</small><br>
+                            <small class="float-start">{{ booked_event_data.phone_number }}</small>
+                        </p>                                       
+                    </div>
+
+                    <div class="col-sm-8 m-auto text-center bg-dark text-light p-2 mt-5">
+                        <h6>Share some contributions to cost!</h6>
+                        <hr>
+                        <p>We are an outreaching church and organising these events for free is difficult for us to manage.</p>
+                        <strong>
+                            We will really appreciate if you will contribute to these cost by giving us donation.
+                        </strong><br>
+                        <small>Very special thanks for booking and participating.</small>
+                        <hr>
+                        <a href="{% url 'payment'  %}" class="btn-sm btn" {% include 'includes/theme.html' %}>Pay Donations</a>
+                    </div>
+                </div>
+                
+            </div>
+            <hr class="mt-3">
+        </div>
+    </div>
+    
+    
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}

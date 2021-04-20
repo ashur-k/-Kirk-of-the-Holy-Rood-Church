@@ -1,7 +1,8 @@
 from django.contrib import admin
 from . models import (
     Events,
-    EventDates
+    EventDates,
+    BookingFreeEvents
     )
 
 
@@ -22,3 +23,4 @@ class EventsAdmin(admin.ModelAdmin):
 
 admin.site.register(Events, EventsAdmin)
 admin.site.register(EventDates)
+admin.site.register(BookingFreeEvents)
