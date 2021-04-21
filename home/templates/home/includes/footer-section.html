@@ -3,23 +3,35 @@
 <div class="container-fluid pt-3 footer-container-background">
     <div class="container p-1 mt-2">
         <div class="row footer mb-2">
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4">
+                <hr>
                 <h4><i class="far fa-address-card"></i> Address</h4>
-                <p><small class="p-1">
-                    Kirk Of the Holy Rood Grangemouth Scotland!
+                <p class="lead"><small class="">
+                    <hr>
+                    Kirk of the Holy Rood<br>
+                    Bowhouse Rd, Grangemouth<br>
+                    FK3 0EX,<br>
+                    United Kingdom
+                    <hr>
                 </small>
                 </p>          
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 offset-lg-1" >
-                <h4><i class="far fa-address-book"></i> Contact and Charity Details</h4>               
-                <p><i class="fas fa-mobile-alt"></i> Mobile: xxxxxxxxxxxxx<small></small></p>
-                <p><i class="fas fa-tty"></i> Telephone: xxxxxxxx@xxx.com</p>    
-                <p><i class="fas fa-at"></i> Email: xxxxxxxx@xxx.com</p>
-                <p><i class="fas fa-fax"></i>Fax: xxxxxxxx@xxx.com</p>                  
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4" >
+                <hr>
+                <h4><i class="far fa-address-book"></i> Contact Details</h4>
+                <hr>         
+                <p><i class="fas fa-mobile-alt"></i> Mobile: 07486052954<small></small></p>
+                <p><i class="fas fa-tty"></i> Telephone: 01324 471595</p>    
+                <p><i class="fas fa-at"></i> Email: <small>kirk_holy_rood_church@yahoo.com</small></p>
+                <p><i class="fas fa-fax"></i>Fax: 01324 471595</p>
+                <p><i class="fas fa-gift"></i>Charity Number: SC 001603</p>  <hr>
+                           
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 ">
+            <div class="col-sm-12 col-md-12 col-lg-5 col-xl-4 ">
                 <div>
+                    <hr>
                     <h4><i class="fas fa-edit"></i>Write to us!</h4>
+                    <hr>
                 </div>
                 <form>
                     {% csrf_token %}
@@ -38,8 +50,10 @@
                         <label for="message"><i class="far fa-comments"></i> Message:</label>                
                         <textarea class="form-control form-control-sm" name="message" placeholder="Leave a message here" id="floatingTextarea"></textarea>                  
                     </div>
-                    <button type="submit" class="btn btn-lg" {% include 'includes/secondary_theme.html' %}>Submit</button>
+                    <button type="submit" class="btn btn-sm" {% include 'includes/theme.html' %}>Submit</button>
                 </form>        
+                <hr>
+
             </div>     
         </div>
     </div>

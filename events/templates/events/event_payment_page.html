@@ -51,7 +51,8 @@
                         <div class="form-check">
                             {% for event_date in event.event_dates %}
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="event_date" value="{{event_date.date}}" checked>
+                                <input type="hidden" name="event_date_id" value="{{ event_date.id }}">
+                                <input class="form-check-input" type="radio" name="event_date" value="{{ event_date.date }}" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     {{event_date.date}}
                                 </label>

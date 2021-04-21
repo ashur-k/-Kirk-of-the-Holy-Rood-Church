@@ -131,8 +131,6 @@ def sunday_services(request):
 
 def sunday_service_booking(request, id):
     service = get_object_or_404(SundayServiceInformation, id=id)
-
-
     form = SundayServiceBookingForm()
 
     if request.method == 'POST':

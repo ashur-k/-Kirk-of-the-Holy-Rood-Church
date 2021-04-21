@@ -22,7 +22,6 @@ def events(request):
             messages.success(request, 'You have succesfully updated the page!')
             return redirect(reverse('events'))
         else:
-            print(form.errors)
             messages.error(
                 request,
                 'Editing events content is failed for errors in form!')
@@ -46,7 +45,6 @@ def edit_event(request, event_id):
             messages.success(request, 'You have succesfully updated the page!')
             return redirect(reverse('events'))
         else:
-            print(form.errors)
             messages.error(
                 request,
                 'Editing events content is failed for errors in form!')
@@ -114,7 +112,7 @@ def buy_event_tickets(request, event_id):
             payment_bag['phone_number'] = request.POST.get('phone_number')
             payment_bag['donation_payment_amount'] = request.POST.get(
                 'donation_payment_amount')
-
+            payment_bag['event_date_id'] = request.POST.get('event_date_id')
             payment_bag['event_date'] = request.POST.get('event_date')
             payment_bag['ticket_qty'] = request.POST.get(
                 'event_ticket_qty')
@@ -154,7 +152,9 @@ def booking_free_event(request, event_id):
     event_dates = EventDates.objects.filter(event=event_id)
 
     if request.method == 'POST':
-        event_booking_date = request.POST['event_booking_date']
+        event__date_id = request.POST['event_booking_date']
+        event_date = get_object_or_404(EventDates, id=event__date_id)
+
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -165,13 +165,14 @@ def booking_free_event(request, event_id):
         if booking_free_event_form.is_valid():
             booking_free_event = booking_free_event_form.save(commit=False)
             booking_free_event.event_title = event
-            booking_free_event.event_booking_date = event_booking_date
+            booking_free_event.event_booking_date = event_date
             booking_free_event = booking_free_event_form.save()
 
-            bookings = booking_free_event.number_of_bookings
-
             # updating event ticket count
-          
+            event_date.update_tickets_sold(
+                booking_free_event.number_of_bookings
+                )
+
             messages.success(request, 'You haeve successfully booked for this event.')
             return redirect(reverse('free_event_booking_success', args=[booking_free_event.id]))
 

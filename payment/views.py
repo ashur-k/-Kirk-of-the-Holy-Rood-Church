@@ -7,7 +7,7 @@ from django.shortcuts import (
     get_object_or_404)
 from django.contrib import messages
 from .forms import PaymentForm, TicketPaymentForm
-from events.models import Events
+from events.models import Events, EventDates
 from .models import Payment, TicketsPayment
 import stripe
 from django.conf import settings
@@ -77,10 +77,10 @@ def ticket_payment(request, id):
             if payment_form.is_valid():
                 payment = payment_form.save()
                 return redirect(reverse(
-                    'payment_success',
+                    'donation_success',
                     args=[payment.payment_number]))
             else:
-                return HttpResponse('Data is not in ticket payment view')
+                return HttpResponse('There is an error call Admin')
         else:
             payment_form_data = {
                 'full_name': payment_bag['full_name'],
@@ -94,13 +94,21 @@ def ticket_payment(request, id):
             }
             payment_form = PaymentForm(payment_form_data)
             ticket_form = TicketPaymentForm(ticket_form_data)
+
             if payment_form.is_valid() and ticket_form.is_valid():
                 payment = payment_form.save()
+                ticket_obj = ticket_form.save(commit=False)
+                ticket_obj.payment = payment
+                ticket_obj.event = event
+                ticket_obj = ticket_form.save()
 
-                ticket = ticket_form.save(commit=False)
-                ticket.payment = payment
-                ticket.event = event
-                ticket.save()
+                # updating event ticket count
+                event__date_id = payment_bag['event_date_id']
+                event_date = get_object_or_404(EventDates, id=event__date_id)
+                event_date.update_tickets_sold(
+                    ticket_obj.event_ticket_qty
+                    )
+
                 return redirect(reverse(
                     'payment_success',
                     args=[payment.payment_number]))
@@ -134,23 +142,47 @@ def ticket_payment(request, id):
 
 
 def payment_success(request, payment_number):
-    ticket_payment_information = None
+
     payment = get_object_or_404(Payment, payment_number=payment_number)
     ticket_payment = TicketsPayment.objects.filter(payment=payment.id)
 
-    if ticket_payment:
-        ticket_payment_information = get_object_or_404(
-            TicketsPayment, id=ticket_payment[0].id)
-        print(ticket_payment_information.event_ticket_qty)
+    ticket_obj = get_object_or_404(
+        TicketsPayment, id=ticket_payment[0].id
+        )
+    event = get_object_or_404(Events, id=ticket_obj.event.id)
+
+    if payment.donation_payment_amount:
+        donation = True
     else:
-        print('Tickets are availalbe')
+        donation = False
+
     if 'payment_bag' in request.session:
         del request.session['payment_bag']
 
     template = 'payment/payment_success.html'
     context = {
+        'event': event,
         'payment': payment,
-        'ticket_payment': ticket_payment_information,
+        'ticket': ticket_obj,
+        'donation': donation
     }
+
+    return render(request, template, context)
+
+
+# this view still has work to
+def donation_success(request, payment_number):
+
+    payment = get_object_or_404(Payment, payment_number=payment_number)
+
+    if 'payment_bag' in request.session:
+        del request.session['payment_bag']
+
+
+    template = 'payment/donation.succes.html'
+    context = {
+        'payment': payment,
+    }
+
 
     return render(request, template, context)

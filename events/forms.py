@@ -16,7 +16,6 @@ class EventsForm(forms.ModelForm):
             'event_description',
             'event_price',
             'is_free_event',
-            'event_ticket_quantity',
             'event_display_status',
             'event_display_status'
             ]
@@ -25,7 +24,10 @@ class EventsForm(forms.ModelForm):
 class EventDateForm(forms.ModelForm):
     class Meta:
         model = EventDates
-        fields = ['date']
+        fields = [
+            'total_tickets',
+            'date'
+            ]
 
 
 class BookingFreeEventsForm(forms.ModelForm):

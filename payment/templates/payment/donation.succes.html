@@ -7,7 +7,7 @@
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
                     <h1 class="text-uppercase bg-dark mb-0">
-                        <strong class="text-white">Event Booking</strong>
+                        <strong class="text-white">Donation</strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
@@ -19,60 +19,50 @@
 {% block content %}
     <div class="container">
         <div class="row text-center">
-            <h3>Booking Details</h3>
+            <h3>Donation Details</h3>
         </div>
         <div class="row mb-5">
             <hr>
             <div class="col-sm-6">
                 <div class="row">
-                    <div class="col-sm-8"> 
-                        <img src="{{ event.image.url }}" class="rounded float-end" alt="" style="height: 360px;">
+                    <div class="col-sm-12"> 
+                        <img src="../../../media/thank-you.jpg" class="rounded float-end" alt="" style="height: 360px;">
                     </div>
-                    <div class="col-sm-4  border-end border-dark mt-0">                       
-                        <h2 class="text-right float-end mt-4">{{ event.event_name }}</h2>
-                        <p class="text-right float-end">
-                            {{ event.event_description }}<br>
-                            <small>Its an free entry ticket</small><br>
-                            <strong class="lead fw-bolder">{{ event.event_instructions }}</strong>
-                        </p>                                         
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="row">                    
                     <div class="col-sm-4">
                         <h2 class="text-right float-end mt-4">                            
-                            {{ booked_event_data.full_name }}
+                            {{ payment.full_name }}
                             <hr class="mb-0">                     
                         </h2>
                         <p class="mb-0">                  
                             <span class="text-dark p-1 fs-6">
                                 <strong>DATE & TIME:</strong><br>
-                                {{ booked_event_data.event_booking_date|slice:"0:16" }}
+                                {{ payment.date|slice:"0:16" }}
                                 <hr class="m-0 mt-2">
                             </span>  
                         </p>                        
-                        <p class="mt-0">                 
-                            <small>Its an free entry ticket</small><br>
-                            <strong class="lead  float-start">No of Bookings: {{ booked_event_data.number_of_bookings }}</strong>
+                        <p class="mt-0">
+                            <strong class="lead  float-start">Donation Amount: £{{ payment.donation_payment_amount }}</strong>
                         </p>
                        
                         <p class="mt-0">             
-                            <small class="float-start">{{ booked_event_data.email }}</small><br>
-                            <small class="float-start">{{ booked_event_data.phone_number }}</small>
+                            <small class="float-start">{{ payment.email }}</small><br>
+                            <small class="float-start">{{ payment.phone_number }}</small>
                         </p>                                       
                     </div>
 
                     <div class="col-sm-8 m-auto text-center bg-dark text-light p-2 mt-5">
-                        <h6>Share some contributions to cost!</h6>
-                        <hr>
-                        <p>We are an outreaching church and organising these events for free is difficult for us to manage.</p>
+                        <h6>Kirk of the Holy Rood Church kindly acccepts your donaiton!</h6>
+                        <hr>                     
                         <strong>
-                            We will really appreciate if you will contribute to these cost by giving us donation.
+                            We are going to use this donation sensibly
                         </strong><br>
-                        <small>Very special thanks for booking and participating.</small>
+                        <small>Please accepet our very special thanks.</small>
                         <hr>
-                        <a href="{% url 'payment'  %}" class="btn-sm btn" {% include 'includes/theme.html' %}>Pay Donations</a>
                         <a href="{% url 'home'  %}" class="btn-sm btn" {% include 'includes/theme.html' %}>Go Back to Homepage</a>
                     </div>
                 </div>

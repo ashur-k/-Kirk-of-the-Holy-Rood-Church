@@ -12,8 +12,6 @@ class Events(models.Model):
     event_description = models.TextField()
     event_price = models.DecimalField(max_digits=6, decimal_places=2)
     is_free_event = models.BooleanField(default=False)
-    event_ticket_quantity = models.IntegerField(default=1)
-    event_remaining_ticket = models.IntegerField(default=0)
     event_display_status = models.CharField(max_length=10, choices=STATUS)
     event_instructions = models.CharField(max_length=254, null=False, blank=False)
     create_at = models.DateTimeField(auto_now_add=True)
@@ -34,6 +32,16 @@ class EventDates(models.Model):
         on_delete=models.CASCADE
         )
     date = models.DateTimeField()
+    total_tickets = models.IntegerField(default=1)
+    ticket_sold = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.event.event_name
+
+    def update_tickets_sold(self, value):
+        self.ticket_sold = self.ticket_sold + value
+        print(self.ticket_sold)
+        self.save()
 
 
 class BookingFreeEvents(models.Model):

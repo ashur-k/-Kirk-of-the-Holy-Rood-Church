@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'notices.apps.NoticesConfig',
     'requests_and_messages.apps.RequestsAndMessagesConfig',
+    'contactus_and_aboutus.apps.ContactusAndAboutusConfig',
 
     # all auth settings
     'django.contrib.sites',
