@@ -1,57 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
 {% block page_header %}
-<style>
-    h1{
-    font-size: 1.8rem;
-    padding: 1rem 0;
-
-}
-</style>
     <div class="container header-container" style="margin-top: 70px;">
         <div class="row"> 
-        <div class="col-sm-12">
-            <div class="card text-center">
-                <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    <h1 class="text-uppercase bg-dark mb-0">
-                         {% if request.user.is_superuser %}
-                            <div class="col m-2">   
-                                <button type="button" class="btn  m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal" {% include 'includes/theme.html' %}>
-                                <i class="fas fa-plus"></i>  Add An Event
-                                </button>          
-                                
-                            </div>
-                         {% endif %}
-                        <strong class="text-white">
-                            Events
-                        </strong>
-                    </h1>
-                <div class="card-header" {% include 'includes/theme.html' %}></div>
-            </div>                    
+            <div class="col-sm-12">
+                <div class="card text-center">
+                    <div class="card-header" {% include 'includes/theme.html' %}></div>
+                        <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                            {% if request.user.is_superuser %}
+                                <div class="col m-2">   
+                                    <button type="button" class="btn  m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal" {% include 'includes/theme.html' %}>
+                                    <i class="fas fa-plus"></i>  Add An Event
+                                    </button>
+                                </div>
+                            {% endif %}
+                            <strong>
+                                Events
+                            </strong>
+                        </h1>
+                    <div class="card-header" {% include 'includes/theme.html' %}></div>
+                </div>                    
+            </div>        
         </div>
-        
-    </div>
-    <!-- Add Event Modal -->
-    <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Add Event Modal -->
+        <div class="modal fade" id="addNewEventModal" tabindex="-1" aria-labelledby="addNewEventModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewEventModalLabel">Adding New Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ event_form | crispy }}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button form="add_event" type="submit" class="btn " {% include 'includes/theme.html' %}>Save changes</button>
+                </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="add_event"  method="POST" class="form mb-2" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ event_form | crispy }}
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button form="add_event" type="submit" class="btn " {% include 'includes/theme.html' %}>Save changes</button>
-            </div>
-            </div>
-        </div>
-    </div>   
+        </div>   
     </div>
 {% endblock %}
 
@@ -215,7 +206,9 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button form="add-{{event.id}}-date-time-form" type="submit" class="btn " {% include 'includes/theme.html' %}>Submit information</button>
+                                        <button form="add-{{event.id}}-date-time-form" type="submit" class="btn " {% include 'includes/theme.html' %}>
+                                            Submit information
+                                        </button>
                                     </div>
                                     </div>
                                 </div>
@@ -247,9 +240,9 @@
                                             </div>
                                             {% endif %}
                                             <div class="col-sm-12">
-                                                <i class="fas fa-calendar-alt text-warning" {% include 'includes/theme.html' %}></i> 
+                                                <i class="fas fa-calendar-alt text-warning p-1" {% include 'includes/theme.html' %}></i> 
                                                 <p class="text-center m-0 p-0">
-                                                <span class="fw-bolder">Event Date-Time:</span>  <br>
+                                                <span class="fw-bolder">EVENT DATE TIME</span>  <br>
                                                     <span class="text-center m-0 p-0">
                                                     {{ event_date.date  }}
                                                     </span> 
@@ -261,12 +254,14 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <span>
-                                        Tickets  Sold: 
+                                        <strong>TICKETS SOLD:</strong>
+                                        
                                         {{ event_date.ticket_sold  }} / {{ event_date.total_tickets  }}
                                     </span>
                                     <br>                                  
                                     <span class="m-0 p-0">
-                                        Tickets Avaialable: 
+                                        <strong>TICKET AVAILABLE: </strong>
+                                        
                                         {{ event_date.available_tickets }}
                                     </span>
                                     <br>                                 

@@ -39,3 +39,21 @@ class BookingFreeEventsForm(forms.ModelForm):
             'email',
             'phone_number',
             ]
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        placeholders = {
+            'full_name': 'Full Name',
+            'email': 'Email Address',
+            'phone_number': 'Phone Number',
+            'donation_payment_amount': 'donation_payment_amount',
+        }
+
+        self.fields['full_name'].widget.attrs['autofocus'] = True
+        for field in self.fields:
+            placeholder = f'{placeholders[field]} *'
+            self.fields[field].widget.attrs['placeholder'] = placeholder
+            self.fields[field].widget.attrs['class'] = 'border-black m-1'
+
+            self.fields[field].label = False

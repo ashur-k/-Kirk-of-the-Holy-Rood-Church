@@ -26,24 +26,25 @@
     </div>
 </div>
 
-<div class="container mt-5">
-      
+<div class="container mt-5">      
     <div class="row mb-5">
         <div class="col-sm-12">
-            <div class="card text-center bg-dark text-white">
+            <div class="card text-center"{% include 'includes/secondary_theme.html' %}>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
-                {% if request.user.is_superuser %}
-        <div class="row text-center justify-content-center mt-1">
-            <a type="button" class="btn btn-sm edit-button-carousel-text text-center" 
-            {% include 'includes/theme.html' %} href="{% url 'ministry_edit' ministry.id %}">
-                    Edit Text
-            </a>
-        </div>            
-    {% endif %} 
-                    <h1 class="text-uppercase bg-dark mb-0">
-                        <strong class="text-white">{{ministry.ministry_heading}}</strong>
+                    {% if request.user.is_superuser %}
+                    <div class="row text-center justify-content-center mt-1">
+                        <a type="button" class="btn btn-sm edit-button-carousel-text text-center" 
+                            {% include 'includes/theme.html' %} 
+                            href="{% url 'ministry_edit' ministry.id %}"
+                        >
+                            Edit Text
+                        </a>
+                    </div>            
+                    {% endif %} 
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>{{ministry.ministry_heading}}</strong>
                     </h1>
-                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <div class="card-header" {% include 'includes/theme.html' %}></div>
                                 
                 <div class="card-body">
                   

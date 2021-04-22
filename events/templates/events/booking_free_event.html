@@ -6,8 +6,8 @@
         <div class="col-sm-12">
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    <h1 class="text-uppercase bg-dark mb-0">
-                        <strong class="text-white">Event Booking</strong>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>Event Booking</strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
@@ -18,34 +18,54 @@
 
 {% block content %}   
 <div class="container">
+    <hr> 
+   <div class="row">
+            <div class="col-sm-9">
+                <h5>
+                    <i class="fas fa-snowflake p-1" {% include 'includes/theme.html' %}></i> Event: {{event.event_name}}
+                </h5>
+                <h5>
+                    <i class="fas fa-calendar-day p-1" {% include 'includes/theme.html' %}></i> Date: {{ event_date.date }}
+                </h5>
+            </div>
+            <div class="col-sm-3 m-auto">
+                <h5>
+                <i class="fas fa-credit-card p-1" {% include 'includes/theme.html' %}></i> 
+                    TOTAL AMOUNT = <span class="fs-5 mt-3 fw-bolder" id="totalAmount">£{{ event.event_price }}</span>
+                </h5>   
+            </div>
+    </div>
+    <hr>
     <div class="row">   
         <div class="col-sm-12">
-            <hr>
-                <h3>BOOKING AN EVENT:</h3>
-            <hr>
+            <h3>
+                BOOKING FOR AN EVENT
+                <hr {% include 'includes/hr_theme.html' %}>
+            </h3>            
         </div>
         <div class="col-sm-12">
             <form method="POST">
                 {% csrf_token %}
-                {{ free_event_form | crispy }}
-                <div id="div_id_number_of_bookings" class="form-group"> 
-                    <label for="id_number_of_bookings" class=" requiredField">
-                        Number of bookings<span class="asteriskField">*</span> 
-                    </label> 
+                    <label class="ms-2" for=""><i class="fas fa-user p-1" {% include 'includes/theme.html' %}></i> FULL NAME</label>                
+                    {{ free_event_form.full_name | as_crispy_field }}
+                    <label class="ms-2" for=""><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> EMAIL</label>
+                    {{ free_event_form.email | as_crispy_field }}
+                    <label class="ms-2" for=""><i class="fas fa-phone-volume p-1" {% include 'includes/theme.html' %}></i> PHONE NUMBER</label>
+                    {{ free_event_form.phone_number | as_crispy_field }}
+                
+                    <div id="div_id_number_of_bookings" class="form-group"> 
+                        <label class="ms-2" for="">
+                            <i class="fas fa-ticket-alt p-1" {% include 'includes/theme.html' %}></i>
+                            TICKET QUANTITY
+                        </label>
                     <div class="">
                         <input type="number" name="number_of_bookings" min="1" max="{{event_date.available_tickets}}" value="1" class="numberinput form-control" required="" id="id_number_of_bookings"> 
                     </div> 
                 </div>
-                <labe>Please Select Event Date*</labe>
-                <select id="id_event_booking_date" class="form-select mt-1" name="event_booking_date" aria-label="Default select example">
-                    <option selected>Select date</option>
-                
-                        <option value="{{ event_date.id }}">{{ event_date.date }}</option>
-                
-                </select>
+                <input type="hidden" name="event_booking_date" value="{{ event_date.id }}">
                 <div class="col-sm-12 mt-3">
                 <a href="{% url 'events' %}" type="button" class="btn btn-dark">Cancel</a>
-                <button type="submit" class="btn" {% include 'includes/theme.html' %}>Save changes</button>
+                <button type="submit" class="btn" {% include 'includes/theme.html' %}>Book Event</button>
             </div>
             </form>
         </div>

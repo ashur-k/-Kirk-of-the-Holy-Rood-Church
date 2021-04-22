@@ -183,6 +183,7 @@ def booking_free_event(request, event_date_id):
     template = 'events/booking_free_event.html'
 
     context = {
+        'event': event,
         'event_date': event_date,
         'free_event_form': booking_free_event_form,
     }

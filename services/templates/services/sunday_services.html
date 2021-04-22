@@ -6,50 +6,29 @@
 {% load static %}
 
 {% block page_header %}
-    <div class="container header-container">
-        
-    </div>
-{% endblock %}
-
-{% block content %}  
-<style>
-    h1{
-    font-size: 1.8rem;
-    padding: 1rem 0;
-
-}
-</style>
-
-<div class="container">
-    <div class="row">            
-        <div class="col-sm-12">
-           
-                <div class="message-container">
-                    
-                       
-                  
-                </div>
-        
-        </div>
-    </div>
-</div>
-<div class="container" style="height:80vh; margin-top: 50px !important;"> 
-    <div class="row"> 
+    <div class="container header-container" style="margin-top: 70px;">
+        <div class="row"> 
         <div class="col-sm-12">
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    <h1 class="text-uppercase bg-dark mb-0">
-                        <strong class="text-white">Sunday Services</strong>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>Sunday Services</strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
         </div>
     </div>
+    </div>
+{% endblock %}
+
+{% block content %}  
+<div class="container" style="height:80vh;"> 
+    
     <div class="row">
         {% if services %}
             {% for service in services %}
-                <div class="col-sm-12 mt-5">                        
-                    <div class="jumbotron bg-dark text-light p-3 rounded">
+                <div class="col-sm-12">                        
+                    <div class="jumbotron text-light p-3 rounded"{% include 'includes/secondary_theme.html' %}>
                     {% if request.user.is_superuser %}
                         <div class="col-sm-4 m-1">
                             <!-- Update Service Information trigger modal Button  -->
