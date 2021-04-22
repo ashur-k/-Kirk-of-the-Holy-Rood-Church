@@ -15,7 +15,7 @@ urlpatterns = [
          name='delete_event'
          ),
 
-    path('buy_event_tickets/<int:event_id>/',
+    path('buy_event_tickets/<int:event_date_id>/',
          views.buy_event_tickets,
          name='buy_event_tickets'
          ),
@@ -35,7 +35,7 @@ urlpatterns = [
          name='delete_event_date_time'
          ),
 
-    path('booking_free_event/<int:event_id>/',
+    path('booking_free_event/<int:event_date_id>/',
          views.booking_free_event,
          name='booking_free_event'
          ),

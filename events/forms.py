@@ -38,5 +38,4 @@ class BookingFreeEventsForm(forms.ModelForm):
             'full_name',
             'email',
             'phone_number',
-            'number_of_bookings',
             ]

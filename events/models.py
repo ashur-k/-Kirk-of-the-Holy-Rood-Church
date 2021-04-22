@@ -34,13 +34,14 @@ class EventDates(models.Model):
     date = models.DateTimeField()
     total_tickets = models.IntegerField(default=1)
     ticket_sold = models.IntegerField(default=0)
+    available_tickets = models.IntegerField(default=0)
 
     def __str__(self):
         return self.event.event_name
 
     def update_tickets_sold(self, value):
         self.ticket_sold = self.ticket_sold + value
-        print(self.ticket_sold)
+        self.available_tickets = self.total_tickets - self.ticket_sold
         self.save()
 
 

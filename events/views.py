@@ -98,11 +98,12 @@ def delete_event_date_time(request, event_date_time_id):
     return redirect(reverse('events'))
 
 
-def buy_event_tickets(request, event_id):
-    event = get_object_or_404(Events, id=event_id)
+def buy_event_tickets(request, event_date_id):
+
+    event_date = get_object_or_404(EventDates, id=event_date_id)
+    event = get_object_or_404(Events, id=event_date.event.id)
 
     if request.method == 'POST':
-
         payment_form = PaymentForm(request.POST)
         ticket_form = TicketPaymentForm(request.POST)
         if payment_form.is_valid() and ticket_form.is_valid():
@@ -124,7 +125,7 @@ def buy_event_tickets(request, event_id):
             event_total = ticket_qty * event_price
             total_amount = int(donation_amount) + event_total
             payment_bag['total_amount'] = int(total_amount)
-            payment_bag['event_id'] = event_id
+            payment_bag['event_id'] = event.id
             request.session['payment_bag'] = payment_bag
 
             return redirect(reverse('ticket_payment', args=[event.id]))
@@ -138,6 +139,7 @@ def buy_event_tickets(request, event_id):
     ticket_payment_form = TicketPaymentForm
     template = 'events/event_payment_page.html'
     context = {
+        'event_date': event_date,
         'event': event,
         'payment_form': payment_form,
         'ticket_payment_form': ticket_payment_form,
@@ -146,10 +148,10 @@ def buy_event_tickets(request, event_id):
     return render(request, template, context)
 
 
-def booking_free_event(request, event_id):
+def booking_free_event(request, event_date_id):
 
-    event = get_object_or_404(Events, id=event_id)
-    event_dates = EventDates.objects.filter(event=event_id)
+    event_date = get_object_or_404(EventDates, id=event_date_id)
+    event = get_object_or_404(Events, id=event_date.event.id)
 
     if request.method == 'POST':
         event__date_id = request.POST['event_booking_date']
@@ -172,15 +174,16 @@ def booking_free_event(request, event_id):
             event_date.update_tickets_sold(
                 booking_free_event.number_of_bookings
                 )
-
             messages.success(request, 'You haeve successfully booked for this event.')
             return redirect(reverse('free_event_booking_success', args=[booking_free_event.id]))
+        else:
+            messages.error(request, 'Booking Failed.')
 
     booking_free_event_form = BookingFreeEventsForm()
     template = 'events/booking_free_event.html'
 
     context = {
-        'event_dates': event_dates,
+        'event_date': event_date,
         'free_event_form': booking_free_event_form,
     }
     return render(request, template, context)

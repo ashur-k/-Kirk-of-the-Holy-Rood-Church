@@ -49,19 +49,21 @@
                     </div>                
                     <div class="input-group">
                         <div class="form-check">
-                            {% for event_date in event.event_dates %}
+                          
                             <div class="form-check">
                                 <input type="hidden" name="event_date_id" value="{{ event_date.id }}">
                                 <input class="form-check-input" type="radio" name="event_date" value="{{ event_date.date }}" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
-                                    {{event_date.date}}
+                                    {{ event_date.date }}
                                 </label>
                             </div>
-                            {% endfor %}
+                          
                         </div>                    
                         <div class="input-group">
                             <label for="" class="m-1">Ticket Qty</label>
-                            {{ ticket_payment_form.event_ticket_qty | as_crispy_field }}
+                            <div class="">
+                                <input type="number" name="event_ticket_qty" value="1" min="1" max="{{event_date.available_tickets}}" class="numberinput form-control" required="" id="id_event_ticket_qty">
+                            </div>
                             <span class="input-group-text">£</span>
                             <span class="input-group-text">{{ event.event_price }}</span>
                         </div>

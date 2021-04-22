@@ -82,13 +82,23 @@
 {% block content %}   
 
 <div class="container">
+    <div class="row m-0 mb-5 p-2 bg-dark text-light">
+        <div class="col-sm-12 mt-3 text-center m-auto">
+            <h4><i class="fas fa-newspaper"></i> Downlaod Our News Letter</h4>
+        </div>
+        <div class="col-sm-8 p-5 text-center m-auto">
+            <img src="../../../media/news-letter.jpg" class="img-fluid w-50" alt="">
+        </div>
+        <div class="col-sm-4 text-start m-auto">
+            <h4>Date: 12-12-12</h4>
+            <a href="../../../media/Ashur.pdf" >News Letter Name or title</a>
+      
+        </div>
+
+    </div>
     <div class="row"> 
         {% for notice in notices %}
-            <div class="col-sm-12 mt-2 mb-5">
-               
-               
-               
-                
+            <div class="col-sm-12 mt-2 mb-5">   
                 <div class="card" style="background-color: #f5f5f5;">
                     <div class="card-body">
                         <h5 class="card-title">{{ notice.notice_title }}
