@@ -29,7 +29,7 @@ class PaymentForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'border-black m-1'
 
-            self.fields[field].label = False
+            #self.fields[field].label = False
 
 
 class TicketPaymentForm(forms.ModelForm):
