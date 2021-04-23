@@ -117,13 +117,15 @@ def del_video(request, id):
 
 def sunday_services(request):
     service = SundayServiceInformation.objects.all()
+    service_id = service[0].id
     template = 'services/sunday_services.html'
 
     form = SundayServiceInformationForm()
 
     context = {
+        'service_id': service_id,
         'services': service,
-        'form': form
+        'form': form,
         }
 
     return render(request, template, context)
@@ -168,17 +170,6 @@ def sunday_service_booking(request, id):
     return render(request, template, context)
 
 
-def sunday_bookings(request):
-
-    template = 'services/sunday_services.html'
-
-    context = {
-
-        }
-
-    return render(request, template, context)
-
-
 def edit_sunday_services(request, id):
     service = get_object_or_404(SundayServiceInformation, id=id)
     template = 'services/edit_sunday_services.html'
@@ -201,9 +192,14 @@ def edit_sunday_services(request, id):
 
 def get_sunday_bookings(request):
     sunday_service_bookings = SundayServiceBooking.objects.all()
+    # Service id to add manual entries
+
+    service = SundayServiceInformation.objects.all()
+    service_id = service[0].id
     template = 'services/sunday_service_bookings.html'
 
     context = {
+        'service_id': service_id,
         'sunday_service_bookings': sunday_service_bookings
     }
 
