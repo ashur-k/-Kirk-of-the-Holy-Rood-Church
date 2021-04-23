@@ -99,10 +99,10 @@ def edit_video(request, id):
                     messages.success(request, 'Video is successfully updated.')
                     return redirect('video_services')
 
-
     video_form = VideoForm(instance=video_obj)
     template = "services/edit_video.html"
     context = {
+        'video_pinned': video_pinned,
         'video_form': video_form
     }
     return render(request, template, context)
@@ -136,11 +136,27 @@ def sunday_service_booking(request, id):
     if request.method == 'POST':
         form = SundayServiceBookingForm(request.POST)
         if form.is_valid():
-            booking_form = form.save(commit=False)
-            booking_form.service_title = service
-            form.save()
-            service.update_available_bookings(booking_form.number_of_bookings)
-            return redirect(reverse('sunday_services'))
+            booking_obj = form.save(commit=False)
+            booking_obj.service_title = service
+            booking_obj = form.save()
+
+            # Calling model function to update booking quantities
+            service.update_available_bookings(
+                booking_obj.number_of_bookings
+                )
+            messages.success(
+                request,
+                'Successfully booked for Sunday service!'
+                )
+
+            # Rendering new view page Sunday success booking
+            # Its saving me from righting new view and urls
+            template = 'services/sunday_booking_success.html'
+            context = {
+                'service': service,
+                'booking_obj': booking_obj,
+                }
+            return render(request, template, context)
 
     template = 'services/sunday_service_booking_form.html'
 

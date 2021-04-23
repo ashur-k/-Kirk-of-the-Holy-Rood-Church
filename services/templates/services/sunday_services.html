@@ -51,7 +51,18 @@
                             <hr class="my-4">
                             <p class="m-1"><strong>{{service.important_notices}}</strong></p>
                             <p class="m-1">Remaining available bookings:<strong> {{service.available_bookings}}</strong></p>
-                            <a class="btn btn-light btn-sm" href="{% url 'sunday_service_booking' service.id %}" role="button" {% include 'includes/theme.html' %}>Request to attend Church in person</a>
+                            {% if service.available_bookings <= 0 %}
+                                <button  class="btn btn-sm btn-danger" disabled>
+                                    SORRY NO MORE BOOKIND AVAILABLE
+                                </button>
+                            {% else %}
+                            <a class="btn btn-light btn-sm" type="" href="{% url 'sunday_service_booking' service.id %}" 
+                                role="button" {% include 'includes/theme.html' %}>
+                                Request to attend Church in person
+                            </a>
+                            </div>
+                            {% endif %}
+                           
                         </div>
                     </div>
                     <!-- Modal -->

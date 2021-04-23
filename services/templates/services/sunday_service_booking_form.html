@@ -6,42 +6,61 @@
 {% load static %}
 
 {% block page_header %}
-    <div class="container header-container">
-        
-    </div>
-{% endblock %}
-
-{% block content %}  
-
-<div class="container">
-    <div class="row">            
+<div class="container" style="margin-top: 70px !important;">
+    <div class="row"> 
         <div class="col-sm-12">
-            {% if messages %}
-                <div class="message-container">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>SUNDAY SERVICE</strong>
+                    </h1>
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>                    
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block content %}  
 <div class="container" style="height:100%; margin-top: 80px !important;"> 
-    <div class="row">
-      
+    <div class="row">      
        <div class="col-sm-12">
-          <h1 class="text-uppercase">Editing Sunday Service</h1>
+            <h3>
+                BOOKING TO ATTEND SUNDAY SERVICE
+                <hr {% include 'includes/hr_theme.html' %}>
+            </h3>            
         </div>
-        <div class="col-sm-8 m-3"> 
+        <div class="col-sm-12"> 
             <form id="update{{service.id}}ServiceInfomration" action="{% url 'sunday_service_booking' service.id %}" method="POST">
                 {% csrf_token %}
-                {{ form | crispy }}
+                <label class="ms-2" for=""><i class="fas fa-user p-1" {% include 'includes/theme.html' %}></i> FULL NAME</label>
+                {{ form.full_name | as_crispy_field }}  
+                <label class="ms-2" for=""><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> EMAIL</label>
+                {{ form.email | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-phone-volume p-1" {% include 'includes/theme.html' %}></i> PHONE NUMBER</label>
+                {{ form.phone_number | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-ticket-alt p-1" {% include 'includes/theme.html' %}></i>BOOKINGS</label>
+                <div id="div_id_number_of_bookings" class="form-group">            
+                <div class="">
+                    <input type="number" name="number_of_bookings" min="1" max="{{ service.available_bookings}}" value="1" placeholder="number_of_bookings *" 
+                    class="border-black m-1 numberinput form-control" required="" id="id_number_of_bookings">
+                </div>
+        </div>
+                
             </form>
         </div>
         <div class="col-sm-12 mt-3">
             <a href="{% url 'sunday_services' %}" type="button" class="btn btn-dark">Cancel</a>
-            <button form="update{{service.id}}ServiceInfomration" type="submit" class="btn btn-lg" {% include 'includes/theme.html' %}>Save changes</button>
+
+            {% if service.available_bookings <= 0 %}
+                <button type="submit"  class="btn btn-danger" disabled>
+                    SORRY NO MORE BOOKIND AVAILABLE
+                </button>
+            {% else %}
+            <button form="update{{service.id}}ServiceInfomration" type="submit" class="btn" {% include 'includes/theme.html' %}>Save changes</button>
+            </div>
+            {% endif %}
+            
         </div>
     </div>
 </div>

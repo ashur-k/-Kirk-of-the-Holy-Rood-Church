@@ -11,8 +11,8 @@
         <div class="col-sm-12">
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    <h1 class="text-uppercase bg-dark mb-0">                       
-                        <strong class="text-white">Editing Video Information</strong>
+                    <h1 class="text-uppercase bg-dark mb-0"  {% include 'includes/secondary_theme.html' %}>                       
+                        <strong >VIDEO SERVICES</strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
@@ -22,28 +22,59 @@
 {% endblock %}
 
 {% block content %}  
-
 <div class="container">
     <div class="row">
+        <div class="col-sm-12">
+            <h3>
+                EDITING VIDEO INFORMATION
+                <hr {% include 'includes/hr_theme.html' %}>
+            </h3>            
+        </div>
         <div class="col-sm-12 p-2">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-
-                        {{ video_form.title| as_crispy_field }}
-                        {{ video_form.video  | as_crispy_field }}
-                        {{ video_form.video_image | as_crispy_field }}
-                        {{ video_form.main_paragraph| as_crispy_field }}
-                        {{ video_form.status | as_crispy_field }}
-                        {{ video_form.pinned | as_crispy_field }}
-                        {{ video_form.date | as_crispy_field }}                     
-   
-						<button type="submit" class="btn primary-button rounded-0 mt-3" {% include 'includes/theme.html' %}>
-                            <span class="icon">
-								 <small><i class="fas fa-user-edit"></i></small>
-							</span>
-							<span class="font-weight-bold">Updat Video Information</span>
-						</button>
-			
+                <label class="ms-2" for=""><i class="fas fa-file-video p-1" {% include 'includes/theme.html' %}></i> VIDEO TITLE</label>   
+                {{ video_form.title| as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-video p-1" {% include 'includes/theme.html' %}></i> VIDEO LINK</label>   
+                {{ video_form.video  | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-camera p-1" {% include 'includes/theme.html' %}></i> VIDEO TITLE IMAGE</label>   
+                {{ video_form.video_image | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-info p-1" {% include 'includes/theme.html' %}></i> VIDEO DESCRIPTION</label>  
+                {{ video_form.main_paragraph| as_crispy_field }}
+                <label class="ms-2" for=""><i class="far fa-eye p-1" {% include 'includes/theme.html' %}></i>USER PAGE VIDEO VISIBILITY STATUS</label>  
+                {{ video_form.status | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-map-pin p-1" {% include 'includes/theme.html' %}></i>PIN VIDEO</label>  
+                <div class="form-group">
+                    <div id="div_id_pinned" class="form-check">
+                        {% if video_pinned %}
+                        <input type="checkbox" name="pinned" placeholder="pinned *" class="border-black m-1 checkboxinput form-check-input" id="id_pinned" checked="" disabled>
+                        <label for="id_pinned" class="form-check-label">
+                            UNPIN VIDEO TO REOMOVE FROM TITLE OF PAGE
+                        </label>  
+                        {% else %}
+                        <input type="checkbox" name="pinned" placeholder="pinned *" class="border-black m-1 checkboxinput form-check-input" id="id_pinned">
+                        <label for="id_pinned" class="form-check-label">
+                            PIN VIDEO TO TITLE OF PAGE
+                        </label>  
+                        {% endif %}         
+                          
+                    </div>
+                </div>
+                <label class="ms-2" for=""><i class="far fa-calendar-alt p-1" {% include 'includes/theme.html' %}></i>SERMON DATE</label>  
+                <div id="div_id_date" class="form-group">
+                    <div class="">
+                        <input type="datetime-local" name="date" placeholder="date *" class="border-black m-1 datetimeinput form-control" required="" id="id_date">
+                    </div>
+                </div> 
+                <div class="col-sm-12">          
+                    <a href="{% url 'video_services' %}" type="button" class="btn btn-dark mt-3">Cancel</a>
+                    <button type="submit" class="btn primary-button mt-3" {% include 'includes/theme.html' %}>
+                        <span class="icon">
+                                <small><i class="fas fa-user-edit"></i></small>
+                        </span>
+                        <span class="font-weight-bold">Updat Video Information</span>
+                    </button>
+			    </div>   
             </form>
            
                     

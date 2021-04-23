@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_header %}
+   <div class="container header-container">
+    <div class="row"> 
+        <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase bg-dark mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>SUNDAY BOOKING</strong>
+                    </h1>
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>                    
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <h3>Booking Details</h3>
+        </div>
+        <div class="row mb-5">
+            <hr>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-8 m-auto text-center"> 
+                        <h5>
+                            <strong>
+                                {{ service.sermon_title }}
+                            </strong>
+                        </h5>
+                        <p>
+                            {{ service.bible_refrence }}
+                        </p>
+                    </div>
+                    <div class="col-sm-4  border-end border-dark mt-0"> 
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5 class="text-right float-end">
+                                    {{ service.title }}
+                                </h5>
+                            </div>
+                            <div class="col-sm-12">
+                                <strong>
+                                    HYMS FOR SERVICE:
+                                </strong>
+                                <ul class="list-group m-0 p-1">
+                                    <li class="list-group-item">{{ service.worship_hymm1 }}</li>
+                                    <li class="list-group-item">{{ service.worship_hymm2 }}</li>
+                                    <li class="list-group-item">{{ service.worship_hymm3 }}</li>
+                                    <li class="list-group-item">{{ service.worship_hymm4 }}</li>
+                                </ul>
+                            </div>
+                        </div>                                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">                    
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-12"> 
+                                <h2 class="text-right mt-4">                            
+                                    {{ booking_obj.full_name }}
+                                    <hr class="mb-0">                     
+                                </h2>
+                            </div>
+                            <div class="col-sm-12"> 
+                                <p class="mb-0">                  
+                                    <span class="text-dark fs-6">
+                                    <strong>DATE & TIME:</strong>
+                                    {{ service.date|slice:"0:16" }}                               
+                                    </span>  
+                                </p>  
+                            </div>
+                            <div class="col-sm-12"> 
+                                <p>
+                                    <strong class="float-start">
+                                        BOOKINGS:
+                                    </strong> 
+                                    {{ booking_obj.number_of_bookings }}
+                                    <hr class="mb-0">   
+                                </p>
+                            </div>
+                            <div class="col-sm-12"> 
+                                <p class="mb-0"> 
+                                    <strong class="float-start">
+                                        EMAIL:
+                                    </strong>
+                                    {{ booking_obj.email }}
+                               </p>
+                            </div>
+                            <div class="col-sm-12"> 
+                                <p>
+                                    <strong class="float-start">
+                                        PHONE NUMBER:
+                                    </strong>
+                                    {{ booking_obj.phone_number }}
+                                   
+                                </p>  
+                            </div>
+                        </div>                                   
+                    </div>
+                    <div class="col-sm-8 m-auto text-center bg-dark text-light p-2">
+                        <h6>We are glad for you are joining with us.</h6>
+                        <hr>
+                        <p>We are an outreaching and Bible beleiveing church.</p>
+                        
+                        <small>Very special thanks for booking and participating.</small>
+                        <hr>
+                         <p>
+                            <strong>IMPORTANT NOTICE</strong><br>
+                            {{service.important_notices}}
+                        </p>
+                        <a href="{% url 'home'  %}" class="btn-sm btn" {% include 'includes/theme.html' %}>Go Back to Homepage</a>
+                        <a href="{% url 'payment'  %}" class="btn-sm btn" {% include 'includes/theme.html' %}>Donate-us</a>
+                    </div>
+                </div>
+                
+            </div>
+            <hr class="mt-3">
+        </div>
+    </div>
+    
+    
+{% endblock %}
+
+{% block postloadjs %}
+
+   
+{% endblock %}
