@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block page_header %}
-    <div class="container header-container" style="margin-top: 70px;">
+    <div class="container header-container">
         <div class="row"> 
             <div class="col-sm-12">
                 <div class="card text-center">
@@ -10,7 +10,7 @@
                             {% if request.user.is_superuser %}
                                 <div class="col m-2">   
                                     <button type="button" class="btn  m-2" data-bs-toggle="modal" data-bs-target="#addNewEventModal" {% include 'includes/theme.html' %}>
-                                    <i class="fas fa-plus"></i>  Add An Event
+                                    <i class="fas fa-plus p-1" {% include 'includes/theme.html' %}></i>  Add An Event
                                     </button>
                                 </div>
                             {% endif %}
@@ -63,10 +63,10 @@
                                     <div id="admin-buttons">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <button type="button" class="btn btn-sm btn btn-dark" data-bs-toggle="modal" data-bs-target="#edit{{ event.id }}EventModal">
-                                                <small><i class="fas fa-user-edit"></i></small>
+                                                <small><i class="fas fa-user-edit p-1" {% include 'includes/theme.html' %}></i></small>
                                             </button>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{ event.id }}Modal">
-                                                    <small><i class="fas fa-trash-alt"></i></small>
+                                                    <small><i class="fas fa-trash-alt p-1" {% include 'includes/theme.html' %}></i></small>
                                             </button> 
                                             <div class="event-edit-delete-modals text-start m-0">
                                                 <!-- Edit Event Modal -->
@@ -148,7 +148,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                         <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">
-                                                            <small><i class="fas fa-trash-alt"></i></small>
+                                                            <small><i class="fas fa-trash-alt p-1" {% include 'includes/theme.html' %}></i></small>
                                                         </a> 
                                                     </div>
                                                     </div>
@@ -176,7 +176,7 @@
                                     <div class="m-0 p-0">
                                         <!-- Add New Date Modal Button -->
                                         <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#add-{{event.id}}-date-time-formModal">
-                                            <small class="m-0 p-0"><i class="far fa-calendar-plus"></i><span> Add New Date </span></small>
+                                            <small class="m-0 p-0"><i class="far fa-calendar-plus p-1" {% include 'includes/theme.html' %}></i><span> Add New Date </span></small>
                                         </button>                                        
                                     </div>                                        
                                 </div>
@@ -234,7 +234,7 @@
                                                     </button>
                                                     <!-- Delete date-time trigger modal -->
                                                     <button type="button" class="btn btn-small btn-danger"  data-bs-toggle="modal" data-bs-target="#delete-{{event_date.id}}-date-timeModal" >
-                                                        <small><i class="fas fa-trash-alt"></i></small>
+                                                        <small><i class="fas fa-trash-alt p-1" {% include 'includes/theme.html' %}></i></small>
                                                     </button>
                                                 </span>                                            
                                             </div>

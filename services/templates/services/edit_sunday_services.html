@@ -12,7 +12,7 @@
                 <div class="card text-center">
                     <div class="card-header" {% include 'includes/theme.html' %}></div>
                         <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
-                            <strong>Event Booking</strong>
+                            <strong>SUNDAY SERVICES</strong>
                         </h1>
                     <div class="card-header" {% include 'includes/theme.html' %}></div>
                 </div>                    
@@ -26,19 +26,40 @@
     <div class="row">      
        <div class="col-sm-12">
            <h3>
-                EDITING SUNDAY SERVICE
+                EDITING SUNDAY SERVICE BOKING INFORAMATION
                 <hr {% include 'includes/hr_theme.html' %}>
             </h3>   
         </div>
-        <div class="col-sm-12">
-            <form id="update{{service.id}}ServiceInfomration" method="POST">
+        <div class="col-sm-12"> 
+            <form id="update{{service.id}}ServiceInfomration" action="" method="POST">
                 {% csrf_token %}
-                {{form | crispy}}
+                <label class="ms-2" for=""><i class="fas fa-user p-1" {% include 'includes/theme.html' %}></i> FULL NAME</label>
+                {{ form.full_name | as_crispy_field }}  
+                <label class="ms-2" for=""><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> EMAIL</label>
+                {{ form.email | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-phone-volume p-1" {% include 'includes/theme.html' %}></i> PHONE NUMBER</label>
+                {{ form.phone_number | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-ticket-alt p-1" {% include 'includes/theme.html' %}></i>BOOKINGS</label>
+                <div id="div_id_number_of_bookings" class="form-group">            
+                <div class="">
+                    <input type="number" name="number_of_bookings" min="1" max="{{ service.available_bookings}}" value="1" placeholder="number_of_bookings *" 
+                    class="border-black m-1 numberinput form-control" required="" id="id_number_of_bookings">
+                </div>
+            </div>
+                
             </form>
         </div>
         <div class="col-sm-12 mt-3">
             <a href="{% url 'sunday_services' %}" type="button" class="btn btn-dark">Cancel</a>
+
+            {% if service.available_bookings <= 0 %}
+                <button type="submit"  class="btn btn-danger" disabled>
+                    SORRY NO MORE BOOKIND AVAILABLE
+                </button>
+            {% else %}
             <button form="update{{service.id}}ServiceInfomration" type="submit" class="btn" {% include 'includes/theme.html' %}>Save changes</button>
+            {% endif %}
+            
         </div>
     </div>
 </div>

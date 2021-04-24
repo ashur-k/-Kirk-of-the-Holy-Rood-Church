@@ -31,37 +31,67 @@
 
 <div class="container" >
     <div class="row">
-        
-        <div class="col-12 col-lg-6">
-            <p class="text-muted">Please fill out the form below to make your payment</p>
+            <div class="col-sm-9">
+            </div>
+            <div class="col-sm-3 m-auto">
+                <h5>
+                <i class="fas fa-credit-card p-1" {% include 'includes/theme.html' %}></i> 
+                    DONATION AMOUNT = <span>£</span><span class="fs-5 mt-3 fw-bolder" id="totalAmount">10</span>
+                </h5>   
+            </div>
+    </div>
+    <div class="row">
+        <h2>PAYING DONATION TO CHURCH:</h2> 
+        <hr {% include 'includes/hr_theme.html' %}>
+        <div class="col-12 col-sm-12">
             <form action="{% url 'payment'  %}" method="POST" id="payment-form">
                 {% csrf_token %}
-                <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Contact Details</legend>
-                    {{ payment_form.full_name | as_crispy_field }}
-                    {{ payment_form.email | as_crispy_field }}
-                    {{ payment_form.phone_number | as_crispy_field }}
-                </fieldset>
-               
-                <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Donation Amount</legend>
-                    {{ payment_form.donation_payment_amount | as_crispy_field }}
-                    <input type="hidden" id="donation_page" name="donation_page" value="True">
-                </fieldset>              
-                <fieldset class="rounded px-3 mb-5">
-                    <div class="submit-button text-right mt-5 mb-2"> 
-                        <button id="submit-button" class="btn rounded-0" {% include 'includes/theme.html' %}>
-                            <span class="font-weight-bold">Your Details</span>
-                        </button>
-                    
+                <label class="ms-2" for=""><i class="fas fa-user p-1" {% include 'includes/theme.html' %}></i> FULL NAME</label>
+                {{ payment_form.full_name | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> EMAIL</label>
+                {{ payment_form.email | as_crispy_field }}
+                <label class="ms-2" for=""><i class="fas fa-phone-volume p-1" {% include 'includes/theme.html' %}></i> PHONE NUMBER</label>
+                {{ payment_form.phone_number | as_crispy_field }}
+                <div id="div_id_donation_payment_amount" class="input-group">       
+                    <div class="col-sm-12 mb-1">    
+                    <label class="ms-2" for="">
+                        <i class="fas fa-gift p-1" {% include 'includes/theme.html' %}></i>
+                        DONATION PAYMENT AMOUNT
+                    </label></div>     
+                    <div class="">
+                        <input type="number" name="donation_payment_amount" value="10" step="5" min="10" placeholder="donation_payment_amount *"
+                        class="numberinput form-control" required="" id="id_donation_payment_amount"
+                        onchange="updatePrice()">
                     </div>
-                </fieldset>
-                             
+                    <span class="input-group-text">£</span>
+                    <span id="price-span" class="input-group-text">10</span>
+                    
+                </div>
+
+                <input type="hidden" id="donation_page" name="donation_page" value="True">                
+                <button id="submit-button" class="btn rounded-0 mt-3" {% include 'includes/theme.html' %}>
+                    <span class="font-weight-bold">Donate</span>
+                </button>           
                 
             </form>
         </div>
     </div>
 </div>
+<script>
+    function updatePrice(price) {
+          
+        const donationAmount = document.getElementById("id_donation_payment_amount");
+        const totalAmount = document.getElementById("totalAmount");
+        const event_price = document.getElementById("price-span");
+        event_price.innerHTML = Number(donationAmount.value);
+        const donation = Number(donationAmount.value);
+
+        console.log(donation)
+        
+        totalAmount.innerHTML = donation;
+        
+    }
+</script>
 {% endblock %}
 
 {% block postloadjs %}

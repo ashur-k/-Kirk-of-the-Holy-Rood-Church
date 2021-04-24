@@ -51,7 +51,7 @@
     <title>Kirk of Holy Rood {% block extra_title %}{% endblock %}</title>  
   </head>
     <body>
-        <section class="header" style="height: 10vh;">
+        <section class="header" style="height: 2vh;">
             <header class="container-fluid fixed-top" >
                 <div class="row bg-white pt-lg-2 d-none d-lg-flex">
                     <div class="col-sm-12 col-md-12 col-lg-10">
@@ -73,10 +73,11 @@
                                     </div>
                                 </a>
                                 <div class="dropdown-menu border-0" aria-labelledby="user-options">
-                                    <a href="{% url 'admin_settings' %}" class="dropdown-item">Admin Settings</a>
-                                    <a href="{% url 'sunday_bookings' %}" class="dropdown-item">Sunday Bookings</a>                       
-                                    <a href="{% url 'request_and_messages' %}" class="dropdown-item">Request messages</a>                           
-                                    <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>                            
+                                    <a href="{% url 'admin_settings' %}" class="dropdown-item">ADMIN SETTINGS</a>
+                                    <a href="{% url 'sunday_bookings' %}" class="dropdown-item">SUNDAY BOOKINGS</a>
+                                    <a href="{% url 'contact_us_messages' %}" class="dropdown-item">CONTACT-US MESSAGES</a>                    
+                                    <a href="{% url 'request_and_messages' %}" class="dropdown-item">MINISTRY MESSAGES</a>                           
+                                    <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>                   
                                 </div>
                             </li>
                         </ul>

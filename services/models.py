@@ -56,6 +56,22 @@ class SundayServiceInformation(models.Model):
         self.available_bookings = self.available_bookings - number_of_bookings
         self.save()
 
+    def update_deleted_bookings(self, number_of_bookings):
+        """
+        Update grand total each time a line item is added,
+        accounting for delivery costs.
+        """
+        self.available_bookings = self.available_bookings + number_of_bookings
+        self.save()
+
+    def reset_booking_counter(self):
+        """
+        Update grand total each time a line item is added,
+        accounting for delivery costs.
+        """
+        self.available_bookings = 50
+        self.save()
+
 
 class SundayServiceBooking(models.Model):
     full_name = models.CharField(max_length=50, null=False, blank=False)

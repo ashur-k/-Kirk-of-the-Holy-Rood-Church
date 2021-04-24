@@ -15,13 +15,29 @@ urlpatterns = [
         'edit_sunday_services/<int:id>/',
         views.edit_sunday_services,
         name='edit_sunday_services'),
+
+    path(
+        'get_sunday_bookings/',
+        views.get_sunday_bookings,
+        name='sunday_bookings'),
+
     path(
         'sunday_service_booking/<int:id>/',
         views.sunday_service_booking,
         name='sunday_service_booking'),
 
     path(
-        'get_sunday_bookings/',
-        views.get_sunday_bookings,
-        name='sunday_bookings'),
+        'edit_sunday_booking/<int:booking_id>/',
+        views.edit_sunday_booking,
+        name='edit_sunday_booking'),
+
+    path(
+        'del_sunday_booking/<int:booking_id>/',
+        views.del_sunday_booking,
+        name='del_sunday_booking'),
+
+    path(
+        'del_all_sunday_booking/',
+        views.del_all_sunday_booking,
+        name='del_all_sunday_booking'),
 ]

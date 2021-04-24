@@ -14,7 +14,8 @@
                     <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
                         <strong>Sunday Services</strong>
                         {% if request.user.is_superuser %}
-                            <div class="col m-2">   
+                            <div class="col m-2">
+                                <form></form>
                                 <a href="{% url 'sunday_service_booking' service_id %}"class="btn m-1" d {% include 'includes/theme.html' %}>
                                 <i class="fas fa-plus"></i>  UPDATE BOOKINGS TAKEN MANUALLY
                                 </a>                             

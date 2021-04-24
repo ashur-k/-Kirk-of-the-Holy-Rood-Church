@@ -131,6 +131,42 @@ def sunday_services(request):
     return render(request, template, context)
 
 
+def edit_sunday_services(request, id):
+    service = get_object_or_404(SundayServiceInformation, id=id)
+    template = 'services/edit_sunday_services.html'
+    form = SundayServiceInformationForm(instance=service)
+
+    if request.method == 'POST':
+        form = SundayServiceInformationForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Service information successfully updated')
+            return redirect(reverse('sunday_services'))
+
+    context = {
+        'services': service,
+        'form': form
+        }
+
+    return render(request, template, context)
+
+
+def get_sunday_bookings(request):
+    sunday_service_bookings = SundayServiceBooking.objects.all()
+
+    # Service id to add manual entries
+    service = SundayServiceInformation.objects.all()
+    service_id = service[0].id
+    template = 'services/sunday_service_bookings.html'
+
+    context = {
+        'service_id': service_id,
+        'sunday_service_bookings': sunday_service_bookings
+    }
+
+    return render(request, template, context)
+
+
 def sunday_service_booking(request, id):
     service = get_object_or_404(SundayServiceInformation, id=id)
     form = SundayServiceBookingForm()
@@ -170,37 +206,68 @@ def sunday_service_booking(request, id):
     return render(request, template, context)
 
 
-def edit_sunday_services(request, id):
-    service = get_object_or_404(SundayServiceInformation, id=id)
-    template = 'services/edit_sunday_services.html'
-    form = SundayServiceInformationForm(instance=service)
+def edit_sunday_booking(request, booking_id):
+
+    booking = get_object_or_404(SundayServiceBooking, id=booking_id)
+
+    service = get_object_or_404(
+        SundayServiceInformation,
+        id=booking.service_title.id)
 
     if request.method == 'POST':
-        form = SundayServiceInformationForm(request.POST, instance=service)
+        form = SundayServiceBookingForm(request.POST, instance=booking)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Service information successfully updated')
-            return redirect(reverse('sunday_services'))
+            booking_obj = form.save(commit=False)
+            booking_obj.service_title = service
+            booking_obj = form.save()
 
+            # Calling model function to update booking quantities
+            service.update_available_bookings(
+                booking_obj.number_of_bookings
+                )
+            messages.success(
+                request,
+                'Successfully booked for Sunday service!'
+                )
+            return redirect('sunday_bookings')
+
+    form = SundayServiceBookingForm(instance=booking)
+    template = 'services/edit_sunday_services.html'
     context = {
-        'services': service,
-        'form': form
+        'booking': booking,
+        'form': form,
         }
-
     return render(request, template, context)
 
 
-def get_sunday_bookings(request):
-    sunday_service_bookings = SundayServiceBooking.objects.all()
-    # Service id to add manual entries
+def del_sunday_booking(request, booking_id):
+    booking = get_object_or_404(SundayServiceBooking, id=booking_id)
 
-    service = SundayServiceInformation.objects.all()
-    service_id = service[0].id
-    template = 'services/sunday_service_bookings.html'
+    service = get_object_or_404(
+        SundayServiceInformation,
+        id=booking.service_title.id)
 
-    context = {
-        'service_id': service_id,
-        'sunday_service_bookings': sunday_service_bookings
-    }
+    # Calling model function to update booking quantities
+    service.update_deleted_bookings(
+        booking.number_of_bookings
+        )
+    booking.delete()
+    messages.success(request, 'BOOKING DELETED SUCCESSFULLY!')
+    return redirect(reverse('sunday_bookings'))
 
-    return render(request, template, context)
+
+def del_all_sunday_booking(request):
+    bookings = SundayServiceBooking.objects.all()
+    service_id = None
+
+    for booking in bookings:
+        service_id = booking.service_title.id
+        booking.delete()
+
+    # Calling model function to reset booking quantities
+    service = get_object_or_404(
+        SundayServiceInformation,
+        id=service_id)
+    service.reset_booking_counter()
+    messages.success(request, 'BOOKING DELETED SUCCESSFULLY!')
+    return redirect(reverse('sunday_bookings'))

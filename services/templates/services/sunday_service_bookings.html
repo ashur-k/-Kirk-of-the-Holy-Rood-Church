@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block page_header %}
-<div class="container header-container" style="margin-top: 70px;">
+<div class="container header-container">
     <div class="row"> 
         <div class="col-sm-12">
             <div class="card text-center">
@@ -9,7 +9,7 @@
                     <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
                         <strong>SUNDAY SERVICE</strong>
                         {% if request.user.is_superuser %}
-                            <div class="col m-2">   
+                            <div class="col m-2">
                                 <a href="{% url 'sunday_service_booking' service_id %}"class="btn m-1" {% include 'includes/theme.html' %}>
                                 <i class="fas fa-plus"></i>  UPDATE BOOKINGS TAKEN MANUALLY
                                 </a>                             
@@ -46,7 +46,6 @@
                     <th scope="col">Number of Bookings</th>
                     <th scope="col">Buttons</th>
                     <th scope="col"></th>
-                          
                 </tr>
             </thead>
              <thead>
@@ -58,8 +57,41 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
-                    <th scope="col"><a href="" class="btn bt-sm btn-danger">Del All</a></th>
-                             
+                    <th scope="col">
+                        <!-- DELETE ALL BOOKINGS -->    
+                        {% if sunday_service_bookings.count == 0  %}
+                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteall{{ booking.id }}Modal" disabled>
+                            <i class="fas fa-trash-alt"></i> DELETE ALL
+                        </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteall{{ booking.id }}Modal">
+                            <i class="fas fa-trash-alt"></i> DELETE ALL
+                        </button>
+                        {% endif %}
+                    </th>
+                    <div class="col-sm-12">                                                                                      
+                        <div id="admin-buttons">
+                            <div class="modal fade" id="deleteall{{ booking.id }}Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteall{{ booking.id }}ModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-dark" id="deleteall{{ booking.id }}ModalLabel">DELETE ALL BOOKINGS</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    Are you sure you want to delete all bookings?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'del_all_sunday_booking' %}" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> DELETE ALL BOOKINGS
+                                    </a> 
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>   
+                    </div>      
                 </tr>
             </thead>
             <tbody>
@@ -73,8 +105,43 @@
                 <td>{{ booking.number_of_bookings }}</td>
                  <td></td>
                 <td>
-                    <a href="" class="btn btn-small btn-dark">Edit</a>
-                    <a href="" class="btn btn-small btn-dark">Del</a>
+                {% if request.user.is_superuser %}
+                <!-- Booking EDIT AND DELETE BUTTONS ARE INSIDE -->     
+                <div class="col-sm-12">                                                                                      
+                    <div class="admin-buttons">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="{% url 'edit_sunday_booking' booking.id %}" type="button" class="btn btn-sm btn btn-dark">
+                                <small><i class="fas fa-user-edit"></i></small>
+                            </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{ booking.id }}Modal">
+                                    <small><i class="fas fa-trash-alt"></i></small>
+                            </button>
+                            <div class="message-edit-delete-modals text-start m-0">                       
+                            <!-- Delete Booking Modal -->
+                            <div class="modal fade" id="delete{{ booking.id }}Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete{{ booking.id }}ModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-dark" id="delete{{ booking.id }}ModalLabel">DELETE BOOKING</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    Are you sure you want to delete booking for {{ booking.full_name}}?.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'del_sunday_booking' booking.id %}" class="btn btn-danger">
+                                        <small><i class="fas fa-trash-alt"></i></small>
+                                    </a> 
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>           
+                        </div>
+                    </div>                               
+                </div>
+                {% endif %} 
                 </td>     
                 </tr>
                 {% endfor %}

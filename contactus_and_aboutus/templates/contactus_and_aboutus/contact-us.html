@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block page_header %}
-<div class="container" style="margin-top: 70px !important;">
+<div class="container header-container">
     <div class="row"> 
         <div class="col-sm-12">
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    <h1 class="text-uppercase bg-dark mb-0">                      
-                        <strong class="text-white">Contact-Us</strong>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>                      
+                        <strong >Contact-Us</strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
@@ -28,26 +28,24 @@
 <div class="container mt-1">
     <div class="row">
         <div class="col-sm-2"></div>
-        <div class="col-sm-8 p-3 bg-dark text-light">
+        <div class="col-sm-8 p-3" {% include 'includes/secondary_theme.html' %}>
                 <div>
-                    <h3><i class="fas fa-edit"></i> Write To Us!</h3>
+                    <h3><i class="fas fa-edit p-1" {% include 'includes/theme.html' %}></i> Write To Us!</h3>
                     <hr>
                 </div>
-                <form>
+                <form method="POST">
                     {% csrf_token %}
-                    <p id="sendEmailSuccess" class="text-success d-none">Message has send succesfully!</p>
-                    <p id="sendEmailFail" class="text-danger d-none">Message sending failed sorry for inconvenience!</p>
                     <div class="mb-3">
-                        <label for="name"><i class="fas fa-male"></i> Name:</label>
+                        <label for="name" class="mb-1"><i class="fas fa-male p-1" {% include 'includes/theme.html' %}></i> Name:</label>
                         <input type="text" class="form-control form-control-sm" name="name" placeholder="name">
                     </div>
                     <div class="mb-3">
-                        <label for="email"><i class="fas fa-envelope-square"></i> Email:</label>
+                        <label for="email" class="mb-1"><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> Email:</label>
                         <input type="email" class="form-control form-control-sm" name="email" placeholder="your_email@anymailservice.com" aria-describedby="emailHelp">
-                        <div class="form-text text-info">We'll never share your email with anyone else.</div>
+                        <div class="form-text text-success">We'll never share your email with anyone else.</div>
                     </div>                        
                     <div class="mb-3 form-check p-0">
-                        <label for="message"><i class="far fa-comments"></i> Message:</label>                
+                        <label for="message" class="mb-1"><i class="far fa-comments p-1" {% include 'includes/theme.html' %}></i> Message:</label>                
                         <textarea class="form-control form-control-sm" name="message" placeholder="Leave a message here" id="floatingTextarea"></textarea>                  
                     </div>
                     <button type="submit" class="btn btn-sm" {% include 'includes/theme.html' %}>Submit</button>
@@ -61,18 +59,18 @@
            <div class="row">
                 <div class="col-sm-12 map-col text-center m-auto">
                     <hr>
-                    <h3 class="mt-3"><i class="far fa-address-card"></i> Contact Details</h3>
+                    <h3 class="mt-3"><i class="far fa-address-card p-1" {% include 'includes/theme.html' %}></i> Contact Details</h3>
                     <hr class="home-page-heading-hr-bottom">
                     <div class="row">
                         <div class="col-sm-12 text-start">                            
-                            <h6><i class="fas fa-male"></i> Church Minister</h6><hr>
+                            <h6><i class="fas fa-male p-1" {% include 'includes/theme.html' %}></i> Church Minister</h6><hr>
                             <p class="p-0 m-0"><strong>Name:</strong>Ronald Matandakufa</p>
                             <p class="p-0 m-0"><strong>Email:</strong> RMatandakufa@churchofscotland.org.uk</p>
                             <p class="p-0 m-0"><strong>Mobile:</strong> 07486052954</p>   
                             <hr>                  
                         </div>
                         <div class="col-sm-12 text-start">                            
-                            <h6><i class="fas fa-male"></i> Church Secretary</h6><hr>
+                            <h6><i class="fas fa-male p-1" {% include 'includes/theme.html' %}></i> Church Secretary</h6><hr>
                             <p class="p-0 m-0"><strong>Name:</strong> Some one</p>
                             <p class="p-0 m-0"><strong>Email:</strong> someone@churchofscotland.org.uk</p>
                             <p class="p-0 m-0"><strong>Mobile:</strong> 07486052954</p>   
@@ -86,12 +84,12 @@
             <div class="row map-row">
                 <div class="col-sm-12 map-col text-center">
                     <hr>
-                    <h3 class="mt-3"><i class="fas fa-church"></i> Kirk Of The Holy Rood</h3>
+                    <h3 class="mt-3"><i class="fas fa-church p-1" {% include 'includes/theme.html' %}></i> Kirk Of The Holy Rood</h3>
                     <hr class="home-page-heading-hr-bottom">
                 </div>
             </div>
             <div class="row">    
-                <h6 class="mb-3"><i class="fas fa-map-pin"></i> Church Location</h6><hr>    
+                <h6 class="mb-3"><i class="fas fa-map-pin p-1" {% include 'includes/theme.html' %}></i> Church Location</h6><hr>    
                 <div class="col-sm-12 p-0 m-0 text-center">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d8922.973272294328!2d-3.7170306!3d56.0057987!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6789115c9b72405c!2sKirk%20of%20the%20Holy%20Rood!5e0!3m2!1sen!2suk!4v1619014384461!5m2!1sen!2suk" 
                     width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
