@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
 
 def _send_confirmation_email(form, cust_email):
@@ -69,7 +70,11 @@ def ministry(request, id):
     return render(request, template, context)
 
 
+@login_required
 def ministry_edit(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     ministry = get_object_or_404(Ministries, id=id)
     form = MinistrieForm(instance=ministry)
@@ -90,7 +95,12 @@ def ministry_edit(request, id):
     return render(request, template, context)
 
 
+@login_required
 def add_ministry(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     form = MinistrieForm()
 
     if request.method == 'POST':
@@ -111,7 +121,12 @@ def add_ministry(request):
     return render(request, template, context)
 
 
+@login_required
 def add_new_meeting_times(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     ministry = get_object_or_404(Ministries, pk=id)
     print()
     if request.method == 'POST':
@@ -127,7 +142,12 @@ def add_new_meeting_times(request, id):
     return redirect(reverse('ministry', args=[ministry.id]))
 
 
+@login_required
 def delete_meeting_times(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     meeting_time = get_object_or_404(MeetingTimes, pk=id)
     ministry_id = meeting_time.meeting_ministry_name.id
     meeting_time.delete()
@@ -135,7 +155,12 @@ def delete_meeting_times(request, id):
     return redirect(reverse('ministry', args=[ministry_id]))
 
 
+@login_required
 def edit_meeting_times(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     meeting_time = get_object_or_404(MeetingTimes, pk=id)
 
     ministry_id = meeting_time.meeting_ministry_name.id

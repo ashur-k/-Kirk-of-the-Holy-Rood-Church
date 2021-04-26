@@ -6,6 +6,7 @@ from django.shortcuts import(
     get_object_or_404)
 from .models import Notice, NewsLetter
 from .forms import NoticeForm
+from django.contrib.auth.decorators import login_required
 
 
 def notices(request):
@@ -27,7 +28,12 @@ def notices(request):
     return render(request, template, context)
 
 
+@login_required
 def add_new_notice(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     if request.method == 'POST':
         notice_form = NoticeForm(request.POST)
         if notice_form.is_valid():
@@ -38,7 +44,12 @@ def add_new_notice(request):
     return redirect(reverse('notices'))
 
 
+@login_required
 def edit_notice(request, notice_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     notice = get_object_or_404(Notice, id=notice_id)
     if request.method == 'POST':
         notice_form = NoticeForm(request.POST, instance=notice)
@@ -50,7 +61,12 @@ def edit_notice(request, notice_id):
     return redirect(reverse('notices'))
 
 
+@login_required
 def delete_notice(request, notice_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     notice = get_object_or_404(Notice, id=notice_id)
     notice.delete()
     return redirect(reverse('notices'))

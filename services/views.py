@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponse
 from . models import Videos, SundayServiceInformation, SundayServiceBooking
 from .forms import SundayServiceInformationForm, SundayServiceBookingForm, SundayServiceBooking, VideoForm
+from django.contrib.auth.decorators import login_required
 
 
 def video_services(request):
@@ -77,7 +78,11 @@ def play_video(request, video_id):
     return render(request, template, context)
 
 
+@login_required
 def pin_video(request, video_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     for video in Videos.objects.all():
         if video.pinned:
@@ -87,7 +92,12 @@ def pin_video(request, video_id):
     return redirect('video_services')
 
 
+@login_required
 def add_video(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     video_form = VideoForm()
     template = "services/add_new_video.html"
 
@@ -117,7 +127,12 @@ def add_video(request):
     return render(request, template, context)
 
 
+@login_required
 def edit_video(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     video_obj = get_object_or_404(Videos, pk=id)
     video_pinned = video_obj.pinned
 
@@ -153,7 +168,12 @@ def edit_video(request, id):
     return render(request, template, context)
 
 
+@login_required
 def del_video(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     video = get_object_or_404(Videos, id=id)
     video.delete()
     messages.success(request, 'Video is deleted successfully!')
@@ -161,6 +181,7 @@ def del_video(request, id):
 
 
 def sunday_services(request):
+
     service = SundayServiceInformation.objects.all()
     service_id = service[0].id
     template = 'services/sunday_services.html'
@@ -176,7 +197,12 @@ def sunday_services(request):
     return render(request, template, context)
 
 
+@login_required
 def edit_sunday_services(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     service = get_object_or_404(SundayServiceInformation, id=id)
     template = 'services/edit_sunday_services.html'
     form = SundayServiceInformationForm(instance=service)
@@ -196,7 +222,12 @@ def edit_sunday_services(request, id):
     return render(request, template, context)
 
 
+@login_required
 def get_sunday_bookings(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     sunday_service_bookings = SundayServiceBooking.objects.all()
 
     # Service id to add manual entries
@@ -213,6 +244,7 @@ def get_sunday_bookings(request):
 
 
 def sunday_service_booking(request, id):
+
     service = get_object_or_404(SundayServiceInformation, id=id)
     form = SundayServiceBookingForm()
 
@@ -251,7 +283,11 @@ def sunday_service_booking(request, id):
     return render(request, template, context)
 
 
+@login_required
 def edit_sunday_booking(request, booking_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     booking = get_object_or_404(SundayServiceBooking, id=booking_id)
 
@@ -285,7 +321,12 @@ def edit_sunday_booking(request, booking_id):
     return render(request, template, context)
 
 
+@login_required
 def del_sunday_booking(request, booking_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     booking = get_object_or_404(SundayServiceBooking, id=booking_id)
 
     service = get_object_or_404(
@@ -301,7 +342,12 @@ def del_sunday_booking(request, booking_id):
     return redirect(reverse('sunday_bookings'))
 
 
+@login_required
 def del_all_sunday_booking(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     bookings = SundayServiceBooking.objects.all()
     service_id = None
 

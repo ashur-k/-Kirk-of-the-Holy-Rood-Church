@@ -24,6 +24,7 @@ from . forms import (
     SecondParallaxSectionForm,
     StudyGroupTextForm,
 )
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -98,7 +99,12 @@ def index(request):
     return render(request, template, context)
 
 
+@login_required
 def carousel_text_edit(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     carousel_text = get_object_or_404(CarouselSectionText, id=id)
     if request.method == 'POST':
         form = CarouselSectionTextForm(request.POST, instance=carousel_text)
@@ -108,7 +114,12 @@ def carousel_text_edit(request, id):
             return redirect(reverse('home'))
 
 
+@login_required
 def inner_carousel_edit(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     carousel_inner_text = get_object_or_404(CarouselInnerSection, id=id)
     if request.method == 'POST':
         form = CarouselInnerSectionForm(request.POST,
@@ -124,7 +135,11 @@ def inner_carousel_edit(request, id):
             return redirect(reverse('home'))
 
 
+@login_required
 def add_new_carousel(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     if request.method == 'POST':
         form = AddNewCarouselForm(request.POST, request.FILES)
@@ -137,7 +152,12 @@ def add_new_carousel(request):
     return redirect(reverse('home'))
 
 
+@login_required
 def parallax_edit(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     second_parallax_section = get_object_or_404(SecondParallaxSection, id=id)
 
     if request.method == 'POST':
@@ -153,7 +173,12 @@ def parallax_edit(request, id):
             return redirect(reverse('home'))
 
 
+@login_required
 def study_group_edit(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     study_group_heading_text = get_object_or_404(StudyGroupText, id=1)
 
     if request.method == 'POST':

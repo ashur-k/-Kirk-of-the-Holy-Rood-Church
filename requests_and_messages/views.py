@@ -5,9 +5,15 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, redirect, 
 from ministries.models import Message
 from home.models import CurrentColorTheme
 from home.forms import CurrentColorThemeForm
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def request_and_messages(request, minstry_id=None):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     query = None
     request_messages = Message.objects.filter(ministy=minstry_id)
     if minstry_id:
@@ -51,7 +57,11 @@ def request_and_messages(request, minstry_id=None):
     return render(request, template, context)
 
 
+@login_required
 def admin_settings(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     context = {
 

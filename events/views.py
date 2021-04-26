@@ -8,6 +8,7 @@ from . models import Events, EventDates, BookingFreeEvents
 from .forms import EventsForm, EventDateForm, BookingFreeEventsForm
 from payment.forms import PaymentForm, TicketPaymentForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def events(request):
@@ -35,7 +36,12 @@ def events(request):
     return render(request, template, context)
 
 
+@login_required
 def edit_event(request, event_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     event = get_object_or_404(Events, id=event_id)
 
     if request.method == 'POST':
@@ -51,14 +57,24 @@ def edit_event(request, event_id):
             return redirect(reverse('events'))
 
 
+@login_required
 def delete_event(request, event_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     event = get_object_or_404(Events, id=event_id)
     event.delete()
     messages.success(request, 'Succesfully deleted an event!')
     return redirect(reverse('events'))
 
 
+@login_required
 def add_event_date_time(request, event_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     event = get_object_or_404(Events, id=event_id)
 
     if request.method == 'POST':
@@ -72,7 +88,12 @@ def add_event_date_time(request, event_id):
         return HttpResponse(form.errors)
 
 
+@login_required
 def edit_event_date_time(request, event_date_time_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     event_date_time = get_object_or_404(EventDates, id=event_date_time_id)
 
     if request.method == 'POST':
@@ -86,7 +107,12 @@ def edit_event_date_time(request, event_date_time_id):
         return HttpResponse(form.errors)
 
 
+@login_required
 def delete_event_date_time(request, event_date_time_id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
+
     """ Delete a product from the store """
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only Church Admin can watch this.')

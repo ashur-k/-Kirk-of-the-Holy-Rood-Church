@@ -5,6 +5,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, redirect, 
 from .models import Contactus
 from .forms import ContactusForm
 from ministries.views import _send_confirmation_email
+from django.contrib.auth.decorators import login_required
 
 
 def contact_us(request):
@@ -28,7 +29,11 @@ def contact_us(request):
     return render(request, template, context)
 
 
+@login_required
 def contact_us_messages(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     contact_us_messages = Contactus.objects.all()
     query = None
@@ -67,7 +72,11 @@ def contact_us_messages(request):
     return render(request, template, context)
 
 
+@login_required
 def del_contactus_msgs(request, id):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry only store owners can do that')
+        return redirect(reverse('home'))
 
     message = get_object_or_404(Contactus, id=id)
     message_name = message.name
