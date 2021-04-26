@@ -4,16 +4,24 @@ from django.shortcuts import(
     reverse,
     HttpResponse,
     get_object_or_404)
-from .models import Notice
+from .models import Notice, NewsLetter
 from .forms import NoticeForm
 
 
 def notices(request):
+    news_letter = NewsLetter.objects.all().order_by('-id')[:1]
+
     notices = Notice.objects.filter(notice_display_status=True)
     notice_form = NoticeForm()
+
+    print(news_letter)
+    for item in news_letter:
+        print(item.title)
+
     context = {
         'notices': notices,
         'notice_form': notice_form,
+        'news_letter': news_letter,
     }
     template = 'notices/notices.html'
     return render(request, template, context)

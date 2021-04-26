@@ -4,19 +4,13 @@
     <link rel="stylesheet" href="{% static 'payment/css/payment.css' %}">
 {% endblock %}
 {% block page_header %}
-<style>
-    h1{
-    font-size: 1.8rem;
-    padding: 1rem 0;
 
-}
-</style>
-<div class="container" style="margin-top: 70px !important;">
+<div class="container header-container">
     <div class="row"> 
         <div class="col-sm-12">
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    <h1 class="text-uppercase bg-dark mb-0">
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
                         {% if request.user.is_superuser %}
                             <div class="col m-2">   
                                 <button class="btn m-1" d {% include 'includes/theme.html' %} data-bs-toggle="modal" data-bs-target="#addnewnoticeModal">
@@ -24,7 +18,7 @@
                                 </button>                             
                             </div>
                         {% endif %}
-                        <strong class="text-white">Notices</strong>
+                        <strong>Notices</strong>
                     </h1>
                     <!-- Add New Notice Modal -->                  
                     <div class="card-header" {% include 'includes/theme.html' %}></div>
@@ -81,20 +75,21 @@
 
 {% block content %}   
 
-<div class="container">
-    <div class="row m-0 mb-5 p-2 bg-dark text-light">
+<div class="container mt-5">
+    <div class="row m-0 mb-5 p-2 text-light" {% include 'includes/secondary_theme.html' %}>
+        {% for newsletter in news_letter %}
         <div class="col-sm-12 mt-3 text-center m-auto">
-            <h4><i class="fas fa-newspaper"></i> Downlaod Our News Letter</h4>
+            <h4><i class="fas fa-newspaper"></i>Downlaod Our News Letter</h4>
         </div>
         <div class="col-sm-8 p-5 text-center m-auto">
             <img src="../../../media/news-letter.jpg" class="img-fluid w-50" alt="">
         </div>
         <div class="col-sm-4 text-start m-auto">
-            <h4>Date: 12-12-12</h4>
-            <a href="../../../media/Ashur.pdf" >News Letter Name or title</a>
-      
+            <h4>{{ newsletter.date }}</h4>
+            <a class="text-dark" href="{{ newsletter.upload.url }}" >{{ newsletter.title }}</a>
+            <p>{{ newsletter.description }}</p>    
         </div>
-
+        {% endfor %}
     </div>
     <div class="row"> 
         {% for notice in notices %}

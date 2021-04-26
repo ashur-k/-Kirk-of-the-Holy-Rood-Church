@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Notice
+from .models import Notice, NewsLetter
 
 
 class NoticeAdmin(admin.ModelAdmin):
@@ -17,3 +17,5 @@ class NoticeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Notice, NoticeAdmin)
+admin.site.register(NewsLetter)
+

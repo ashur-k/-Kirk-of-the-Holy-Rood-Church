@@ -9,7 +9,7 @@ class ContactusForm(forms.ModelForm):
     class Meta:
         model = Contactus
         fields = [
-            'name',
+            'full_name',
             'email',
             'message',
             ]
@@ -18,12 +18,12 @@ class ContactusForm(forms.ModelForm):
 
         super().__init__(*args, **kwargs)
         placeholders = {
-            'name': 'Name',
+            'full_name': 'Full Name',
             'email': 'Email',
             'message': 'Message',
         }
 
-        self.fields['name'].widget.attrs['autofocus'] = True
+        self.fields['full_name'].widget.attrs['autofocus'] = True
         for field in self.fields:
             placeholder = f'{placeholders[field]} *'
             self.fields[field].widget.attrs['placeholder'] = placeholder

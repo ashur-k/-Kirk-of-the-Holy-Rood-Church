@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.db.models import Q
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponse
 from . models import Videos, SundayServiceInformation, SundayServiceBooking
 from .forms import SundayServiceInformationForm, SundayServiceBookingForm, SundayServiceBooking, VideoForm
@@ -8,13 +10,56 @@ def video_services(request):
     template = 'services/videos_services.html'
     title_video = get_object_or_404(Videos, pinned=True)
     if request.user.is_superuser:
-        videos = Videos.objects.all()
+        videos = Videos.objects.all().order_by('-id')[:3]
     else:
-        videos = Videos.objects.filter(status="True")
+        videos = Videos.objects.filter(status="True").order_by('-id')[:3]
 
     context = {
         'title_video': title_video,
         'videos': videos,
+        }
+
+    return render(request, template, context)
+
+
+def all_videos(request):
+    query = None
+    template = 'services/all_videos.html'
+
+    if request.user.is_superuser:
+        videos = Videos.objects.all().order_by('-id')
+    else:
+        videos = Videos.objects.filter(status="True").order_by('-id')
+
+    if request.GET:
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(request, "You didn't enter any search criteria")
+                return redirect(reverse('contact_us_messages'))
+
+            queries = Q(
+                title__icontains=query
+                ) | Q(
+                    date__icontains=query
+                    ) | Q(
+                    main_paragraph__icontains=query
+                    )
+
+            videos = videos.filter(queries)
+            messages.success(
+                request,
+                f'{videos.count()} results found.')
+
+    # pagintion for website
+    videos_paginator = Paginator(videos, 9)
+    page_num = request.GET.get('page')
+    page = videos_paginator.get_page(page_num)
+
+    context = {
+        'videos': videos,
+        'query': query,
+        'page': page
         }
 
     return render(request, template, context)

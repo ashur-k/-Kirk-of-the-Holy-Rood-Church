@@ -1,30 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
 {% block page_header %}
-    <div class="container header-container">
-        
+<div class="container header-container">
+    <div class="row"> 
+        <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>                      
+                        <strong >Requests and Messages</strong>
+                    </h1>
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>                    
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}   
 <div class="container">
-    <div class="row">            
-        <div class="col-sm-12">
-            {% if messages %}
-                <div class="message-container">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mt-3 ">
-            <h2 class="logo-font text-dark">Request and Messages</h2>
+            <h2 class="logo-font text-dark"></h2>
             {% for ministry in ministries %}
                 <a class="category-badge text-decoration-none mb-2" href="{% url 'request_and_messages' ministry.id %}">
                     <span class="p-2 mt-2 badge btn-dark fs-6" {% include 'includes/secondary_theme.html' %}>{{ ministry.ministry_heading }}</span>
@@ -33,9 +29,25 @@
             <hr>
         </div>            
     </div>
-    
+     {% if request_messages %}
+     <div class="row mt-4 mb-4">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8 text-center p-3 rounded" {% include 'includes/secondary_theme.html' %}>
+            <h5 class="" {% include 'includes/secondary_theme.html' %}>SEARCH BY NAME OR DATE</h5> 
+            <form method="GET" action="{% url 'request_and_messages' minstry_id %}">
+                <div class="input-group input-group-sm pb-4">
+                    <input type="text" class="form-control" id="q" name="q" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <button class="btn btn-sm" {% include 'includes/theme.html' %}>
+                        <span class="input-group-text border-0" id="inputGroup-sizing-sm" {% include 'includes/theme.html' %}>                    
+                            <i class="fas fa-search p-1"></i>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
     <div class="row table-responsive">
-        {% if request_messages %}
         <table class="table table-success table-striped">
             <thead>
                 <tr>
@@ -50,7 +62,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for request_message in request_messages %}
+                {% for request_message in page.object_list %}
                 <tr>        
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ request_message.ministy }}</td>
@@ -63,10 +75,47 @@
                 {% endfor %}
             </tbody>
         </table>
-{% else %}
-<p class="lead"> Please select one of ministries to view messages in it.</p>
-{% endif %}
-    </div>         
+    {% else %}
+    <p class="lead"> Please select one of ministries to view messages in it.</p>
+    {% endif %}
+    </div>   
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" 
+                    href="?page={{ page.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" 
+                    
+                    {% include 'includes/theme.html' %}>
+                        <i class="fas fa-angle-double-left"></i>
+                        Previous
+                    </a>                    
+                </li>
+            {% endif %}
+            {% if page.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.next_page_number }}{% if query %}&q={{ query }}{% endif %}" {% include 'includes/theme.html' %}>
+                   Next <i class="fas fa-angle-double-right"></i>
+                </a>                
+            </li>
+         
+            {% endif %}
+            {% if request_messages %}
+            <li class="page-item">
+                <span class="current" >
+                    <strong class="page-link" {% include 'includes/secondary_theme.html' %}>Page {{ page.number }} of {{ page.paginator.num_pages }}.</strong>
+                </span>
+            </li>
+              {% endif %}
+            {% if query %}
+            <li class="page-item">
+                <span class="current" >
+                    <a href="{% url 'all_videos' %}" class="page-link btn" {% include 'includes/secondary_theme.html' %}>REQUEST AND MESSAGES</a>
+                </span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>        
 </div>
 {% endblock %}
 

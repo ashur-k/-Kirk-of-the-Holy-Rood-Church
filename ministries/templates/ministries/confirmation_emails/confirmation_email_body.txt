@@ -5,9 +5,15 @@ Message: {{ form.message }}
 
 Please contact back the person on following given details 
 
-Phone Number: {{ form.phone_number }}
+{% if form.phone_number  %}
+    Phone Number: {{ form.phone_number }}
+{% endif %}
+
 Email: {{ form.email }}
-Address: {{ form.street_address1 }},{{ form.street_address2 }}, {{form.postcode}}
+
+{% if form.street_address1  %}
+    Address: {{ form.street_address1 }},{{ form.street_address2 }}, {{form.postcode}}
+{% endif %}
 
 Thank you for your volunteering and giving up your valuabe time to 
 take part in Kirk of the Holy Rood Church Outreach for Jesus Christ program!

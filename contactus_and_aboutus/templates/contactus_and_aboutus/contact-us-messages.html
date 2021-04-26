@@ -22,25 +22,26 @@
 {% endblock %}
 {% block content %}  
 <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-sm-2"></div>
         <div class="col-sm-8 text-center p-3 rounded" {% include 'includes/secondary_theme.html' %}>
-            <h5 class="" {% include 'includes/secondary_theme.html' %}>SEARCH BY NAME OR DATE</h5>     
-            <div class="input-group input-group-default pb-4">
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-                <button class="btn btn-default" {% include 'includes/theme.html' %}>
-                    <span class="input-group-text border-0" id="inputGroup-sizing-default" {% include 'includes/theme.html' %}>                    
-                        <i class="fas fa-search p-1"></i>
-                    </span>
-                </button>
-            </div>
-            
+            <h5 class="" {% include 'includes/secondary_theme.html' %}>SEARCH BY NAME OR DATE</h5> 
+            <form method="GET" action="{% url 'contact_us_messages' %}">
+                <div class="input-group input-group-sm pb-4">
+                    <input type="text" class="form-control" id="q" name="q" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    <button class="btn btn-sm" {% include 'includes/theme.html' %}>
+                        <span class="input-group-text border-0" id="inputGroup-sizing-sm" {% include 'includes/theme.html' %}>                    
+                            <i class="fas fa-search p-1"></i>
+                        </span>
+                    </button>
+                </div>
+            </form>
         </div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row mt-3">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <h2 class="logo-font text-dark">Received Messages</h2>                      
+            <h2 class="logo-font text-dark">Received Messages</h2>         
             <hr>
         </div>            
     </div>
@@ -50,7 +51,7 @@
         <table class="table table-success table-striped">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">#{{query}}</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Message</th>
@@ -60,10 +61,10 @@
                 </tr>
             </thead>
             <tbody>
-                {% for message in contact_us_messages %}
+                {% for message in page.object_list %}
                 <tr>        
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ message.name }}</td>
+                <td>{{ message.full_name }}</td>
                 <td>{{ message.email }}</td>
                 <td>{{ message.message }}</td>
                 <td>{{ message.receieve_at }}</td>
@@ -108,9 +109,40 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>   
 
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" 
+                    href="?page={{ page.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" 
+                    
+                    {% include 'includes/theme.html' %}>
+                        <i class="fas fa-angle-double-left"></i>
+                        Previous
+                    </a>
+                    
+                </li>
+                
+            {% endif %}
+           
 
-    </div>         
+            {% if page.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.next_page_number }}{% if query %}&q={{ query }}{% endif %}" {% include 'includes/theme.html' %}>
+                   Next <i class="fas fa-angle-double-right"></i>
+                </a>                
+            </li>
+         
+            {% endif %}
+            <li class="page-item">
+                <span class="current" >
+                    <strong class="page-link" {% include 'includes/secondary_theme.html' %}>Page {{ page.number }} of {{ page.paginator.num_pages }}.</strong>
+                </span>
+            </li>
+        </ul>
+    </nav>     
 </div>
 {% endblock %}
 

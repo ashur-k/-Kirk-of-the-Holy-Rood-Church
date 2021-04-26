@@ -51,7 +51,7 @@
     <title>Kirk of Holy Rood {% block extra_title %}{% endblock %}</title>  
   </head>
     <body>
-        <section class="header" style="height: 2vh;">
+        <section class="header" style="height: 0vh;">
             <header class="container-fluid fixed-top" >
                 <div class="row bg-white pt-lg-2 d-none d-lg-flex">
                     <div class="col-sm-12 col-md-12 col-lg-10">
@@ -69,7 +69,7 @@
                                 <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="text-center">
                                         <div><i class="fas fa-user fa-lg"></i></div>
-                                        <p class="my-0">Admin Logged In</p>
+                                        <p class="my-0">ADMIN LOGGED-IN</p>
                                     </div>
                                 </a>
                                 <div class="dropdown-menu border-0" aria-labelledby="user-options">
@@ -83,8 +83,7 @@
                         </ul>
                     </div>
                     {% endif %}
-                </div>
-                
+                </div>                
                 <div class="row" {% include 'includes/theme.html' %}>
                     <nav class="navbar navbar-expand-lg navbar-light w-100 text-center p-2" >                    
                         <button class="navbar-toggler m-2" type="button" 
@@ -124,7 +123,7 @@
     {% block page_header %}
     {% endblock %}
 
-    <div class="mb-5"></div>
+    
     
     {% block content %}
     {% endblock %}

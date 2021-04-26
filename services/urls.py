@@ -4,6 +4,7 @@ from .import views
 
 urlpatterns = [
     path('video_services/', views.video_services, name='video_services'),
+    path('all_videos/', views.all_videos, name='all_videos'),
     path('pin_video/<int:video_id>/', views.pin_video, name='pin_video'),
     path('add_video/', views.add_video, name='add_video'),
     path('edit_video/<int:id>/', views.edit_video, name="edit_video"),
