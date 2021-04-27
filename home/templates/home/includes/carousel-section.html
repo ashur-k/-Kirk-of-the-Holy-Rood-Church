@@ -15,13 +15,13 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div id="carouselHomePage" class="carousel carousel-dark slide" data-bs-ride="carousel">
                     <ol class="carousel-indicators">
                         {% for item in carousel_inner_section %}
                             {% if forloop.counter|divisibleby:3 %}
-                                <li data-bs-target="#carouselExampleDark" class="active"></li>
+                                <li data-bs-target="#carouselHomePage" class="active"></li>
                             {% else %}
-                                <li data-bs-target="#carouselExampleDark"></li>
+                                <li data-bs-target="#carouselHomePage"></li>
                             {% endif %}
                         {% endfor %}
                     </ol>
@@ -128,11 +128,11 @@
                         {% endif %}
                     {% endfor %}
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleDark" role="button" data-bs-slide="prev">
+                    <a class="carousel-control-prev" href="#carouselHomePage" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleDark" role="button" data-bs-slide="next">
+                    <a class="carousel-control-next" href="#carouselHomePage" role="button" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </a>

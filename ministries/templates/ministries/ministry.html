@@ -6,19 +6,26 @@
 {% load static %}
 
 {% block page_header %}
-    <div class="container header-container">
-        
+<div class="container header-container">
+    <div class="row"> 
+        <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>Notices</strong>
+                    </h1>             
+                    <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>   
+            {% if request.user.is_superuser %}
+            
+            {% endif %}               
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}  
-<style>
-    h1{
-    font-size: 1.8rem;
-    padding: 1rem 0;
 
-}
-</style>
 
 <div class="container">
     <div class="row">            
@@ -26,36 +33,18 @@
     </div>
 </div>
 
-<div class="container mt-5">      
+<div class="container mt-3">      
     <div class="row mb-5">
         <div class="col-sm-12">
-            <div class="card text-center"{% include 'includes/secondary_theme.html' %}>
-                <div class="card-header" {% include 'includes/theme.html' %}></div>
-                    {% if request.user.is_superuser %}
-                    <div class="row text-center justify-content-center mt-1">
-                        <a type="button" class="btn btn-sm edit-button-carousel-text text-center" 
-                            {% include 'includes/theme.html' %} 
-                            href="{% url 'ministry_edit' ministry.id %}"
-                        >
-                            Edit Text
-                        </a>
-                    </div>            
-                    {% endif %} 
-                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
-                        <strong>{{ministry.ministry_heading}}</strong>
-                    </h1>
-                    <div class="card-header" {% include 'includes/theme.html' %}></div>
-                                
+            <div class="card text-center"{% include 'includes/secondary_theme.html' %}>                                
                 <div class="card-body">
-                  
-                    <h6 class="card-title" ><blockquote >{{ministry.sub_title_heading}}</blockquote></h6>
-                     
-                    <p class="card-text" style="padding-left: 10%; padding-right: 10%;">{{ministry.bible_verse}}</p>                           
+                    <h4 class="card-title" ><blockquote >{{ministry.sub_title_heading}}</blockquote></h4><hr>
+                    <p class="card-text" style="padding-left: 10%; padding-right: 10%;">{{ministry.bible_verse}}</p>                  
                 </div>
                 <div class="mb-3" style="padding-left: 30%; padding-right: 30%;">
-                        <small>{{ministry.group_promotion}}
-                        </small> 
-                    </div>
+                    <small>{{ministry.group_promotion}}
+                    </small> 
+                </div><hr>
             </div>
         </div>
        <div class="row">
@@ -103,7 +92,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm-6 mt-4">
+            <div class="col-sm-6 mt-3">
                 <div class="col-sm-12 mt-5">
                     <div class="accordion"  id="accordionExample">
                         <div class="accordion-item">
