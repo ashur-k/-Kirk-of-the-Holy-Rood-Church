@@ -264,3 +264,38 @@ transition-delay:.2s;
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+/* Notices Page CSS */
+.title-page-section{
+        background: url('../../../media/news-letter.jpg');
+        height: 65vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        align-items:flex-end;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    }
+    .text-bg{
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+                            }
+
+.payment_title-page-section{
+        background: url('../../../media/donationGift.jpg');
+        height: 65vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        align-items:flex-end;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    }
