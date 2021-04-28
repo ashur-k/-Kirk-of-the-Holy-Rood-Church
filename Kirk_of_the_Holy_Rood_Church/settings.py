@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'phonenumber_field',
     'django_countries',
+    'storages',
 
 
 ]
@@ -154,7 +155,6 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
-   
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -199,11 +199,30 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+if 'USE_AWS' in os.environ:
+    # Cache control
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=94608000',
+    }
+    # Buket Config
+    AWS_STORAGE_BUCKET_NAME = 'kirk-of-the-holy-rood-church'
+    AWS_S3_REGION_NAME = 'eu-west-2'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+    # Static and media files
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+
+    # Override static media URLS in production
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
 # Stripe
 STRIPE_CURRENCY = 'GBP'
 STRIPE_PUBLIC_KEY = os.getenv('KIRK_STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('KIRK_STRIPE_SECRET_KEY', '')
-
-#print("Printing STripe PUBLIC key and secret key to verify all is fine")
-#print(STRIPE_PUBLIC_KEY)
-#print(STRIPE_SECRET_KEY)
