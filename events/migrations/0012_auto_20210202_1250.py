@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='events',
             name='event_ticket_quantity',
-            field=models.DateTimeField(auto_now_add=True),
+            field=models.IntegerField(default=1),
         ),
     ]

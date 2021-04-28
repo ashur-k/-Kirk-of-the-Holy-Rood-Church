@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,7 +95,7 @@ TEMPLATES = [
                 # For using media URl tags
                 'django.template.context_processors.media',
                 'home.contexts.site_settings',
-                #'payment.contexts.payment_bag_contents',
+                # 'payment.contexts.payment_bag_contents',
             ],
 
             'builtins': [
@@ -147,6 +148,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation

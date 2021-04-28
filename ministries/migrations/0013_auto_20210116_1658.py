@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='message',
             name='postcode',
-            field=models.CharField(blank=True, default=django.utils.timezone.now, max_length=20),
+            field=models.CharField(blank=True, default=django.utils.timezone.now, max_length=50),
             preserve_default=False,
         ),
         migrations.AlterField(

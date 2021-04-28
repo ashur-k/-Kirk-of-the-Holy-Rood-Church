@@ -8,7 +8,7 @@ class Videos(models.Model):
         ('True', 'True'),
         ('False', 'False'),
     )
-    title = models.CharField(max_length=30, blank=False)
+    title = models.CharField(max_length=50, default="New Video", blank=False)
     video = EmbedVideoField()  # same like models.URLField()
     video_image = models.ImageField(
         blank=False,

@@ -30,7 +30,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='videos',
             name='title',
-            field=models.CharField(default=django.utils.timezone.now, max_length=30),
+            field=models.CharField(
+                default=django.utils.timezone.now, max_length=50),
             preserve_default=False,
         ),
     ]
