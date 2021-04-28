@@ -267,7 +267,7 @@ transition-delay:.2s;
 
 /* Notices Page CSS */
 .title-page-section{
-        background: url('../../../media/news-letter.jpg');
+        background: url('/media/news-letter.jpg');
         height: 65vh;
         background-repeat: no-repeat;
         background-size: cover;
@@ -286,7 +286,7 @@ transition-delay:.2s;
                             }
 
 .payment_title-page-section{
-        background: url('../../../media/donationGift.jpg');
+        background: url('/media/donationGift.jpg');
         height: 65vh;
         background-repeat: no-repeat;
         background-size: cover;
