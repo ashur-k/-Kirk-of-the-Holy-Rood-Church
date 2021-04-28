@@ -1,0 +1,53 @@
+[
+   {
+      "model":"home.sitecolortheme",
+      "pk":1,
+      "fields":{
+         "theme_name":"Christmas Theme",
+         "primary_background_color_code":"#b71c1c",
+         "primary_foreground_color_code":"#ffffff",
+         "secondary_background_color_code":"#212529",
+         "secondary_foreground_color_code":"#fff"
+      }
+   },
+   {
+      "model":"home.sitecolortheme",
+      "pk":2,
+      "fields":{
+         "theme_name":"Easter Theme",
+         "primary_background_color_code":"#4a148c",
+         "primary_foreground_color_code":"#ffffff",
+         "secondary_background_color_code":"#ea80fc",
+         "secondary_foreground_color_code":"#000000"
+      }
+   },
+   {
+      "model":"home.sitecolortheme",
+      "pk":3,
+      "fields":{
+         "theme_name":"Black Friday",
+         "primary_background_color_code":"#000",
+         "primary_foreground_color_code":"#ffff",
+         "secondary_background_color_code":"#fff",
+         "secondary_foreground_color_code":"#000"
+      }
+   },
+   {
+      "model":"home.sitecolortheme",
+      "pk":4,
+      "fields":{
+         "theme_name":"Church Of Scotland",
+         "primary_background_color_code":"#1A4D7B",
+         "primary_foreground_color_code":"#EDF8FC",
+         "secondary_background_color_code":"#2196f3",
+         "secondary_foreground_color_code":"#000000"
+      }
+   },
+   {
+      "model":"home.currentcolortheme",
+      "pk":1,
+      "fields":{
+         "current_color_theme":4
+      }
+   }
+]
