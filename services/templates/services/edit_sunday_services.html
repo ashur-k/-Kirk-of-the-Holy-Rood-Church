@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block extra_css %}
 
 {% endblock %}
@@ -33,18 +33,8 @@
         <div class="col-sm-12"> 
             <form id="update{{service.id}}ServiceInfomration" action="" method="POST">
                 {% csrf_token %}
-                <label class="ms-2" for=""><i class="fas fa-user p-1" {% include 'includes/theme.html' %}></i> FULL NAME</label>
-                {{ form.full_name | as_crispy_field }}  
-                <label class="ms-2" for=""><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> EMAIL</label>
-                {{ form.email | as_crispy_field }}
-                <label class="ms-2" for=""><i class="fas fa-phone-volume p-1" {% include 'includes/theme.html' %}></i> PHONE NUMBER</label>
-                {{ form.phone_number | as_crispy_field }}
-                <label class="ms-2" for=""><i class="fas fa-ticket-alt p-1" {% include 'includes/theme.html' %}></i>BOOKINGS</label>
-                <div id="div_id_number_of_bookings" class="form-group">            
-                <div class="">
-                    <input type="number" name="number_of_bookings" min="1" max="{{ service.available_bookings}}" value="1" placeholder="number_of_bookings *" 
-                    class="border-black m-1 numberinput form-control" required="" id="id_number_of_bookings">
-                </div>
+                {{ form | crispy }}
+                
             </div>
                 
             </form>

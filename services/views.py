@@ -204,7 +204,6 @@ def edit_sunday_services(request, id):
         return redirect(reverse('home'))
 
     service = get_object_or_404(SundayServiceInformation, id=id)
-    template = 'services/edit_sunday_services.html'
     form = SundayServiceInformationForm(instance=service)
 
     if request.method == 'POST':
@@ -213,6 +212,8 @@ def edit_sunday_services(request, id):
             form.save()
             messages.success(request, 'Service information successfully updated')
             return redirect(reverse('sunday_services'))
+
+    template = 'services/edit_sunday_services.html'
 
     context = {
         'services': service,

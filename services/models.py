@@ -32,15 +32,15 @@ class Videos(models.Model):
 
 
 class SundayServiceInformation(models.Model):
-    title = models.CharField(max_length=30, null=False, blank=False)
-    preacher_name = models.CharField(max_length=50, null=False, blank=False)
-    sermon_title = models.CharField(max_length=100, null=False, blank=False)
+    title = models.CharField(max_length=50, default="Service title")
+    preacher_name = models.CharField(max_length=50, default="Preacher Name")
+    sermon_title = models.CharField(max_length=100, default="Sermon title")
     bible_refrence = models.TextField(blank=True)
-    worship_hymm1 = models.CharField(max_length=100)
-    worship_hymm2 = models.CharField(max_length=100)
-    worship_hymm3 = models.CharField(max_length=100)
-    worship_hymm4 = models.CharField(max_length=100)
-    important_notices = models.CharField(max_length=300)
+    worship_hymm1 = models.CharField(max_length=100, default="Hymm 1")
+    worship_hymm2 = models.CharField(max_length=100, default="Hymm 2")
+    worship_hymm3 = models.CharField(max_length=100, default="Hymm 3")
+    worship_hymm4 = models.CharField(max_length=100, default="Hymm 4")
+    important_notices = models.CharField(max_length=300, default="Notices")
     available_bookings = models.IntegerField(default=50)
     date = models.DateTimeField()
     updated_at = models.DateTimeField(auto_now_add=True)
