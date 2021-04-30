@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('KIRK_CHURCH_SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = 'DEVELOPMENT' in os.environ
-Debug = True
+Debug = False
 
 ALLOWED_HOSTS = ['localhost', 'kirk-of-the-holy-rood-church.herokuapp.com']
 
