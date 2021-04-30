@@ -57,14 +57,15 @@
                     <div class="col-sm-12 col-md-12 col-lg-10">
                         <a href="{% url 'home' %}" class="nav-link main-logo-link">                    
                             <h4 class="logo-font text-black my-0">
-                                <img src="/media/kirkcolour.png" alt="" height="70px">
-                                <strong class="text-uppercase">Kirk Of the Holy Rood Church</strong>
+                                <img src="https://kirk-of-the-holy-rood-church.s3.eu-west-2.amazonaws.com/media/kirkcolour.png" alt="" height="70px">
+                                <strong class="text-uppercase">Kirk Of the Holy Rood Grangemouth</strong>
                             </h4>                    
                         </a>
                     </div>
-                    {% if request.user.is_superuser %}
+                    
                     <div class="col-sm-12 col-lg-2 my-auto py-1 py-lg-0">
                         <ul class="list-inline list-unstyled text-center text-lg-right my-0">       
+                            {% if request.user.is_superuser %}
                             <li class="list-inline-item dropdown">
                                 <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="text-center">
@@ -80,9 +81,17 @@
                                     <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>                   
                                 </div>
                             </li>
+                             {% endif %}
+                            <li class="list-inline-item dropdown">
+                                <a href="https://www.churchofscotland.org.uk/" class="nav-link main-logo-link" target="_blank">                    
+                                    <h4 class="logo-font text-black my-0">
+                                        <img src="https://kirk-of-the-holy-rood-church.s3.eu-west-2.amazonaws.com/media/cos_header.jpg" alt="" height="70px">                                        
+                                    </h4>                    
+                                </a>
+                            </li>
                         </ul>
                     </div>
-                    {% endif %}
+                   
                 </div>                
                 <div class="row" {% include 'includes/theme.html' %}>
                     <nav class="navbar navbar-expand-lg navbar-light w-100 text-center p-2" >                    

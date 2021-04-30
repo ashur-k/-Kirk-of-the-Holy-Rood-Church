@@ -3,58 +3,54 @@
 <div class="container-fluid pt-3 footer-container-background">
     <div class="container p-1 mt-2">
         <div class="row footer mb-2">
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4">
-                <hr>
-                <h4><i class="far fa-address-card"></i> Address</h4>
-                <p class="lead"><small class="">
-                    <hr>
-                    Kirk of the Holy Rood<br>
-                    Bowhouse Rd, Grangemouth<br>
-                    FK3 0EX,<br>
-                    United Kingdom
-                    <hr>
-                </small>
-                </p>          
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4" >
-                <hr>
-                <h4><i class="far fa-address-book"></i> Contact Details</h4>
-                <hr>         
-                <p><i class="fas fa-mobile-alt"></i> Mobile: 07486052954<small></small></p>
-                <p><i class="fas fa-tty"></i> Telephone: 01324 471595</p>    
-                <p><i class="fas fa-at"></i> Email: <small>kirk_holy_rood_church@yahoo.com</small></p>
-                <p><i class="fas fa-fax"></i>Fax: 01324 471595</p>
-                <p><i class="fas fa-gift"></i>Charity Number: SC 001603</p>  <hr>
-                           
-            </div>
             <div class="col-sm-12 col-md-12 col-lg-5 col-xl-4 ">
                 <div>
                     <hr>
-                    <h4><i class="fas fa-edit"></i>Write to us!</h4>
+                    <h4><i class="fas fa-edit"></i> Write to us!</h4>
                     <hr>
                 </div>
-                <form>
-                    {% csrf_token %}
-                    <p id="sendEmailSuccess" class="text-success d-none">Message has send succesfully!</p>
-                    <p id="sendEmailFail" class="text-danger d-none">Message sending failed sorry for inconvenience!</p>
+                <form method="POST" action="{% url 'contact-us' %}" >
+                 {% csrf_token %}
                     <div class="mb-3">
-                        <label for="name"><i class="fas fa-male"></i> Name:</label>
-                        <input type="text" class="form-control form-control-sm" name="name" placeholder="name">
+                        <label for="name" class="mb-1"><i class="fas fa-male p-1" {% include 'includes/theme.html' %}></i> Name:</label>
+                        <input type="text" class="form-control form-control-sm" name="full_name" placeholder="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email"><i class="fas fa-envelope-square"></i> Email:</label>
-                        <input type="email" class="form-control form-control-sm" name="email" placeholder="your_email@anymailservice.com" aria-describedby="emailHelp">
-                        <div class="form-text text-info">We'll never share your email with anyone else.</div>
+                        <label for="email" class="mb-1"><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> Email:</label>
+                        <input type="email" class="form-control form-control-sm" name="email" placeholder="your_email@anymailservice.com" aria-describedby="emailHelp" required>
+                        <div class="form-text text-success">We'll never share your email with anyone else.</div>
                     </div>                        
                     <div class="mb-3 form-check p-0">
-                        <label for="message"><i class="far fa-comments"></i> Message:</label>                
-                        <textarea class="form-control form-control-sm" name="message" placeholder="Leave a message here" id="floatingTextarea"></textarea>                  
+                        <label for="message" class="mb-1"><i class="far fa-comments p-1" {% include 'includes/theme.html' %}></i> Message:</label>                
+                        <textarea class="form-control form-control-sm" name="message" placeholder="Leave a message here" id="floatingTextarea" required></textarea>                  
                     </div>
-                    <button type="submit" class="btn btn-sm" {% include 'includes/theme.html' %}>Submit</button>
-                </form>        
+                    <button type="submit" class="btn btn-sm" {% include 'includes/secondary_theme.html' %}>SUBMIT</button>
+                </form>          
                 <hr>
 
-            </div>     
+            </div>  
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4">
+                <hr>
+                <h4><i class="far fa-address-card"></i> Address</h4><hr>
+
+                <p>Kirk of the Holy Rood Grangemouth</p>    
+                <p>Bowhouse Rd FK3 0EX,</p>
+                <p>Scotland</p> 
+                 <hr>
+                         
+            </div>
+            
+            <div class="col-sm-12 col-md-6 col-lg-3 col-xl-4" >
+                <hr>
+                <h4><i class="far fa-address-book"></i> Contact Details</h4>
+                <hr>
+                <p><i class="fas fa-tty"></i> Telephone: 01324 337885</p>    
+                <p><i class="fas fa-at"></i> Email: <small>RMatandakufa@churchofscotland.org.uk</small></p>
+                <p><i class="fas fa-gift"></i> Charity Number: SC 001603</p> 
+                 <hr>
+                           
+            </div>
+               
         </div>
     </div>
 </div>

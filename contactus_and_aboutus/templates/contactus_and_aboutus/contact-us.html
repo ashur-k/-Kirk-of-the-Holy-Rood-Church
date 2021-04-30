@@ -42,13 +42,14 @@
                     <div class="mb-3">
                         <label for="email" class="mb-1"><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> Email:</label>
                         <input type="email" class="form-control form-control-sm" name="email" placeholder="your_email@anymailservice.com" aria-describedby="emailHelp" required>
+                        <input type="hidden" name="email" value="True">
                         <div class="form-text text-success">We'll never share your email with anyone else.</div>
                     </div>                        
                     <div class="mb-3 form-check p-0">
                         <label for="message" class="mb-1"><i class="far fa-comments p-1" {% include 'includes/theme.html' %}></i> Message:</label>                
                         <textarea class="form-control form-control-sm" name="message" placeholder="Leave a message here" id="floatingTextarea" required></textarea>                  
                     </div>
-                    <button type="submit" class="btn btn-lg" {% include 'includes/secondary_theme.html' %}>SUBMIT</button>
+                    <button type="submit" class="btn btn-sm" {% include 'includes/secondary_theme.html' %}>SUBMIT</button>
                 </form>   
 
         </div>

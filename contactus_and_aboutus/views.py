@@ -11,11 +11,20 @@ from django.contrib.auth.decorators import login_required
 def contact_us(request):
 
     if request.method == 'POST':
+        from_home_page = request.POST.get('email')
         form = ContactusForm(request.POST)
         if form.is_valid():
             form_obj = form.save()
             cust_email = form_obj.send_email_to
             _send_confirmation_email(form_obj, cust_email)
+            # Returning back to Home Page
+            if from_home_page:
+                messages.success(
+                request,
+                f'Hello {form_obj.full_name}, we have received your message and we will contact you soon.')
+                return redirect(reverse('home'))
+
+            # Returning back to Contact Us spage
             messages.success(
                 request,
                 f'Hello {form_obj.full_name}, we have received your message and we will contact you soon.')
@@ -35,7 +44,7 @@ def contact_us_messages(request):
         messages.error(request, 'Sorry only store owners can do that')
         return redirect(reverse('home'))
 
-    contact_us_messages = Contactus.objects.all()
+    contact_us_messages = Contactus.objects.all().order_by('-id')
     query = None
     # query = request.GET['q']
 
