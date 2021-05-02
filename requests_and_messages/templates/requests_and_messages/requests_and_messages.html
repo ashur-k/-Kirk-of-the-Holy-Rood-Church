@@ -7,7 +7,7 @@
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
                     <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>                      
-                        <strong >Requests and Messages</strong>
+                        <strong>Requests and Messages</strong>
                     </h1>
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
             </div>                    
@@ -58,6 +58,8 @@
                 <th scope="col">Sender-Email</th>
                 <th scope="col">Sender-Phone Number</th>
                 <th scope="col">Sender-Address</th>
+                <th scope="col">Buttons</th>
+                <th scope="col"></th>
                 
                 </tr>
             </thead>
@@ -70,7 +72,44 @@
                 <td>{{ request_message.message }}</td>
                 <td>{{ request_message.email }}</td>
                 <td>{{ request_message.phone_number }}</td>
-                <td>{{ request_message.street_address1 }}{{ message.street_address2 }} {{message.postcode}}</td>     
+                <td>{{ request_message.street_address1 }}{{ request_message.street_address2 }} {{ request_message.postcode}}</td> 
+                <td>
+                    {% if request.user.is_superuser %}
+                    <!-- message EDIT AND DELETE BUTTONS ARE INSIDE -->     
+                    <div class="col-sm-12">                                                                                      
+                        <div class="admin-buttons">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{ request_message.id }}Modal">
+                                        <small><i class="fas fa-trash-alt"></i></small>
+                                </button>
+                                <div class="message-edit-delete-modals text-start m-0">                       
+                                <!-- Delete message Modal -->
+                                <div class="modal fade" id="delete{{ request_message.id }}Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete{{ request_message.id }}ModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-dark" id="delete{{ request_message.id }}ModalLabel">DELETE MESSAGE</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-dark">
+                                        Are you sure you want to delete message for {{ request_message.full_name }}?.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="{% url 'del_ministry_message' request_message.id  %}" class="btn btn-danger">
+                                            <small><i class="fas fa-trash-alt"></i></small>
+                                        </a> 
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>           
+                            </div>
+                        </div>                               
+                    </div>
+                    {% endif %} 
+                </td> 
+                <td></td>      
                 </tr>
                 {% endfor %}
             </tbody>

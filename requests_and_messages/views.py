@@ -43,8 +43,6 @@ def request_and_messages(request, minstry_id=None):
     request_messages_paginator = Paginator(request_messages, 5)
     page_num = request.GET.get('page')
     page = request_messages_paginator.get_page(page_num)
-    for item in page.object_list:
-        print(item.ministy)
 
     context = {
         "minstry_id": minstry_id,
@@ -55,6 +53,18 @@ def request_and_messages(request, minstry_id=None):
     template = "requests_and_messages/requests_and_messages.html"
 
     return render(request, template, context)
+
+
+@login_required
+def del_ministry_message(request, message_id):
+    message = get_object_or_404(Message, id=message_id)
+    ministry_id = message.ministy.id
+    message_sender = message.full_name
+    message.delete()
+    messages.success(
+        request,
+        f'Message from {message_sender} is deleted.')
+    return redirect(reverse('request_and_messages', args=[ministry_id]))
 
 
 @login_required

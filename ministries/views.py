@@ -131,7 +131,6 @@ def add_new_meeting_times(request, id):
         return redirect(reverse('home'))
 
     ministry = get_object_or_404(Ministries, pk=id)
-    print()
     if request.method == 'POST':
         form = AddMeetingTimesForm(request.POST)
         if form.is_valid():
