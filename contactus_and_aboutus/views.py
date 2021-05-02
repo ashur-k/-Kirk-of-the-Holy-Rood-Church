@@ -17,21 +17,19 @@ def contact_us(request):
             cust_email = form_obj.send_email_to
             _send_confirmation_email(form_obj, cust_email)
 
-            from_home_page = bool(request.POST.get('email'))
-            print(from_home_page)
+            from_home_page = bool(request.POST.get('from_home_page'))
 
             # Returning back to Home Page
             if from_home_page is True:
-                from_home_page = False
-                messages.success(
-                request,
-                f'Hello {form_obj.full_name}, we have received your message and we will contact you soon.')
-                return redirect(reverse('home'))
-            else:
-                # Returning back to Contact Us spage
                 messages.success(
                     request,
-                    f'Hello {form_obj.full_name}, we have received your message and we will contact you soon.')
+                    f'Hello {form_obj.full_name}, your message is received and we will contact you soon.')
+                return redirect(reverse('home'))
+            else:
+                # Returning back to Contact Us page
+                messages.success(
+                    request,
+                    f'Hello {form_obj.full_name}, your message is received and we will contact you soon.')
                 return redirect(reverse('contact-us'))
 
     form = ContactusForm

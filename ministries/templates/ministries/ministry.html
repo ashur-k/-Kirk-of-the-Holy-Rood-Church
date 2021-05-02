@@ -12,13 +12,10 @@
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
                     <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
-                        <strong>Notices</strong>
+                        <strong>{{ ministry.ministry_heading }}</strong>
                     </h1>             
                     <div class="card-header" {% include 'includes/theme.html' %}></div>
-            </div>   
-            {% if request.user.is_superuser %}
-            
-            {% endif %}               
+            </div>           
         </div>
     </div>
 </div>
@@ -55,6 +52,7 @@
                     </small>
                 </strong>
             </blockquote>
+            <!--
             <div class="col-sm-12">
                 {% if form.errors %}
                     {% for field in form %}
@@ -78,6 +76,7 @@
                     </div>
                 {% endif %}
             </div>
+            -->
             <div class="col-sm-6">
                 <form  method="POST">
                     {% csrf_token %}
