@@ -15,8 +15,12 @@ Email: {{ form.email }}
     Address: {{ form.street_address1 }},{{ form.street_address2 }}, {{form.postcode}}
 {% endif %}
 
-Thank you for your volunteering and giving up your valuabe time to 
-take part in Kirk of the Holy Rood Church Outreach for Jesus Christ program!
+{% if form.ministy.group_leader  %}
+    Thank you {{ form.ministy.group_leader }} for your volunteering and giving up your valuabe time to 
+    take part in Kirk of the Holy Rood Church Outreach for Jesus Christ program!
+{% else %}
+    Kirk of the Holy Rood Grangemouth has receive message.
+{% endif %}
 
 Sincerely,
 

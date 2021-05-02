@@ -39,8 +39,8 @@ def _send_confirmation_email(form, cust_email):
     )
 
 
-def ministry(request, id):
-    ministry = get_object_or_404(Ministries, id=id)
+def ministry(request, ministry_id):
+    ministry = get_object_or_404(Ministries, id=ministry_id)
     times = MeetingTimes.objects.filter(meeting_ministry_name=ministry.id)
     meeting_days = WeekDays.objects.filter()
 
@@ -52,7 +52,10 @@ def ministry(request, id):
             form.save()
             cust_email = ministry.group_leader_email
             _send_confirmation_email(form, cust_email)
-            messages.success(request, 'We have received your inforamtion, thanks and we will contact you soon!')
+            messages.success(
+                request,
+                f'Hello {form.full_name}, your message is received and we will contact you soon.')
+            return redirect(reverse('ministry', args=[ministry_id]))
         else:
             messages.error(request, 'Please enter valid information.')
 
