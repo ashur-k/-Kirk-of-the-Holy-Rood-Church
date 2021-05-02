@@ -5,67 +5,86 @@
 {% endblock %}
 {% block page_header %}
     <div class="container header-container">
-        
+    <div class="row"> 
+        <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase bg-dark mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>PAYMENT</strong>
+                    </h1>
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>                    
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}   
 <div class="container">
-    <div class="row">            
-        <div class="col-sm-12">
-            {% if messages %}
-                <div class="message-container">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                </div>
+    <hr> 
+   <div class="row">
+        <div class="col-sm-9">
+            {% if event.event_name %}
+            <h5>
+                <i class="fas fa-snowflake p-1" {% include 'includes/theme.html' %}></i> Event: {{event.event_name}}
+            </h5>
+            <h5>
+                <i class="fas fa-calendar-day p-1" {% include 'includes/theme.html' %}></i> Date: {{ event_date.date }}
+            </h5>
+            {% else %}
+            <h5>
+                <i class="fas fa-gift p-1" {% include 'includes/theme.html' %}></i> Making Donation
+            </h5>
             {% endif %}
         </div>
+        <div class="col-sm-3 m-auto">
+            {% if event.event_name %}
+            <h5>
+            <i class="fas fa-credit-card p-1" {% include 'includes/theme.html' %}></i> 
+                TOTAL AMOUNT = <span class="fs-5 mt-3 fw-bolder" id="totalAmount">£{{ stripe_payment}}</span>
+            </h5>
+            {% else %}
+            <h5>
+            <i class="fas fa-credit-card p-1" {% include 'includes/theme.html' %}></i> 
+                TOTAL AMOUNT = <span class="fs-5 mt-3 fw-bolder" id="totalAmount">£{{ donation }}.00</span>
+            </h5>
+            {% endif  %}
+        </div>
     </div>
-</div>
-<div class="container">
-    <div class="row" style="margin-top: 150px;">
-        <h3>Buying Ticket for {{ event.event_name }} </h3>
-        <p>Event Date</p>
+    <hr>
+    <div class="row mt-5">
+        {% if event.event_name %}
+        <h2 class="text-uppercase">MAKING BANK PAYMENT FOR {{ event.event_name }} </h2><hr>
+        {% else %}
+        <h2 class="text-uppercase">MAKING BANK PAYMENT FOR A DONATION</h2><hr>
+        {% endif %}
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <h6>Payment Form</h6>
-            <form action="{% url 'ticket_payment' event.id %}" method="POST" id="payment-form">
+        <div class="col-sm-6 mb-4">
+            <img src="https://kirk-of-the-holy-rood-church.s3.eu-west-2.amazonaws.com/media/bank_card.jpg" alt="">
+        </div>
+        <div class="col-md-6 m-auto">
+            <form action="{% url 'ticket_payment' event_id %}" method="POST" id="payment-form">
                 {% csrf_token %}
-                <!--
                 <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Contact Details</legend>
-                    {{ payment_form.full_name | as_crispy_field }}
-                    {{ payment_form.email | as_crispy_field }}
-                    {{ payment_form.phone_number | as_crispy_field }}
-                    <small class="m-3" style="font-size:x-small;">Do you want to pay some donation for Church.</small>                  
-                    {{ payment_form.donation_payment_amount | as_crispy_field }}
-                    
-                </fieldset>
-                <fieldset class="rounded px-3 mb-5">
-                <legend class="fieldset-label small text-black px-2 w-auto">Ticket Details</legend>                    
-                    <input class="border-black m-1 textinput textInput form-control" type="float" id="ticket_price" value="Ticket Price: £{{event.event_price}}" readonly>
-                    <label for="">Ticket Qty</label>
-                    {{ ticket_payment_form.event_ticket_qty | as_crispy_field }}
-                </fieldset>
-                -->
-                <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Card Details</legend>
+                    <legend class="fieldset-label text-black  w-auto">Card Details</legend>
                     <!-- Stripe card element will go here-->
                     <div class="mb-3" id="card-element"></div>
                     <!-- Stripe card element will go here-->
                     <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                </fieldset>  
-
-               
+                </fieldset>                 
             </form>
-            <button form="payment-form" class="btn btn-dark mt-2" type="submit">Submit data</button>
-            <p class="small text-danger my-0">
+            <a href="" class="btn btn-dark mt-2" type="submit" {% include 'includes/secondary_theme.html' %}>Cancel</a>
+            <button form="payment-form" class="btn btn-dark mt-2" type="submit" {% include 'includes/theme.html' %}>Make Payment</button>
+            <p class="small text-danger my-0 mt-3">
                 <span class="icon">
                     <i class="fas fa-exclamation-circle"></i>
                 </span>
-                <span>Your card will be charged <strong>£{{ grand_total|floatformat:2 }}..</strong></span>
+                 {% if event.event_name %}
+                <span class="lead">Your card will be charged <strong>£{{ stripe_payment |floatformat:2 }}</strong></span>
+                {% else %}
+                <span class="lead">Your card will be charged <strong>£{{ donation |floatformat:2 }}</strong></span>
+                {% endif %}
             </p>
         </div>
     </div>

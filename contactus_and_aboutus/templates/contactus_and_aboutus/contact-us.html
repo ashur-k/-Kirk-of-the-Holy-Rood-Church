@@ -33,7 +33,7 @@
                     <h3><i class="fas fa-edit p-1" {% include 'includes/theme.html' %}></i> Write To Us!</h3>
                     <hr>
                 </div>
-                <form method="POST">
+                <form  method="POST">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="name" class="mb-1"><i class="fas fa-male p-1" {% include 'includes/theme.html' %}></i> Name:</label>
@@ -42,7 +42,7 @@
                     <div class="mb-3">
                         <label for="email" class="mb-1"><i class="fas fa-envelope-square p-1" {% include 'includes/theme.html' %}></i> Email:</label>
                         <input type="email" class="form-control form-control-sm" name="email" placeholder="your_email@anymailservice.com" aria-describedby="emailHelp" required>
-                        <input type="hidden" name="email" value="True">
+                        <input type="hidden" name="from_home_page" value="False">
                         <div class="form-text text-success">We'll never share your email with anyone else.</div>
                     </div>                        
                     <div class="mb-3 form-check p-0">

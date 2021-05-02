@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import (
     render,
     redirect,
@@ -144,17 +145,20 @@ def buy_event_tickets(request, event_date_id):
             payment_bag['ticket_qty'] = request.POST.get(
                 'event_ticket_qty')
             payment_bag['donation_page'] = False
-            donation_amount = request.POST.get('donation_payment_amount')
             ticket_qty = int(request.POST.get('event_ticket_qty'))
             event_price = event.event_price
 
+            # Setting total amount in session variable
+            donation_amount = request.POST.get('donation_payment_amount')
             event_total = ticket_qty * event_price
             total_amount = int(donation_amount) + event_total
-            payment_bag['total_amount'] = int(total_amount)
+            payment_bag['total_amount'] = round(float(total_amount), 2)
+            print(payment_bag['total_amount'])
             payment_bag['event_id'] = event.id
             request.session['payment_bag'] = payment_bag
 
             return redirect(reverse('ticket_payment', args=[event.id]))
+        # Else block is prinitng form error its for testing code needs updating
         else:
             ash = payment_form.errors
             bsh = ticket_form.errors

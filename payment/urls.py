@@ -6,7 +6,7 @@ urlpatterns = [
     path('payment/', views.payment, name='payment'),
 
     path(
-        'ticket_payment/<int:id>/',
+        'ticket_payment/<int:event_id>/',
         views.ticket_payment,
         name='ticket_payment'
         ),

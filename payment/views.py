@@ -47,23 +47,38 @@ def payment(request):
     return render(request, template, context)
 
 
-def ticket_payment(request, id):
+def ticket_payment(request, event_id):
 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    event = get_object_or_404(Events, id=id)
+
+    event = get_object_or_404(Events, id=event_id)
+    # Getting event_id for template
+    event_id = event.id
+
     payment_bag = request.session.get('payment_bag')
     from_donation_page = (payment_bag['donation_page'])
+
+    '''
+        This part of code is written to set logic of template
+        to be able to print different values when event or when
+        doantion
+    '''
+    event_date = None
+    donation = None
+    if from_donation_page:
+        # Setting event to none: if donation page then not to show event data
+        event = None
+        donation = payment_bag['donation_payment_amount']
+    else:
+        date_id = payment_bag['event_date_id']
+        event_date = get_object_or_404(EventDates, id=date_id)
 
     """ This part is calculating stripe payment total
         taking value from session and assigning it to form
     """
-    # donation_price = int(payment_bag['donation_payment_amount'])
-    # ticket_qty = int(payment_bag['ticket_qty'])
-    # event_price = event.event_price
-    # total_amount = donation_price + ticket_qty * event_price
     total_amount = payment_bag['total_amount']
-    stripe_payment = int(total_amount)
+    stripe_payment = round(float(total_amount), 2)
 
     if request.method == 'POST':
         if from_donation_page:
@@ -122,6 +137,7 @@ def ticket_payment(request, id):
         amount=stripe_total,
         currency=settings.STRIPE_CURRENCY
     )
+
     payment_form = PaymentForm()
     ticket_payment_form = TicketPaymentForm
 
@@ -131,6 +147,10 @@ def ticket_payment(request, id):
 
     template = 'payment/buy_ticket.html'
     context = {
+        'stripe_payment': stripe_payment,
+        'donation': donation,
+        'event_date': event_date,
+        'event_id': event_id,
         'event': event,
         'payment_form': payment_form,
         'ticket_payment_form': ticket_payment_form,
