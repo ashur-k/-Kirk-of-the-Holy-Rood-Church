@@ -43,7 +43,10 @@ h3{
 
 /*-------------------- Main Hero Section with Church image ------------------------- */
 .hero-parallax-img{
-    background: url('/media/anna-gru-MTdtJZByP5g-unsplash.jpg');
+    background: url('/media/hero_section.JPG');
+    background-size: 100% !important;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: top 100px left, top 100px  right, top 100px  center;
 }
 .prayer-parallax-img{
     background: url('/media/Prayer-bg-img.jpg');
