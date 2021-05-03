@@ -90,7 +90,7 @@ def del_contactus_msgs(request, id):
         return redirect(reverse('home'))
 
     message = get_object_or_404(Contactus, id=id)
-    message_name = message.name
+    message_name = message.full_name
     message.delete()
     messages.success(
                 request,
