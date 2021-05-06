@@ -43,16 +43,13 @@ h3{
 
 /*-------------------- Main Hero Section with Church image ------------------------- */
 .hero-parallax-img{
-    background: url('/media/hero_section.JPG');
-    background-size: 100% !important;
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-position: top 100px left, top 100px  right, top 100px  center;
+    background: url('/media/hero_section.jpg');
 }
 .prayer-parallax-img{
-    background: url('/media/Prayer-bg-img.jpg');
+    background: url('/media/for_bible.jpg');
 }
 .sunday-service-parallax-img{
-    background: url('/media/Sunday service.jpg');
+    background: url('/media/sunday_worship.jpg');
 }
 .container-parallax {
     height: 100vh;
@@ -66,6 +63,9 @@ h3{
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
+
+    background-position: center top;
+    background-size: 100% 100%;
 }
 .opaque-overlay {
     position: absolute;
