@@ -12,6 +12,13 @@
             <div class="card text-center">
                 <div class="card-header" {% include 'includes/theme.html' %}></div>
                     <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        {% if request.user.is_superuser %}
+                            <div class="col m-2">   
+                                <a href="{% url 'ministry_edit' ministry.id %}" class="btn  m-2"  {% include 'includes/theme.html' %}>
+                                <i class="fas fa-edit p-1" {% include 'includes/theme.html' %}></i> EDIT MINISTRY
+                                </a>
+                            </div>
+                        {% endif %}
                         <strong>{{ ministry.ministry_heading }}</strong>
                     </h1>             
                     <div class="card-header" {% include 'includes/theme.html' %}></div>
