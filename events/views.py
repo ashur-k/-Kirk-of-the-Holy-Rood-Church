@@ -1,4 +1,3 @@
-from decimal import Decimal
 from django.shortcuts import (
     render,
     redirect,
@@ -10,6 +9,8 @@ from .forms import EventsForm, EventDateForm, BookingFreeEventsForm
 from payment.forms import PaymentForm, TicketPaymentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+# Importing sending email functionality
+from ministries.views import _send_confirmation_email
 
 
 def events(request):
@@ -197,15 +198,26 @@ def booking_free_event(request, event_date_id):
         if booking_free_event_form.is_valid():
             booking_free_event = booking_free_event_form.save(commit=False)
             booking_free_event.event_title = event
-            booking_free_event.event_booking_date = event_date
+            booking_free_event.event_booking_date = event_date.date
             booking_free_event = booking_free_event_form.save()
 
             # updating event ticket count
             event_date.update_tickets_sold(
                 booking_free_event.number_of_bookings
                 )
-            messages.success(request, 'You haeve successfully booked for this event.')
-            return redirect(reverse('free_event_booking_success', args=[booking_free_event.id]))
+            # Sending email to person who booked event
+            cust_email = booking_free_event.email
+            _send_confirmation_email(booking_free_event, cust_email)
+
+            # Saving Full name to show on site message
+            full_name = booking_free_event.full_name
+            messages.success(
+                request,
+                f'{full_name} have successfully booked for this event.')
+
+            return redirect(reverse(
+                'free_event_booking_success',
+                args=[booking_free_event.id]))
         else:
             messages.error(request, 'Booking Failed.')
 

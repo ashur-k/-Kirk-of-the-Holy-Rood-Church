@@ -11,6 +11,8 @@ from events.models import Events, EventDates
 from .models import Payment, TicketsPayment
 import stripe
 from django.conf import settings
+# Importing sending email functionality
+from ministries.views import _send_confirmation_email
 
 
 def payment(request):
@@ -91,6 +93,23 @@ def ticket_payment(request, event_id):
             payment_form = PaymentForm(payment_form_data)
             if payment_form.is_valid():
                 payment = payment_form.save()
+
+                # Sending email to person who booked event
+                form = {
+                    'donation_page': True,
+                    'full_name': payment.full_name,
+                    'phone_number': payment.phone_number,
+                    'email': payment.phone_number,
+                    'create_at': payment.create_at,
+                    'donation_paid': payment.donation_payment_amount,
+                }
+                cust_email = payment.email
+                _send_confirmation_email(form, cust_email)
+                # Saving Full name to show on site message
+                full_name = payment.full_name
+                messages.success(
+                    request,
+                    f'Dear {full_name}, thanks for your donation.')
                 return redirect(reverse(
                     'donation_success',
                     args=[payment.payment_number]))
@@ -124,6 +143,27 @@ def ticket_payment(request, event_id):
                     ticket_obj.event_ticket_qty
                     )
 
+                # Sending email to person who booked event
+                form = {
+                    'full_name': payment.full_name,
+                    'phone_number': payment.phone_number,
+                    'email': payment.email,
+                    'event_title': ticket_obj.event,
+                    'event_booking_date': ticket_obj.event_date,
+                    'number_of_bookings': ticket_obj.event_ticket_qty,
+                    'create_at': payment.create_at,
+                    'donation_paid': payment.donation_payment_amount,
+                    'event_booking_payment': payment.ticket_payment_total,
+                    'total_amount_paid': payment.grand_total,
+                }
+                cust_email = payment.email
+                _send_confirmation_email(form, cust_email)
+
+                # Saving Full name to show on site message
+                full_name = payment.full_name
+                messages.success(
+                    request,
+                    f'Dear {full_name}, have successfully booked for this event.')
                 return redirect(reverse(
                     'payment_success',
                     args=[payment.payment_number]))

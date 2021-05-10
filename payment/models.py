@@ -14,6 +14,8 @@ class Payment(models.Model):
     donation_payment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     ticket_payment_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     def _generate_payment_number(self):
         return uuid.uuid4().hex.upper()

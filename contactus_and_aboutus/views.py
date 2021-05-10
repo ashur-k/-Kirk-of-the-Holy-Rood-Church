@@ -17,6 +17,9 @@ def contact_us(request):
             cust_email = form_obj.send_email_to
             _send_confirmation_email(form_obj, cust_email)
 
+            ''' Creating boolean variable to check
+                if Home page Form is used to send message.
+            '''
             from_home_page = bool(request.POST.get('from_home_page'))
 
             # Returning back to Home Page

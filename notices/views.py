@@ -1,4 +1,4 @@
-from django.shortcuts import(
+from django.shortcuts import (
     render,
     redirect,
     reverse,

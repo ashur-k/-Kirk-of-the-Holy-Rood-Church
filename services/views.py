@@ -1,9 +1,18 @@
 from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponse
+
+from django.shortcuts import (
+    render,
+    get_object_or_404,
+    redirect, reverse,
+    )
 from . models import Videos, SundayServiceInformation, SundayServiceBooking
-from .forms import SundayServiceInformationForm, SundayServiceBookingForm, SundayServiceBooking, VideoForm
+# Imported Forms
+from .forms import (
+    SundayServiceInformationForm,
+    SundayServiceBookingForm,
+    VideoForm)
 from django.contrib.auth.decorators import login_required
 
 
