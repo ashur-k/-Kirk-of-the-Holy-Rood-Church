@@ -54,7 +54,7 @@
     Number of tickets you booked: {{ form.number_of_bookings }}
     Booking created at: {{ form.create_at }}
 
-    Organising events is one of our way to outreach, please if you would like to support us with cost follow the link.
+    This is an free event and we are organising these events to outreach, events like this cost us a lot. If you like to support us with cost please follow the link to pay us donaiton.
     https://kirk-of-the-holy-rood-church.herokuapp.com/payment/
 
     {% if form.event_booking_payment %}
