@@ -87,8 +87,9 @@
                     <p class="" style="padding-left: 10%; padding-right: 10%;">{{ newsletter.description }}</p>                  
                 </div>
                 <div class="mb-3" style="padding-left: 30%; padding-right: 30%;">
+                    <a href="{% url 'add_new_newsletter'  %}" class="btn btn-sm mb-3 text-uppercase" {% include 'includes/secondary_theme.html' %}>Add new news letter</a><br>
                     <a href="{{ newsletter.upload.url }}" class="btn btn-sm" {% include 'includes/theme.html' %} target="_blank">{{ newsletter.date|slice:'4:7' }}
-                    </a>        
+                    </a>       
                 </div>
             </div>            
         </div>

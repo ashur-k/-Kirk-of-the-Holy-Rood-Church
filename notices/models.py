@@ -25,7 +25,7 @@ class Notice(models.Model):
 
 
 class NewsLetter(models.Model):
-    title = models.CharField(max_length=50, default="Contact-Us-Messages")
+    title = models.CharField(max_length=50, default="Notices Title")
     upload = models.FileField(upload_to='uploads/newsletters/')
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)

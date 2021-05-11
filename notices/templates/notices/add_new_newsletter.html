@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'payment/css/payment.css' %}">
+{% endblock %}
+{% block page_header %}
+
+<div class="container header-container">
+    <div class="row"> 
+        <div class="col-sm-12">
+            <div class="card text-center">
+                <div class="card-header" {% include 'includes/theme.html' %}></div>
+                    <h1 class="text-uppercase mb-0" {% include 'includes/secondary_theme.html' %}>
+                        <strong>Notices</strong>
+                    </h1>
+                    <!-- Add New Notice Modal -->                  
+                    <div class="card-header" {% include 'includes/theme.html' %}></div>
+            </div>             
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}   
+<style>
+    
+</style>
+<div class="container px-3 mt-3">
+    <div class="row">
+        <div class="col-sm-12">
+            <form method="POST" class="form mb-2" enctype="multipart/form-data">
+                {% csrf_token %}   
+                {{ news_letter_form | crispy}}
+                <a href="{% url 'notices'  %}" class="btn rounded-0 mt-3" {% include 'includes/theme.html' %}>
+                        <span class="font-weight-bold">Cancel</span>
+                </a>
+                <button type="submit" class="btn rounded-0 mt-3" {% include 'includes/theme.html' %}>
+                        <span class="font-weight-bold">Add Notice</span>
+                </button>
+
+            </form>
+        </div>
+    </div>
+     
+</div>
+
+{% endblock %}
+
+{% block postloadjs %}
+    
+{% endblock %}

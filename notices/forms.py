@@ -1,5 +1,5 @@
 from django import forms
-from .models import Notice
+from .models import Notice, NewsLetter
 
 
 class NoticeForm(forms.ModelForm):
@@ -14,4 +14,15 @@ class NoticeForm(forms.ModelForm):
             'contact_email',
             'date_time',
             'notice_display_status',
+        ]
+
+
+class NewsLetterForm(forms.ModelForm):
+
+    class Meta:
+        model = NewsLetter
+        fields = [
+            'title',
+            'upload',
+            'description',
         ]

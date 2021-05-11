@@ -149,6 +149,7 @@ if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
+    print("postgrees")
 
 else:
     DATABASES = {
@@ -157,6 +158,10 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
+    print("sqlite3")
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

@@ -15,4 +15,9 @@ urlpatterns = [
         'delete_notice/<int:notice_id>/',
         views.delete_notice,
         name='delete_notice'),
+
+    path(
+        'add_new_newsletter/',
+        views.add_new_newsletter,
+        name='add_new_newsletter'),
 ]
